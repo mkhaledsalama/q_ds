@@ -1,0 +1,3963 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M&lt;&gt;S — Data Science Learning &amp; Practice Platform</title>
+  <script>
+(function(){try{var r=localStorage.getItem('ms_datascience_platform_v2');if(r){var s=JSON.parse(r);if(s.theme)document.documentElement.setAttribute('data-theme',s.theme);if(s.lang){document.documentElement.setAttribute('lang',s.lang);document.documentElement.setAttribute('dir',s.lang==='ar'?'rtl':'ltr');}}}catch(e){}})();
+</script>
+  <style>
+/* ==========================================================================
+   M<>S Data Science Platform — Strict Palette Tokens (css/themes.css)
+   Exact Light & Dark Color Specification (Zero Blue, Zero Purple, Zero Neon)
+   ========================================================================== */
+
+:root {
+  --bg-main: #F0F1ED;
+  --bg-card: #FFFFFF;
+  --bg-surface: #E7EAE4;
+  --primary: #17432E;
+  --secondary: #315B42;
+  --accent: #315B42;
+  --text-main: #202820;
+  --text-muted: #777F77;
+  --border: #DDE2DC;
+
+  --primary-soft: rgba(23, 67, 46, 0.09);
+  --ok-color: #17432E;
+  --ok-bg: #E3EFE8;
+  --err-color: #8C2D23;
+  --err-bg: #F6E6E4;
+  --warn-color: #7A5C1E;
+  --warn-bg: #F4EEE0;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, serif;
+  --font-ar: 'Cairo', 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --radius: 6px;
+  --shadow: 0 1px 3px rgba(32, 40, 32, 0.06);
+  --nav-h: 64px;
+}
+
+[data-theme="dark"] {
+  --bg-main: #151916;
+  --bg-card: #202722;
+  --bg-surface: #303B33;
+  --primary: #24563A;
+  --secondary: #303B33;
+  --accent: #76A785;
+  --text-main: #F3F4EF;
+  --text-muted: #A8B3A9;
+  --border: #303B33;
+
+  --primary-soft: rgba(118, 167, 133, 0.14);
+  --ok-color: #76A785;
+  --ok-bg: rgba(36, 86, 58, 0.36);
+  --err-color: #E58C83;
+  --err-bg: rgba(140, 45, 35, 0.30);
+  --warn-color: #D9B76C;
+  --warn-bg: rgba(122, 92, 30, 0.28);
+
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.30);
+}
+
+[dir="rtl"] body {
+  font-family: var(--font-ar);
+}
+
+/* ==========================================================================
+   M<>S Data Science Platform — Core Stylesheet (css/style.css)
+   Minimal, Academic, Mobile-First, Zero Horizontal Overflow
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { font-size: 16px; overflow-x: hidden; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+button, input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+svg { max-width: 100%; height: auto; display: block; }
+
+/* ==================== GEOMETRIC M<>S LOGO ==================== */
+.ms-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 4px 0;
+  flex-shrink: 0;
+}
+
+.ms-logo-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 5px 10px;
+  background-color: var(--primary);
+  color: #F3F4EF;
+  border: 1px solid var(--secondary);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.96rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.ms-logo-diamond {
+  color: #A8B3A9;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .ms-logo-diamond { color: var(--accent); }
+
+.ms-logo-sub {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  display: none;
+}
+
+/* ==================== TOP NAVIGATION ==================== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--nav-h);
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.nav-links {
+  display: none;
+  align-items: center;
+  gap: 3px;
+}
+
+.nav-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 11px;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.nav-item:hover { background-color: var(--bg-surface); color: var(--text-main); }
+.nav-item.active { background-color: var(--primary); color: #F3F4EF; }
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ctrl-btn {
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.ctrl-btn:hover { border-color: var(--accent); }
+
+.mobile-drawer {
+  display: none;
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px 16px;
+}
+
+.mobile-drawer.open { display: block; }
+
+.mobile-drawer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.mobile-drawer .nav-item {
+  width: 100%;
+  justify-content: flex-start;
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+}
+
+/* ==================== LAYOUT & HEADERS ==================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 16px 64px;
+  width: 100%;
+}
+
+.page-head {
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.eyebrow {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.page-title {
+  margin: 4px 0 6px;
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  line-height: 1.25;
+}
+
+[dir="rtl"] .page-title { font-family: var(--font-ar); }
+
+.page-sub { margin: 0; font-size: 0.94rem; color: var(--text-muted); }
+
+/* ==================== CARDS, BUTTONS & BADGES ==================== */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.card-subtle {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-primary { background-color: var(--primary); color: #F3F4EF; border-color: var(--primary); }
+.btn-primary:hover { background-color: var(--secondary); }
+.btn-secondary { background-color: var(--bg-card); color: var(--text-main); border-color: var(--border); }
+.btn-secondary:hover { border-color: var(--accent); background-color: var(--bg-surface); }
+.btn-danger { background-color: var(--err-color); color: #F3F4EF; }
+.btn-sm { min-height: 32px; padding: 5px 11px; font-size: 0.82rem; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.badge-green { background-color: var(--ok-bg); color: var(--ok-color); }
+.badge-err { background-color: var(--err-bg); color: var(--err-color); }
+.badge-muted { background-color: var(--bg-surface); color: var(--text-muted); border: 1px solid var(--border); }
+
+.input, .select {
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 12px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-main);
+}
+
+.input:focus, .select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* ==================== DASHBOARD ==================== */
+.hero-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-inline-start: 4px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 22px;
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-box {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 15px;
+}
+
+.stat-k { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+.stat-v { font-size: 1.55rem; font-weight: 800; margin-top: 4px; font-variant-numeric: tabular-nums; }
+
+.topics-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.topic-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.topic-num {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.progress-track {
+  width: 100%;
+  height: 8px;
+  background-color: var(--bg-surface);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--primary);
+  transition: width 0.3s ease;
+}
+
+[data-theme="dark"] .progress-fill { background-color: var(--accent); }
+
+.dash-two-col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+/* ==================== VOCABULARY & FLASHCARDS (3D FLIP) ==================== */
+.tabs-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.tab-btn {
+  padding: 7px 12px;
+  border-radius: 4px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.tab-btn.active { background-color: var(--primary); color: #F3F4EF; border-color: var(--primary); }
+
+.vocab-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.flip-scene {
+  perspective: 1000px;
+  min-height: 250px;
+}
+
+.flip-card {
+  position: relative;
+  width: 100%;
+  min-height: 250px;
+  transform-style: preserve-3d;
+  transition: transform 0.45s ease;
+}
+
+.flip-card.flipped { transform: rotateY(180deg); }
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+  border-color: var(--accent);
+}
+
+/* ==================== PRACTICE & EXAMS ==================== */
+.config-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.opt-list { display: flex; flex-direction: column; gap: 9px; margin-top: 14px; }
+
+.opt-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 14px;
+  text-align: start;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.92rem;
+}
+
+.opt-btn:hover { border-color: var(--accent); }
+.opt-btn.selected { border-color: var(--primary); background-color: var(--primary-soft); font-weight: 600; }
+.opt-btn.ok { border-color: var(--ok-color); background-color: var(--ok-bg); }
+.opt-btn.err { border-color: var(--err-color); background-color: var(--err-bg); }
+
+.opt-key {
+  min-width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  font-weight: 700;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+/* Interactive Touch-Friendly Matching Board */
+.match-board {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.match-col { display: flex; flex-direction: column; gap: 8px; }
+
+.match-item {
+  width: 100%;
+  padding: 12px;
+  text-align: start;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.match-item.picking { border: 2px solid var(--primary); background-color: var(--primary-soft); }
+.match-item.paired { border-color: var(--accent); background-color: var(--bg-card); }
+.match-item.ok { border-color: var(--ok-color); background-color: var(--ok-bg); }
+.match-item.err { border-color: var(--err-color); background-color: var(--err-bg); }
+
+.fb-box {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+
+.fb-box.ok { background-color: var(--ok-bg); border-color: var(--ok-color); }
+.fb-box.err { background-color: var(--err-bg); border-color: var(--err-color); }
+
+.timer-pill {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 4px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+}
+
+/* Modal & Toast */
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(21, 25, 22, 0.58);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 200;
+}
+
+.modal-bg.open { display: flex; }
+
+.modal-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  max-width: 440px;
+  width: 100%;
+  padding: 22px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  inset-inline-end: 20px;
+  z-index: 300;
+  background-color: var(--primary);
+  color: #F3F4EF;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.toast.show { opacity: 1; transform: translateY(0); }
+
+.empty-box {
+  text-align: center;
+  padding: 28px 16px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  background-color: var(--bg-surface);
+}
+
+.table-wrap { width: 100%; overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+.table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.table th, .table td { padding: 10px 12px; text-align: start; border-bottom: 1px solid var(--border); }
+.table th { background-color: var(--bg-surface); font-weight: 700; color: var(--text-muted); }
+
+/* Single-File Canvas SPA View Toggle */
+.spa-view { display: none; }
+.spa-view.active { display: block; }
+
+/* ==========================================================================
+   M<>S Data Science Platform — Responsive Breakpoints (css/responsive.css)
+   Mobile-first for 360px, 390px, 768px, 1024px, 1440px
+   ========================================================================== */
+
+@media (min-width: 640px) {
+  .ms-logo-sub { display: inline; }
+  .match-board { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 768px) {
+  .container { padding: 26px 24px 72px; }
+  .page-title { font-size: 2rem; }
+  .hero-card { flex-direction: row; align-items: center; justify-content: space-between; padding: 26px; }
+  .stats-row { grid-template-columns: repeat(4, 1fr); }
+  .topics-grid { grid-template-columns: repeat(3, 1fr); }
+  .vocab-grid { grid-template-columns: repeat(2, 1fr); }
+  .config-grid { grid-template-columns: repeat(2, 1fr); }
+  .dash-two-col { grid-template-columns: 1.35fr 1fr; align-items: start; }
+}
+
+@media (min-width: 1024px) {
+  .nav-links { display: flex; }
+  .mobile-menu-btn, .mobile-drawer { display: none !important; }
+  .config-grid { grid-template-columns: repeat(4, 1fr); }
+  .vocab-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 390px) {
+  .topbar-inner { padding: 0 10px; gap: 6px; }
+  .ctrl-btn { padding: 5px 8px; font-size: 0.76rem; }
+  .mobile-drawer-grid { grid-template-columns: 1fr; }
+  .card { padding: 15px; }
+}
+
+  </style>
+</head>
+<body data-page="home" data-mode="spa">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="ms-logo" href="#" data-nav="home" aria-label="M<>S Home">
+        <span class="ms-logo-box">M<span class="ms-logo-diamond">&lt;&gt;</span>S</span>
+        <span class="ms-logo-sub" data-i18n="courseTitle">Data Science</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a class="nav-item active" href="#" data-nav="home" data-i18n="navHome">Dashboard</a>
+        <a class="nav-item" href="#" data-nav="study" data-i18n="navStudy">Study</a>
+        <a class="nav-item" href="#" data-nav="vocabulary" data-i18n="navVocab">Vocabulary</a>
+        <a class="nav-item" href="#" data-nav="practice" data-i18n="navPractice">Practice</a>
+        <a class="nav-item" href="#" data-nav="flashcards" data-i18n="navFlashcards">Flashcards</a>
+        <a class="nav-item" href="#" data-nav="exams" data-i18n="navExams">Exams</a>
+        <a class="nav-item" href="#" data-nav="results" data-i18n="navResults">Progress</a>
+        <a class="nav-item" href="#" data-nav="revision" data-i18n="navRevision">Revision</a>
+      </nav>
+      <div class="topbar-actions">
+        <button class="ctrl-btn" id="btn-lang" aria-label="Switch Language">العربية</button>
+        <button class="ctrl-btn" id="btn-theme" aria-label="Switch Theme">Dark</button>
+        <button class="ctrl-btn mobile-menu-btn" id="btn-mobile" aria-label="Toggle Menu">&#9776;</button>
+      </div>
+    </div>
+  </header>
+  <nav class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation">
+    <div class="mobile-drawer-grid">
+      <a class="nav-item active" href="#" data-nav="home" data-i18n="navHome">Dashboard</a>
+        <a class="nav-item" href="#" data-nav="study" data-i18n="navStudy">Study</a>
+        <a class="nav-item" href="#" data-nav="vocabulary" data-i18n="navVocab">Vocabulary</a>
+        <a class="nav-item" href="#" data-nav="practice" data-i18n="navPractice">Practice</a>
+        <a class="nav-item" href="#" data-nav="flashcards" data-i18n="navFlashcards">Flashcards</a>
+        <a class="nav-item" href="#" data-nav="exams" data-i18n="navExams">Exams</a>
+        <a class="nav-item" href="#" data-nav="results" data-i18n="navResults">Progress</a>
+        <a class="nav-item" href="#" data-nav="revision" data-i18n="navRevision">Revision</a>
+    </div>
+  </nav>
+  <main class="container">
+    <section id="page-home" class="spa-view active"></section>
+    <section id="page-study" class="spa-view"></section>
+    <section id="page-vocabulary" class="spa-view"></section>
+    <section id="page-practice" class="spa-view"></section>
+    <section id="page-flashcards" class="spa-view"></section>
+    <section id="page-exams" class="spa-view"></section>
+    <section id="page-results" class="spa-view"></section>
+    <section id="page-revision" class="spa-view"></section>
+  </main>
+  <div class="modal-bg" id="confirm-modal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <h3 style="margin:0 0 8px;" data-i18n="confirmSubmitTitle">Confirm Exam Submission</h3>
+      <p style="margin:0 0 18px;font-size:0.9rem;color:var(--text-muted);" data-i18n="confirmSubmitMsg">Are you sure you want to submit your exam now?</p>
+      <div style="display:flex;justify-content:flex-end;gap:8px;">
+        <button class="btn btn-secondary btn-sm" id="modal-cancel" data-i18n="cancel">Cancel</button>
+        <button class="btn btn-primary btn-sm" id="modal-confirm" data-i18n="confirm">Submit Now</button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="msds-toast" role="status" aria-live="polite"></div>
+  <script>
+/* ==========================================================================
+   M<>S Data Science Platform — LocalStorage Persistence (js/storage.js)
+   ========================================================================== */
+
+window.MSDS_STORAGE = (function () {
+  var KEY = 'ms_datascience_platform_v2';
+  var mem = null;
+
+  function todayKey() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  function defaults() {
+    return {
+      lang: 'en',
+      theme: 'light',
+      completedTopics: [],
+      lastTopicId: 'topic1',
+      dailyGoal: 15,
+      dailyCount: 0,
+      lastStudyDate: '',
+      streak: 0,
+      vocabUnderstood: [],
+      vocabFavorites: [],
+      bookmarkedQuestions: [],
+      bookmarkedExplanations: [],
+      flashcardStatus: {},      /* cardId -> 'known' | 'review' */
+      questionStats: {},        /* qId -> { attempts, correct, wrong, lastWrongAnswer, resolved } */
+      examHistory: [],          /* array of full exam attempt records */
+      practiceHistory: [],      /* array of practice session summaries */
+      recentActivity: []        /* chronological log */
+    };
+  }
+
+  function load() {
+    try {
+      var raw = window.localStorage.getItem(KEY);
+      if (!raw) return defaults();
+      return Object.assign(defaults(), JSON.parse(raw));
+    } catch (e) {
+      return mem ? Object.assign(defaults(), mem) : defaults();
+    }
+  }
+
+  function save(state) {
+    mem = state;
+    try {
+      window.localStorage.setItem(KEY, JSON.stringify(state));
+    } catch (e) { /* Safe fallback */ }
+  }
+
+  function touchStreak(state) {
+    var today = todayKey();
+    if (state.lastStudyDate === today) return;
+    if (state.lastStudyDate) {
+      var prev = new Date(state.lastStudyDate + 'T00:00:00');
+      var cur = new Date(today + 'T00:00:00');
+      var diffDays = Math.round((cur - prev) / 86400000);
+      state.streak = diffDays === 1 ? (state.streak || 0) + 1 : 1;
+    } else {
+      state.streak = 1;
+    }
+    state.lastStudyDate = today;
+    state.dailyCount = 0;
+  }
+
+  function update(fn) {
+    var s = load();
+    fn(s);
+    save(s);
+    return s;
+  }
+
+  function logActivity(state, titleEn, titleAr, detail) {
+    touchStreak(state);
+    state.recentActivity = state.recentActivity || [];
+    state.recentActivity.unshift({
+      titleEn: titleEn,
+      titleAr: titleAr,
+      detail: detail,
+      ts: Date.now()
+    });
+    if (state.recentActivity.length > 20) state.recentActivity = state.recentActivity.slice(0, 20);
+  }
+
+  function recordAnswer(qId, isCorrect, userAnswerText) {
+    return update(function (s) {
+      touchStreak(s);
+      s.dailyCount = (s.dailyCount || 0) + 1;
+      var st = s.questionStats[qId] || { attempts: 0, correct: 0, wrong: 0, lastWrongAnswer: '', resolved: false };
+      st.attempts += 1;
+      if (isCorrect) {
+        st.correct += 1;
+        st.resolved = true;
+      } else {
+        st.wrong += 1;
+        st.lastWrongAnswer = String(userAnswerText || '—');
+        st.resolved = false;
+      }
+      s.questionStats[qId] = st;
+    });
+  }
+
+  function resetAll() {
+    var d = defaults();
+    save(d);
+    return d;
+  }
+
+  return {
+    KEY: KEY,
+    load: load,
+    save: save,
+    update: update,
+    logActivity: logActivity,
+    recordAnswer: recordAnswer,
+    touchStreak: touchStreak,
+    resetAll: resetAll
+  };
+})();
+
+/* ==========================================================================
+   M<>S Data Science Platform — Bilingual Translations (js/translations.js)
+   Full Arabic (RTL) and English (LTR) interface strings.
+   ========================================================================== */
+
+window.MSDS_I18N = (function () {
+  var T = {
+    en: {
+      courseTitle: 'Data Science',
+      courseDesc: 'Master the fundamentals of Data Science, the 6-phase Data Science Life Cycle, and its real-world Pros & Cons with verified course exercises.',
+      navHome: 'Dashboard',
+      navStudy: 'Study',
+      navVocab: 'Vocabulary',
+      navPractice: 'Practice',
+      navFlashcards: 'Flashcards',
+      navExams: 'Exams',
+      navResults: 'Progress',
+      navRevision: 'Revision',
+      langSwitch: 'العربية',
+      themeDark: 'Dark',
+      themeLight: 'Light',
+      welcomeTitle: 'Welcome to M<>S Data Science',
+      welcomeSub: 'Understand the material. Practice intelligently. Test yourself. Improve continuously.',
+      continueLearning: 'Continue Learning',
+      startLearning: 'Start Learning',
+      quickPractice: 'Practice',
+      quickFlashcards: 'Flashcards',
+      quickExams: 'Take an Exam',
+      statTopics: 'Topics Completed',
+      statProgress: 'Overall Progress',
+      statAccuracy: 'Quiz Accuracy',
+      statStreak: 'Study Streak',
+      daysUnit: 'days',
+      dailyGoal: 'Daily Goal',
+      questionsToday: 'questions today',
+      courseTopics: 'Course Topics (3 Modules)',
+      recentActivity: 'Recent Activity',
+      noActivity: 'No study activity recorded yet. Start Topic 1 or try a practice question.',
+      qOfDay: 'Question of the Day',
+      checkQod: 'Check Answer',
+      searchCourse: 'Search across topics, definitions, and vocabulary...',
+      searchNoResults: 'No matching course items found.',
+      studyTitle: 'Study Center',
+      studySubtitle: 'Complete bilingual explanations grounded in your Data Science course materials.',
+      secIntro: '1. Introduction',
+      secDefs: '2. Important Definitions',
+      secDetail: '3. Detailed Concept Explanation',
+      secTerms: '4. Important Terminology',
+      secExamples: '5. Realistic Examples (Additional Clarifications)',
+      secKeyPoints: '6. Key Points to Memorize',
+      secSummary: '7. Quick Revision Summary',
+      secMistakes: '8. Common Mistakes & Confusing Concepts',
+      markTopicDone: 'Mark Topic as Completed',
+      topicCompleted: 'Topic Completed',
+      bookmarkExp: 'Bookmark Explanation',
+      bookmarked: 'Bookmarked',
+      vocabTitle: 'Vocabulary Center',
+      vocabSubtitle: 'All 15 course vocabulary matching terms organized by topic with Arabic meanings and flip cards.',
+      searchVocab: 'Search term or Arabic meaning...',
+      allTopics: 'All Topics',
+      shuffle: 'Shuffle',
+      flipCard: 'Flip Card',
+      markUnderstood: 'Mark Understood',
+      understood: 'Understood',
+      favorite: 'Favorite',
+      favorited: 'Favorited',
+      practiceTitle: 'Interactive Practice Center',
+      practiceSubtitle: 'All 75 original course exercises (30 MCQs, 15 True/False, 15 Matching, 15 Fill in the Blanks) with Arabic translations and instant correction.',
+      selectTopic: 'Topic',
+      selectType: 'Exercise Type',
+      questionCount: 'Questions',
+      viewMode: 'Display Mode',
+      modeSingle: 'One at a Time',
+      modeList: 'Organized List',
+      startPractice: 'Start Practice Session',
+      typeAll: 'All Exercise Types',
+      typeMcq: 'Multiple Choice (30)',
+      typeTf: 'True or False (15)',
+      typeMatch: 'Vocabulary Matching (15)',
+      typeFill: 'Fill in the Blanks (15)',
+      showArTrans: 'Arabic Translation',
+      checkAnswer: 'Check Answer',
+      prevBtn: 'Previous',
+      nextBtn: 'Next',
+      finishPractice: 'Finish & See Score',
+      retryWrong: 'Retry Incorrect Questions',
+      newSession: 'New Practice Session',
+      correct: 'Correct',
+      incorrect: 'Incorrect',
+      correctAnsLabel: 'Correct Answer',
+      yourAnsLabel: 'Your Answer',
+      explanationLabel: 'Explanation',
+      matchingInstr: 'Click a term on the left, then click its matching definition on the right (works with touch and mouse).',
+      validateMatches: 'Validate Matches',
+      resetMatches: 'Reset Matches',
+      fillPlaceholder: 'Type the missing term or phrase...',
+      saveQuestion: 'Bookmark Question',
+      savedQuestion: 'Bookmarked',
+      flashcardsTitle: 'Interactive Flashcards',
+      flashcardsSubtitle: 'Memorize vocabulary and core Data Science concepts with active recall.',
+      cardFront: 'Term / Question',
+      cardBack: 'Definition / Answer',
+      clickToFlip: 'Click card or press Space to flip',
+      markKnown: 'Known',
+      markNeedsRev: 'Needs Revision',
+      knownCount: 'Known',
+      needsRevCount: 'Needs Revision',
+      examsTitle: 'Examination Center',
+      examsSubtitle: 'Simulate a real timed or untimed exam. Answers stay hidden until submission.',
+      examScope: 'Exam Scope',
+      scopeAll: 'Comprehensive Exam (All 3 Topics)',
+      scopeT1: 'Topic 1 Exam',
+      scopeT2: 'Topic 2 Exam',
+      scopeT3: 'Topic 3 Exam',
+      examTimer: 'Timer',
+      timerNone: 'No Timer',
+      timer10: '10 Minutes',
+      timer15: '15 Minutes',
+      timer25: '25 Minutes',
+      startExam: 'Start Exam',
+      submitExam: 'Submit Exam',
+      confirmSubmitTitle: 'Confirm Exam Submission',
+      confirmSubmitMsg: 'Are you sure you want to submit your exam now? Unanswered questions will be marked incorrect.',
+      cancel: 'Cancel',
+      confirm: 'Submit Now',
+      examHistory: 'Previous Exam Attempts',
+      reviewAttempt: 'Review Attempt',
+      noExamsYet: 'No exams taken yet. Configure an exam above to test yourself.',
+      resultsTitle: 'Results & Learning Analytics',
+      resultsSubtitle: 'Real performance statistics computed strictly from your actual study and quiz activity.',
+      totalAnswered: 'Questions Answered',
+      correctTotal: 'Correct Answers',
+      incorrectTotal: 'Incorrect Answers',
+      overallAccuracy: 'Overall Accuracy',
+      topicPerf: 'Topic-Wise Performance',
+      strongestTopic: 'Strongest Topic',
+      weakestTopic: 'Weakest Topic',
+      reviseNext: 'What Should I Revise Next?',
+      noAnalyticsYet: 'Answer some practice questions or complete an exam to generate your analytics.',
+      revisionTitle: 'Bookmarks & Revision Hub',
+      revisionSubtitle: 'Review bookmarked questions, saved vocabulary, important explanations, and incorrect answers.',
+      tabWrong: 'Incorrect Answers',
+      tabSavedQ: 'Saved Questions',
+      tabSavedV: 'Bookmarked Vocab',
+      tabSavedE: 'Saved Explanations',
+      quickRevBtn: 'Start Quick Revision (Weak & Missed)',
+      emptySection: 'Nothing saved here yet.',
+      resetData: 'Reset All Progress',
+      resetConfirm: 'Click again to confirm full reset'
+    },
+    ar: {
+      courseTitle: 'علم البيانات (Data Science)',
+      courseDesc: 'أتقن أساسيات علم البيانات، ودورة حياة علم البيانات، ومزاياه وتحدياته مع جميع التمارين المحلولة من ملفات المنهج.',
+      navHome: 'الرئيسية',
+      navStudy: 'المذاكرة',
+      navVocab: 'المفردات',
+      navPractice: 'التدريب',
+      navFlashcards: 'البطاقات',
+      navExams: 'الامتحانات',
+      navResults: 'التقدم',
+      navRevision: 'المراجعة',
+      langSwitch: 'English',
+      themeDark: 'داكن',
+      themeLight: 'فاتح',
+      welcomeTitle: 'مرحباً بك في منصة M<>S لعلم البيانات',
+      welcomeSub: 'افهم المنهج. تدرّب بذكاء. اختبر نفسك. تطوّر باستمرار.',
+      continueLearning: 'متابعة التعلم',
+      startLearning: 'ابدأ المذاكرة',
+      quickPractice: 'تدريب فوري',
+      quickFlashcards: 'بطاقات الحفظ',
+      quickExams: 'خوض امتحان',
+      statTopics: 'الموضوعات المكتملة',
+      statProgress: 'التقدم الكلي',
+      statAccuracy: 'دقة الإجابات',
+      statStreak: 'سلسلة المذاكرة',
+      daysUnit: 'يوم',
+      dailyGoal: 'الهدف اليومي',
+      questionsToday: 'سؤال اليوم',
+      courseTopics: 'موضوعات المقرر (3 وحدات)',
+      recentActivity: 'النشاط الأخير',
+      noActivity: 'لا يوجد نشاط مسجل بعد. ابدأ بالموضوع الأول أو جرّب سؤال التدريب.',
+      qOfDay: 'سؤال اليوم',
+      checkQod: 'تحقق من الإجابة',
+      searchCourse: 'ابحث في الموضوعات والتعريفات والمفردات...',
+      searchNoResults: 'لا توجد نتائج مطابقة في المقرر.',
+      studyTitle: 'مركز المذاكرة والشرح',
+      studySubtitle: 'شرح تعليمي مبسط بالعربية والإنجليزية مستند مباشرة إلى ملفي المقرر.',
+      secIntro: '1. مقدمة',
+      secDefs: '2. التعريفات المهمة',
+      secDetail: '3. الشرح التفصيلي للمفاهيم',
+      secTerms: '4. المصطلحات الأساسية',
+      secExamples: '5. أمثلة واقعية (توضيحات إضافية)',
+      secKeyPoints: '6. نقاط رئيسية للحفظ',
+      secSummary: '7. ملخص المراجعة السريعة',
+      secMistakes: '8. أخطاء شائعة ومفاهيم قد تسبب لبساً',
+      markTopicDone: 'تحديد الموضوع كمكتمل',
+      topicCompleted: 'موضوع مكتمل',
+      bookmarkExp: 'حفظ الشرح في المراجعة',
+      bookmarked: 'محفوظ',
+      vocabTitle: 'مركز المفردات والمصطلحات',
+      vocabSubtitle: 'جميع مصطلحات المطابقة الـ 15 من الملف الأول مصنفة حسب الموضوع مع المعاني العربية وبطاقات القلب.',
+      searchVocab: 'ابحث بالمصطلح الإنجليزي أو المعنى العربي...',
+      allTopics: 'جميع الموضوعات',
+      shuffle: 'خلط عشوائي',
+      flipCard: 'اقلب البطاقة',
+      markUnderstood: 'تم الفهم',
+      understood: 'مفهوم',
+      favorite: 'مفضلة',
+      favorited: 'في المفضلة',
+      practiceTitle: 'مركز التدريب التفاعلي',
+      practiceSubtitle: 'جميع تمارين المنهج الـ 75 (30 اختيار من متعدد، 15 صح وخطأ، 15 مطابقة، 15 إكمال فراغات) مع الترجمة العربية والتصحيح الفوري.',
+      selectTopic: 'الموضوع',
+      selectType: 'نوع التمرين',
+      questionCount: 'عدد الأسئلة',
+      viewMode: 'طريقة العرض',
+      modeSingle: 'سؤال تلو الآخر',
+      modeList: 'قائمة منظمة',
+      startPractice: 'بدء جلسة التدريب',
+      typeAll: 'جميع أنواع التمارين',
+      typeMcq: 'اختيار من متعدد (30)',
+      typeTf: 'صح أو خطأ (15)',
+      typeMatch: 'مطابقة المفردات (15)',
+      typeFill: 'إكمال الفراغات (15)',
+      showArTrans: 'الترجمة العربية',
+      checkAnswer: 'تحقق من الإجابة',
+      prevBtn: 'السابق',
+      nextBtn: 'التالي',
+      finishPractice: 'إنهاء وعرض النتيجة',
+      retryWrong: 'إعادة الأسئلة الخاطئة',
+      newSession: 'جلسة تدريب جديدة',
+      correct: 'إجابة صحيحة',
+      incorrect: 'إجابة خاطئة',
+      correctAnsLabel: 'الإجابة الصحيحة',
+      yourAnsLabel: 'إجابتك',
+      explanationLabel: 'الشرح',
+      matchingInstr: 'اضغط على المصطلح في العمود الأول ثم اضغط على تعريفه الصحيح في العمود الثاني (يدعم اللمس والفأرة).',
+      validateMatches: 'تحقق من المطابقة',
+      resetMatches: 'إعادة التوصيل',
+      fillPlaceholder: 'اكتب الكلمة أو العبارة الناقصة...',
+      saveQuestion: 'حفظ السؤال',
+      savedQuestion: 'محفوظ',
+      flashcardsTitle: 'بطاقات المراجعة التفاعلية',
+      flashcardsSubtitle: 'احفظ المصطلحات والمفاهيم الأساسية عبر الاسترجاع النشط.',
+      cardFront: 'المصطلح / السؤال',
+      cardBack: 'التعريف / الإجابة',
+      clickToFlip: 'اضغط على البطاقة أو مفتاح المسافة لقلبها',
+      markKnown: 'أتقنتها',
+      markNeedsRev: 'تحتاج مراجعة',
+      knownCount: 'مُتقَنة',
+      needsRevCount: 'تحتاج مراجعة',
+      examsTitle: 'مركز الامتحانات',
+      examsSubtitle: 'محاكاة حقيقية للامتحان بمؤقت أو بدونه، مع إخفاء الإجابات حتى التسليم.',
+      examScope: 'نطاق الامتحان',
+      scopeAll: 'امتحان شامل (الموضوعات الثلاثة)',
+      scopeT1: 'امتحان الموضوع الأول',
+      scopeT2: 'امتحان الموضوع الثاني',
+      scopeT3: 'امتحان الموضوع الثالث',
+      examTimer: 'المؤقت',
+      timerNone: 'بدون مؤقت',
+      timer10: '10 دقائق',
+      timer15: '15 دقيقة',
+      timer25: '25 دقيقة',
+      startExam: 'بدء الامتحان',
+      submitExam: 'تسليم الامتحان',
+      confirmSubmitTitle: 'تأكيد تسليم الامتحان',
+      confirmSubmitMsg: 'هل أنت متأكد من تسليم الامتحان الآن؟ ستُحتسب الأسئلة غير المجابة خاطئة.',
+      cancel: 'إلغاء',
+      confirm: 'تسليم الآن',
+      examHistory: 'سجل الامتحانات السابقة',
+      reviewAttempt: 'مراجعة المحاولة',
+      noExamsYet: 'لم تخض أي امتحان بعد. اضبط إعدادات الامتحان بالأعلى للبدء.',
+      resultsTitle: 'النتائج وتحليلات التقدم',
+      resultsSubtitle: 'إحصاءات حقيقية محسوبة مباشرة من نشاطك الفعلي في المذاكرة والاختبارات.',
+      totalAnswered: 'الأسئلة المجابة',
+      correctTotal: 'الإجابات الصحيحة',
+      incorrectTotal: 'الإجابات الخاطئة',
+      overallAccuracy: 'الدقة الكلية',
+      topicPerf: 'الأداء حسب الموضوع',
+      strongestTopic: 'أقوى موضوع',
+      weakestTopic: 'أضعف موضوع',
+      reviseNext: 'ماذا يجب أن أراجع تالياً؟',
+      noAnalyticsYet: 'أجب عن بعض أسئلة التدريب أو أكمل امتحاناً لعرض تحليلاتك.',
+      revisionTitle: 'المحفوظات ومركز المراجعة',
+      revisionSubtitle: 'راجع الأسئلة الصعبة والمفردات المفضلة والشروحات المحفوظة والأخطاء السابقة.',
+      tabWrong: 'الأخطاء السابقة',
+      tabSavedQ: 'الأسئلة المحفوظة',
+      tabSavedV: 'المفردات المفضلة',
+      tabSavedE: 'الشروحات المحفوظة',
+      quickRevBtn: 'مراجعة سريعة (الأخطاء والموضوعات الضعيفة)',
+      emptySection: 'لا توجد عناصر محفوظة هنا بعد.',
+      resetData: 'إعادة تعيين كل التقدم',
+      resetConfirm: 'اضغط مرة أخرى لتأكيد الحذف الكامل'
+    }
+  };
+
+  function getLang() {
+    return window.MSDS_STORAGE.load().lang || 'en';
+  }
+
+  function t(key) {
+    var l = getLang();
+    return (T[l] && T[l][key]) || T.en[key] || key;
+  }
+
+  function apply(lang) {
+    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  }
+
+  function toggle() {
+    var next = getLang() === 'en' ? 'ar' : 'en';
+    window.MSDS_STORAGE.update(function (s) { s.lang = next; });
+    apply(next);
+    return next;
+  }
+
+  return { getLang: getLang, t: t, apply: apply, toggle: toggle };
+})();
+
+/* ==========================================================================
+   M<>S Data Science Platform — Verified 75-Question Source Bank (js/questions.js)
+   Sources:
+   - PDF 1: EN_Fill in the Blanks & Vocabulary Matching.pdf (15 Matching + 15 Fill)
+   - PDF 2: EN_MCQ & True Or False.pdf (30 MCQ + 15 True/False)
+   Total: 75 verbatim source questions with exact answer keys & Arabic translations.
+   ========================================================================== */
+
+window.MSDS_VOCAB_TERMS = [
+  /* TOPIC 1 (PDF 1, p. 1) */
+  {
+    id: 'vm-t1-1', topicId: 'topic1', roman: 'i', answerLetter: 'C',
+    term: 'Data Science', arMeaning: 'علم البيانات',
+    enDef: 'A discipline involving tools and algorithms to extract insights and predict outcomes.',
+    arExp: 'تخصص يجمع بين الأدوات والخوارزميات لاستخلاص الرؤى التحليلية والتنبؤ بالنتائج المستقبلية.',
+    example: 'Data science helps businesses predict customer behavior from historical and live data.'
+  },
+  {
+    id: 'vm-t1-2', topicId: 'topic1', roman: 'ii', answerLetter: 'E',
+    term: 'Predictive Analytics', arMeaning: 'التحليلات التنبؤية',
+    enDef: 'A method for predicting possible future outcomes and associated actions.',
+    arExp: 'أسلوب تحليلي للتنبؤ بالنتائج المستقبلية المحتملة والإجراءات المرتبطة بها.',
+    example: 'Weather forecasting is a practical example of predictive analytics.'
+  },
+  {
+    id: 'vm-t1-3', topicId: 'topic1', roman: 'iii', answerLetter: 'B',
+    term: 'Prescriptive Analytics', arMeaning: 'التحليلات التوجيهية',
+    enDef: 'Techniques to recommend actions based on data predictions and decisions.',
+    arExp: 'تقنيات توصي بأفضل الإجراءات والقرارات بناءً على التنبؤات وتعديل المعاملات.',
+    example: 'Prescriptive analytics suggests the optimal action to take alongside predicted outcomes.'
+  },
+  {
+    id: 'vm-t1-4', topicId: 'topic1', roman: 'iv', answerLetter: 'A',
+    term: 'Data Scientist', arMeaning: 'عالم البيانات',
+    enDef: 'A professional who uses data to answer business questions and provide insights.',
+    arExp: 'متخصص يستخدم البيانات والأساليب المتقدمة للإجابة عن أسئلة الأعمال وتقديم الرؤى.',
+    example: 'A data scientist uses mathematics, statistics, and computer science to solve complex problems.'
+  },
+  {
+    id: 'vm-t1-5', topicId: 'topic1', roman: 'v', answerLetter: 'D',
+    term: 'Business Intelligence', arMeaning: 'ذكاء الأعمال',
+    enDef: 'Analyzing historical data to explain current patterns.',
+    arExp: 'تحليل البيانات التاريخية المنظمة لتفسير الأنماط الحالية في العمل.',
+    example: 'Traditional business intelligence tools work best with structured data.'
+  },
+
+  /* TOPIC 2 (PDF 1, p. 3) */
+  {
+    id: 'vm-t2-1', topicId: 'topic2', roman: 'i', answerLetter: 'A',
+    term: 'Lifecycle', arMeaning: 'دورة الحياة',
+    enDef: 'A structured approach consisting of phases to complete a data science project.',
+    arExp: 'منهجية منظمة تتكون من مراحل متتابعة لإنجاز مشروع علم البيانات من البداية حتى النهاية.',
+    example: 'The data science lifecycle moves from Discovery to Communicate the Results.'
+  },
+  {
+    id: 'vm-t2-2', topicId: 'topic2', roman: 'ii', answerLetter: 'B',
+    term: 'Analytical Sandbox', arMeaning: 'البيئة التحليلية المعزولة',
+    enDef: 'A secure environment for testing and analyzing data.',
+    arExp: 'بيئة آمنة ومعزولة لاختبار البيانات وتحليلها دون التأثير على الأنظمة التشغيلية.',
+    example: 'ETL operations move prepared data into the analytical sandbox.'
+  },
+  {
+    id: 'vm-t2-3', topicId: 'topic2', roman: 'iii', answerLetter: 'C',
+    term: 'ETL', arMeaning: 'الاستخراج والتحويل والتحميل (ETL)',
+    enDef: 'The process of extracting, transforming, and loading data into a system.',
+    arExp: 'عملية استخراج البيانات من مصادرها ثم تحويلها وتنظيفها وتحميلها في النظام أو البيئة التحليلية.',
+    example: 'Data teams run ETL pipelines during Data Preparation.'
+  },
+  {
+    id: 'vm-t2-4', topicId: 'topic2', roman: 'iv', answerLetter: 'D',
+    term: 'Hypothesis', arMeaning: 'الفرضية',
+    enDef: 'A proposed explanation or prediction that can be tested.',
+    arExp: 'تفسير أو توقع مقترح يُصاغ في مرحلة الاستكشاف ويمكن اختباره بالبيانات.',
+    example: 'During Discovery, the team frames the problem and forms an initial hypothesis.'
+  },
+  {
+    id: 'vm-t2-5', topicId: 'topic2', roman: 'v', answerLetter: 'E',
+    term: 'Real-time Data', arMeaning: 'البيانات الفورية',
+    enDef: 'Data that is processed and analyzed as it is generated.',
+    arExp: 'بيانات تتم معالجتها وتحليلها لحظياً فور إنتاجها.',
+    example: 'Operating the model tests how it performs on real-time data.'
+  },
+
+  /* TOPIC 3 (PDF 1, p. 4) */
+  {
+    id: 'vm-t3-1', topicId: 'topic3', roman: 'i', answerLetter: 'C',
+    term: 'Supervised Learning', arMeaning: 'التعلم الخاضع للإشراف',
+    enDef: 'A machine learning method where labeled data is used for training.',
+    arExp: 'أسلوب في تعلم الآلة تُستخدم فيه بيانات مصنّفة (موسومة) لتدريب النموذج.',
+    example: 'Supervised learning trains classification models using labeled historical examples.'
+  },
+  {
+    id: 'vm-t3-2', topicId: 'topic3', roman: 'ii', answerLetter: 'D',
+    term: 'Redundancy', arMeaning: 'التكرار غير الضروري',
+    enDef: 'The unnecessary repetition of tasks.',
+    arExp: 'التكرار غير الضروري للمهام أو العمليات التي يمكن أتمتتها.',
+    example: 'Data science reduces redundancy by training machines to perform repetitive tasks.'
+  },
+  {
+    id: 'vm-t3-3', topicId: 'topic3', roman: 'iii', answerLetter: 'A',
+    term: 'Domain Knowledge', arMeaning: 'المعرفة بالمجال',
+    enDef: 'Knowledge specific to a particular field or industry.',
+    arExp: 'معرفة متخصصة بقطاع أو صناعة معينة ضرورية لتفسير البيانات بدقة.',
+    example: 'Strong domain knowledge helps data scientists interpret healthcare or financial data.'
+  },
+  {
+    id: 'vm-t3-4', topicId: 'topic3', roman: 'iv', answerLetter: 'B',
+    term: 'Ambiguous', arMeaning: 'غامض / يحتمل أكثر من تفسير',
+    enDef: 'Open to multiple interpretations or unclear.',
+    arExp: 'غير محدد بدقة أو قابل لأكثر من تفسير.',
+    example: 'Data science can feel ambiguous because its responsibilities vary across organizations.'
+  },
+  {
+    id: 'vm-t3-5', topicId: 'topic3', roman: 'v', answerLetter: 'E',
+    term: 'Privacy Breach', arMeaning: 'انتهاك الخصوصية',
+    enDef: 'The violation of data protection leading to unauthorized access.',
+    arExp: 'انتهاك حماية البيانات يؤدي إلى وصول أطراف غير مصرح لها للمعلومات الحساسة.',
+    example: 'Improper security measures can cause a privacy breach exposing personal data.'
+  }
+];
+
+/* ==================== ALL 75 VERIFIED SOURCE QUESTIONS ==================== */
+window.MSDS_QUESTIONS = [
+  /* ---------- 30 MULTIPLE CHOICE QUESTIONS (PDF 2: EN_MCQ & True Or False.pdf) ---------- */
+  /* TOPIC 1 MCQs (1–10) */
+  {
+    id: 't1-mcq-1', topicId: 'topic1', type: 'mcq', source: 'PDF 2 (p. 1)',
+    question: 'What is the main purpose of data science?',
+    questionAr: 'ما هو الغرض الرئيسي من علم البيانات؟',
+    options: [
+      'To store information in digital databases',
+      'To identify patterns and predict possible outcomes',
+      'To replace all traditional business tools',
+      'To collect data without analyzing it'
+    ],
+    optionsAr: [
+      'تخزين المعلومات في قواعد بيانات رقمية',
+      'تحديد الأنماط والتنبؤ بالنتائج المحتملة',
+      'استبدال جميع أدوات الأعمال التقليدية',
+      'جمع البيانات دون تحليلها'
+    ],
+    correctIndex: 1,
+    expEn: 'Data science uses algorithms and tools to discover hidden patterns and predict future outcomes.',
+    expAr: 'يستخدم علم البيانات الخوارزميات والأدوات لاكتشاف الأنماط المخفية والتنبؤ بالنتائج المحتملة.'
+  },
+  {
+    id: 't1-mcq-2', topicId: 'topic1', type: 'mcq', source: 'PDF 2 (p. 2)',
+    question: 'How does a data scientist differ from a data analyst, according to the passage?',
+    questionAr: 'كيف يختلف عالم البيانات عن محلل البيانات وفقاً للنص؟',
+    options: [
+      'A data scientist focuses only on historical events.',
+      'A data scientist avoids using statistical methods.',
+      'A data scientist uses advanced methods to predict outcomes.',
+      'A data scientist works exclusively with structured data.'
+    ],
+    optionsAr: [
+      'يركز عالم البيانات على الأحداث التاريخية فقط.',
+      'يتجنب عالم البيانات استخدام الأساليب الإحصائية.',
+      'يستخدم عالم البيانات أساليب متقدمة للتنبؤ بالنتائج.',
+      'يعمل عالم البيانات حصرياً مع البيانات المنظمة.'
+    ],
+    correctIndex: 2,
+    expEn: 'Unlike a data analyst who focuses on explaining current/historical patterns, a data scientist uses advanced algorithms to predict outcomes.',
+    expAr: 'على عكس محلل البيانات، يستخدم عالم البيانات أساليب وخوارزميات متقدمة للتنبؤ بالنتائج المستقبلية.'
+  },
+  {
+    id: 't1-mcq-3', topicId: 'topic1', type: 'mcq', source: 'PDF 2 (p. 2)',
+    question: 'What is the primary purpose of predictive causal analytics?',
+    questionAr: 'ما هو الغرض الأساسي من التحليلات التنبؤية السببية؟',
+    options: [
+      'To predict possible future outcomes',
+      'To organize existing data into categories',
+      'To display information in simple charts',
+      'To explain previously recorded events'
+    ],
+    optionsAr: [
+      'التنبؤ بالنتائج المستقبلية المحتملة',
+      'تنظيم البيانات الحالية في فئات',
+      'عرض المعلومات في رسوم بيانية بسيطة',
+      'تفسير الأحداث المسجلة سابقاً'
+    ],
+    correctIndex: 0,
+    expEn: 'Predictive causal analytics builds models to predict possibilities or outcomes of future events.',
+    expAr: 'تهدف التحليلات التنبؤية السببية إلى التنبؤ بالنتائج المستقبلية المحتملة.'
+  },
+  {
+    id: 't1-mcq-4', topicId: 'topic1', type: 'mcq', source: 'PDF 2 (p. 2)',
+    question: 'How does prescriptive analytics support decision-making?',
+    questionAr: 'كيف تدعم التحليلات التوجيهية عملية اتخاذ القرار؟',
+    options: [
+      'By collecting information from different sources',
+      'By recording events that have already occurred',
+      'By identifying patterns in historical information',
+      'By recommending actions based on available data'
+    ],
+    optionsAr: [
+      'عن طريق جمع المعلومات من مصادر مختلفة',
+      'عن طريق تسجيل الأحداث التي وقعت بالفعل',
+      'عن طريق تحديد الأنماط في المعلومات التاريخية',
+      'عن طريق التوصية بإجراءات بناءً على البيانات المتاحة'
+    ],
+    correctIndex: 3,
+    expEn: 'Prescriptive analytics goes beyond prediction by recommending actions and modifying parameters to support informed decisions.',
+    expAr: 'تدعم التحليلات التوجيهية اتخاذ القرار عبر التوصية بالإجراءات المناسبة بناءً على البيانات المتاحة.'
+  },
+  {
+    id: 't1-mcq-5', topicId: 'topic1', type: 'mcq', source: 'PDF 2 (p. 2)',
+    question: 'Why are traditional business intelligence tools sometimes insufficient today?',
+    questionAr: 'لماذا تكون أدوات ذكاء الأعمال التقليدية غير كافية أحياناً اليوم؟',
+    options: [
+      'They cannot collect any historical information.',
+      'They struggle with large volumes of complex data.',
+      'They cannot analyze structured data sets.',
+      'They require data scientists to collect all data.'
+    ],
+    optionsAr: [
+      'لا تستطيع جمع أي معلومات تاريخية.',
+      'تواجه صعوبة مع الأحجام الكبيرة من البيانات المعقدة.',
+      'لا تستطيع تحليل مجموعات البيانات المنظمة.',
+      'تتطلب من علماء البيانات جمع كل البيانات.'
+    ],
+    correctIndex: 1,
+    expEn: 'Traditional BI works best with small structured datasets and struggles with large volumes of complex/unstructured data.',
+    expAr: 'تواجه أدوات ذكاء الأعمال التقليدية صعوبة في التعامل مع الأحجام الضخمة من البيانات المعقدة وغير المنظمة.'
+  },
+  {
+    id: 't1-mcq-6', topicId: 'topic1', type: 'mcq', source: 'PDF 2 (p. 3)',
+    question: 'How can data science improve customer service?',
+    questionAr: 'كيف يمكن لعلم البيانات تحسين خدمة العملاء؟',
+    options: [
+      'By eliminating the need to study customer behavior',
+      'By providing identical products to all customers',
+      'By analyzing customer data to recommend suitable products',
+      'By replacing customer information with general assumptions'
+    ],
+    optionsAr: [
+      'بإلغاء الحاجة لدراسة سلوك العملاء',
+      'بتقديم منتجات متطابقة لجميع العملاء',
+      'بتحليل بيانات العملاء للتوصية بالمنتجات المناسبة',
+      'باستبدال معلومات العملاء بافتراضات عامة'
+    ],
+    correctIndex: 2,
+    expEn: 'Analyzing purchase history, browsing history, income, and age lets firms recommend suitable products.',
+    expAr: 'يحلل علم البيانات بيانات العملاء مثل سجل المشتريات والتصفح للتوصية بالمنتجات المناسبة.'
+  },
+  {
+    id: 't1-mcq-7', topicId: 'topic1', type: 'mcq', source: 'PDF 2 (p. 3)',
+    question: 'What enables self-driving cars to respond to their surroundings?',
+    questionAr: 'ما الذي يمكّن السيارات ذاتية القيادة من الاستجابة لمحيطها؟',
+    options: [
+      'Sensors and algorithms that process collected information',
+      'Historical records stored in business databases',
+      'Instructions provided manually during every journey',
+      'Statistical reports prepared before each journey'
+    ],
+    optionsAr: [
+      'المستشعرات والخوارزميات التي تعالج المعلومات المجمّعة',
+      'السجلات التاريخية المخزنة في قواعد بيانات الأعمال',
+      'التعليمات المقدمة يدوياً خلال كل رحلة',
+      'التقارير الإحصائية المعدّة قبل كل رحلة'
+    ],
+    correctIndex: 0,
+    expEn: 'Self-driven cars rely on sensors (lasers, radars, cameras) and machine learning algorithms.',
+    expAr: 'تعتمد السيارات ذاتية القيادة على المستشعرات والخوارزميات التي تعالج البيانات الحية.'
+  },
+  {
+    id: 't1-mcq-8', topicId: 'topic1', type: 'mcq', source: 'PDF 2 (p. 3)',
+    question: 'How does data science contribute to weather forecasting?',
+    questionAr: 'كيف يسهم علم البيانات في التنبؤ بالطقس؟',
+    options: [
+      'By replacing observations with general predictions',
+      'By using customer data to estimate weather conditions',
+      'By relying exclusively on information from satellites',
+      'By analyzing data from multiple sources to build predictive models'
+    ],
+    optionsAr: [
+      'باستبدال الرصد بتوقعات عامة',
+      'باستخدام بيانات العملاء لتقدير الطقس',
+      'بالاعتماد حصرياً على معلومات الأقمار الصناعية',
+      'بتحليل البيانات من مصادر متعددة لبناء نماذج تنبؤية'
+    ],
+    correctIndex: 3,
+    expEn: 'Weather forecasting combines data from satellites, aircraft, radars, ships, and other instruments to build predictive models.',
+    expAr: 'يدمج التنبؤ بالطقس البيانات من مصادر متعددة لبناء نماذج تنبؤية دقيقة.'
+  },
+  {
+    id: 't1-mcq-9', topicId: 'topic1', type: 'mcq', source: 'PDF 2 (p. 3)',
+    question: 'Which combination best describes the knowledge used by data scientists?',
+    questionAr: 'أي مزيج يصف بشكل أفضل المعرفة التي يستخدمها علماء البيانات؟',
+    options: [
+      'Literature, history, and language studies',
+      'Mathematics, statistics, and computer science',
+      'Marketing, accounting, and business communication',
+      'Geography, philosophy, and political science'
+    ],
+    optionsAr: [
+      'الأدب والتاريخ ودراسات اللغة',
+      'الرياضيات والإحصاء وعلوم الحاسب',
+      'التسويق والمحاسبة والاتصال التجاري',
+      'الجغرافيا والفلسفة والعلوم السياسية'
+    ],
+    correctIndex: 1,
+    expEn: 'Data scientists combine mathematics, statistics, and computer science.',
+    expAr: 'يجمع علماء البيانات بين الرياضيات والإحصاء وعلوم الحاسب.'
+  },
+  {
+    id: 't1-mcq-10', topicId: 'topic1', type: 'mcq', source: 'PDF 2 (p. 4)',
+    question: 'Why do data scientists work with both structured and unstructured data?',
+    questionAr: 'لماذا يعمل علماء البيانات مع كلٍّ من البيانات المنظمة وغير المنظمة؟',
+    options: [
+      'To avoid using mathematical and statistical methods',
+      'To ensure that all data follows the same format',
+      'To extract useful information from different data types',
+      'To eliminate the need for advanced analytical tools'
+    ],
+    optionsAr: [
+      'لتجنب استخدام الأساليب الرياضية والإحصائية',
+      'لضمان اتباع جميع البيانات لنفس الصيغة',
+      'لاستخراج معلومات مفيدة من أنواع البيانات المختلفة',
+      'لإلغاء الحاجة إلى الأدوات التحليلية المتقدمة'
+    ],
+    correctIndex: 2,
+    expEn: 'Handling both structured and unstructured data enables extracting useful insights across all data types.',
+    expAr: 'يتيح التعامل مع النوعين استخراج معلومات مفيدة من مختلف أشكال البيانات.'
+  },
+
+  /* TOPIC 2 MCQs (1–10) */
+  {
+    id: 't2-mcq-1', topicId: 'topic2', type: 'mcq', source: 'PDF 2 (p. 4)',
+    question: 'What is the main purpose of the discovery phase in the data science lifecycle?',
+    questionAr: 'ما هو الغرض الرئيسي من مرحلة الاستكشاف (Discovery) في دورة حياة علم البيانات؟',
+    options: [
+      'To evaluate the final model results',
+      'To understand the project requirements and resources',
+      'To test the model using real-time data',
+      'To communicate the findings to the organization'
+    ],
+    optionsAr: [
+      'تقييم النتائج النهائية للنموذج',
+      'فهم متطلبات المشروع والموارد المتاحة',
+      'اختبار النموذج باستخدام البيانات الفورية',
+      'توصيل النتائج إلى المؤسسة'
+    ],
+    correctIndex: 1,
+    expEn: 'Discovery identifies business requirements, specifications, budget, priorities, and available resources.',
+    expAr: 'تركز مرحلة الاستكشاف على فهم متطلبات المشروع وتحديد الموارد المتاحة.'
+  },
+  {
+    id: 't2-mcq-2', topicId: 'topic2', type: 'mcq', source: 'PDF 2 (p. 5)',
+    question: 'Which of the following should be assessed during the discovery phase?',
+    questionAr: 'أي مما يلي يجب تقييمه خلال مرحلة الاستكشاف؟',
+    options: [
+      'Model accuracy and final reports',
+      'Training data and testing results',
+      'Available resources, technology, and time',
+      'Visualization methods and model performance'
+    ],
+    optionsAr: [
+      'دقة النموذج والتقارير النهائية',
+      'بيانات التدريب ونتائج الاختبار',
+      'الموارد المتاحة والتكنولوجيا والوقت',
+      'أساليب التصور البصري وأداء النموذج'
+    ],
+    correctIndex: 2,
+    expEn: 'During Discovery, teams evaluate available resources, people, technology, data, and time.',
+    expAr: 'يتم في الاستكشاف تقييم الموارد المتاحة والتكنولوجيا والوقت.'
+  },
+  {
+    id: 't2-mcq-3', topicId: 'topic2', type: 'mcq', source: 'PDF 2 (p. 5)',
+    question: 'What is the main purpose of preparing data before modeling?',
+    questionAr: 'ما هو الغرض الرئيسي من تحضير البيانات قبل النمذجة؟',
+    options: [
+      'To clean and organize data for analysis',
+      'To communicate the results to the organization',
+      'To select the final model evaluation criteria',
+      'To deliver technical documents to stakeholders'
+    ],
+    optionsAr: [
+      'تنظيف البيانات وتنظيمها للتحليل',
+      'توصيل النتائج إلى المؤسسة',
+      'اختيار معايير تقييم النموذج النهائية',
+      'تسليم الوثائق الفنية لأصحاب المصلحة'
+    ],
+    correctIndex: 0,
+    expEn: 'Data preparation cleans, explores, conditions, and organizes raw data so it is ready for modeling.',
+    expAr: 'الهدف هو تنظيف البيانات وتنظيمها وتهيئتها قبل بناء النموذج.'
+  },
+  {
+    id: 't2-mcq-4', topicId: 'topic2', type: 'mcq', source: 'PDF 2 (p. 5)',
+    question: 'Which of the following operations is associated with moving data into a sandbox environment?',
+    questionAr: 'أي العمليات التالية ترتبط بنقل البيانات إلى البيئة التحليلية (Sandbox)؟',
+    options: [
+      'Classification, clustering, and association',
+      'Training, testing, and evaluating',
+      'Modeling, reporting, and communicating',
+      'Extracting, transforming, and loading'
+    ],
+    optionsAr: [
+      'التصنيف والتجميع والارتباط',
+      'التدريب والاختبار والتقييم',
+      'النمذجة وإعداد التقارير والتواصل',
+      'الاستخراج والتحويل والتحميل (ETL)'
+    ],
+    correctIndex: 3,
+    expEn: 'ETL (Extracting, Transforming, and Loading) moves data into the analytical sandbox.',
+    expAr: 'عمليات ETL (الاستخراج والتحويل والتحميل) هي المسؤولة عن نقل البيانات للبيئة التحليلية.'
+  },
+  {
+    id: 't2-mcq-5', topicId: 'topic2', type: 'mcq', source: 'PDF 2 (p. 5)',
+    question: 'What is the primary objective of the plan-the-model phase?',
+    questionAr: 'ما هو الهدف الأساسي لمرحلة تخطيط النموذج (Plan the Model)؟',
+    options: [
+      'To present the findings to the organization',
+      'To identify relationships and select suitable algorithms',
+      'To test the model in a production environment',
+      'To divide the data into training and testing sets'
+    ],
+    optionsAr: [
+      'عرض النتائج على المؤسسة',
+      'تحديد العلاقات واختيار الخوارزميات المناسبة',
+      'اختبار النموذج في بيئة الإنتاج',
+      'تقسيم البيانات إلى مجموعتي تدريب واختبار'
+    ],
+    correctIndex: 1,
+    expEn: 'Plan the Model identifies variable relationships via EDA and selects suitable modeling algorithms.',
+    expAr: 'تهدف مرحلة تخطيط النموذج إلى تحديد العلاقات بين المتغيرات واختيار الخوارزميات المناسبة.'
+  },
+  {
+    id: 't2-mcq-6', topicId: 'topic2', type: 'mcq', source: 'PDF 2 (p. 6)',
+    question: 'How does SQL support the modeling process, according to the passage?',
+    questionAr: 'كيف تدعم لغة SQL عملية النمذجة وفقاً للمنهج؟',
+    options: [
+      'By preparing reports for organizational communication',
+      'By collecting real-time information from sensors',
+      'By supporting database analysis and predictive modeling',
+      'By replacing all other modeling tools and techniques'
+    ],
+    optionsAr: [
+      'بإعداد تقارير للتواصل المؤسسي',
+      'بجمع معلومات فورية من المستشعرات',
+      'بدعم التحليل داخل قواعد البيانات والنمذجة التنبؤية',
+      'باستبدال جميع أدوات وتقنيات النمذجة الأخرى'
+    ],
+    correctIndex: 2,
+    expEn: 'SQL supports in-database analysis using predictive models and data mining functions.',
+    expAr: 'تدعم SQL التحليل داخل قاعدة البيانات والنمذجة التنبؤية.'
+  },
+  {
+    id: 't2-mcq-7', topicId: 'topic2', type: 'mcq', source: 'PDF 2 (p. 6)',
+    question: 'Why is a dataset divided into training and testing sets during the model-building phase?',
+    questionAr: 'لماذا تُقسَّم مجموعة البيانات إلى تدريب واختبار خلال مرحلة بناء النموذج؟',
+    options: [
+      'To support model development and testing',
+      "To identify the project's budget and priorities",
+      'To communicate the final findings to stakeholders',
+      'To determine the initial business requirements'
+    ],
+    optionsAr: [
+      'لدعم تطوير النموذج واختباره',
+      'لتحديد ميزانية المشروع وأولوياته',
+      'لتوصيل النتائج النهائية لأصحاب المصلحة',
+      'لتحديد متطلبات العمل الأولية'
+    ],
+    correctIndex: 0,
+    expEn: 'Training data teaches/develops the model while testing data evaluates its performance.',
+    expAr: 'تُستخدم بيانات التدريب لتطوير النموذج وبيانات الاختبار للتحقق من أدائه.'
+  },
+  {
+    id: 't2-mcq-8', topicId: 'topic2', type: 'mcq', source: 'PDF 2 (p. 6)',
+    question: 'Which techniques are mentioned as methods for developing a model?',
+    questionAr: 'أي التقنيات التالية ذُكرت كأساليب لتطوير النموذج؟',
+    options: [
+      'Extraction, transformation, and loading',
+      'Reporting, documentation, and communication',
+      'Prediction, visualization, and data cleaning',
+      'Clustering, classification, and association'
+    ],
+    optionsAr: [
+      'الاستخراج والتحويل والتحميل',
+      'التقارير والتوثيق والتواصل',
+      'التنبؤ والتصور البصري وتنظيف البيانات',
+      'التجميع والتصنيف والارتباط'
+    ],
+    correctIndex: 3,
+    expEn: 'Clustering, classification, and association are the three modeling techniques cited in Phase 4.',
+    expAr: 'التقنيات الثلاث هي التجميع (Clustering) والتصنيف (Classification) والارتباط (Association).'
+  },
+  {
+    id: 't2-mcq-9', topicId: 'topic2', type: 'mcq', source: 'PDF 2 (p. 6)',
+    question: 'What is the main purpose of operating the model?',
+    questionAr: 'ما هو الغرض الرئيسي من تشغيل النموذج (Operate the Model)؟',
+    options: [
+      'To identify the initial project hypothesis',
+      'To examine performance using real-time data',
+      'To select the required analytical resources',
+      "To determine the project's approved budget"
+    ],
+    optionsAr: [
+      'تحديد الفرضية الأولية للمشروع',
+      'فحص الأداء باستخدام البيانات الفورية',
+      'اختيار الموارد التحليلية المطلوبة',
+      'تحديد الميزانية المعتمدة للمشروع'
+    ],
+    correctIndex: 1,
+    expEn: 'Operating the model deploys it to production to examine performance on real-time data and deliver reports.',
+    expAr: 'الغرض هو اختبار أداء النموذج على البيانات الفورية في بيئة الإنتاج.'
+  },
+  {
+    id: 't2-mcq-10', topicId: 'topic2', type: 'mcq', source: 'PDF 2 (p. 7)',
+    question: 'What happens during the final phase of the data science lifecycle?',
+    questionAr: 'ماذا يحدث خلال المرحلة الأخيرة من دورة حياة علم البيانات؟',
+    options: [
+      'The data is cleaned and prepared for analysis.',
+      'The dataset is divided into training and testing sets.',
+      'The findings are evaluated and communicated to the organization.',
+      'The relationships between variables are initially identified.'
+    ],
+    optionsAr: [
+      'يتم تنظيف البيانات وتحضيرها للتحليل.',
+      'يتم تقسيم البيانات إلى تدريب واختبار.',
+      'يتم تقييم النتائج وتوصيلها إلى المؤسسة.',
+      'يتم تحديد العلاقات بين المتغيرات مبدئياً.'
+    ],
+    correctIndex: 2,
+    expEn: 'In Phase 6 (Communicate the Results), key findings are evaluated against Phase 1 criteria and shared with the organization.',
+    expAr: 'في المرحلة الأخيرة تُقيَّم النتائج وتُعرض على المؤسسة.'
+  },
+
+  /* TOPIC 3 MCQs (1–10) */
+  {
+    id: 't3-mcq-1', topicId: 'topic3', type: 'mcq', source: 'PDF 2 (p. 7)',
+    question: 'Why is data science considered a field with abundant career opportunities?',
+    questionAr: 'لماذا يُعد علم البيانات مجالاً غنياً بالفرص الوظيفية؟',
+    options: [
+      'It requires no specialized knowledge or training.',
+      'It is used exclusively in the technology industry.',
+      'The demand for skilled data scientists exceeds their supply.',
+      'It allows employees to avoid learning new skills.'
+    ],
+    optionsAr: [
+      'لأنه لا يتطلب معرفة أو تدريباً متخصصاً.',
+      'لأنه يُستخدم حصرياً في قطاع التكنولوجيا.',
+      'لأن الطلب على علماء البيانات المهرة يفوق العرض المتاح.',
+      'لأنه يتيح للموظفين تجنب تعلم مهارات جديدة.'
+    ],
+    correctIndex: 2,
+    expEn: 'Career opportunities are abundant because demand for skilled data scientists exceeds supply.',
+    expAr: 'الطلب المرتفع على علماء البيانات المهرة يفوق عدد المتخصصين المتاحين.'
+  },
+  {
+    id: 't3-mcq-2', topicId: 'topic3', type: 'mcq', source: 'PDF 2 (p. 8)',
+    question: 'What makes data science a versatile career?',
+    questionAr: 'ما الذي يجعل علم البيانات مساراً مهنياً متعدد المجالات (Versatile)؟',
+    options: [
+      'It can be applied across different industries.',
+      'It focuses on solving only technical problems.',
+      'It depends on a single set of professional skills.',
+      'It requires employees to work in one specialized field.'
+    ],
+    optionsAr: [
+      'يمكن تطبيقه عبر مختلف الصناعات.',
+      'يركز على حل المشكلات التقنية فقط.',
+      'يعتمد على مجموعة واحدة فقط من المهارات.',
+      'يتطلب العمل في مجال متخصص واحد فقط.'
+    ],
+    correctIndex: 0,
+    expEn: 'Data science is versatile because it applies across healthcare, finance, retail, e-commerce, and many other industries.',
+    expAr: 'تعدد استخداماته عبر مختلف القطاعات والصناعات يجعله مجالاً مرناً للغاية.'
+  },
+  {
+    id: 't3-mcq-3', topicId: 'topic3', type: 'mcq', source: 'PDF 2 (p. 8)',
+    question: 'How does data science help companies make informed decisions?',
+    questionAr: 'كيف يساعد علم البيانات الشركات على اتخاذ قرارات مستنيرة؟',
+    options: [
+      'By replacing all employees with automated systems',
+      'By reducing the amount of information collected',
+      'By avoiding the use of historical data',
+      'By analyzing and improving the quality of data'
+    ],
+    optionsAr: [
+      'باستبدال جميع الموظفين بأنظمة آلية',
+      'بتقليل كمية المعلومات التي يتم جمعها',
+      'بتجنب استخدام البيانات التاريخية',
+      'بتحليل البيانات وتحسين جودتها'
+    ],
+    correctIndex: 3,
+    expEn: 'Data science enriches and analyzes data quality to support better business decisions.',
+    expAr: 'يساعد في اتخاذ قرارات أدق عبر تحليل البيانات وتحسين جودتها.'
+  },
+  {
+    id: 't3-mcq-4', topicId: 'topic3', type: 'mcq', source: 'PDF 2 (p. 8)',
+    question: 'How can data science reduce redundant tasks in organizations?',
+    questionAr: 'كيف يقلل علم البيانات من المهام المتكررة غير الضرورية في المؤسسات؟',
+    options: [
+      'By increasing the amount of manual work',
+      'By training machines to perform repetitive tasks',
+      'By preventing companies from collecting historical data',
+      'By replacing data analysis with human judgment'
+    ],
+    optionsAr: [
+      'بزيادة حجم العمل اليدوي',
+      'بتدريب الآلات على أداء المهام المتكررة',
+      'بمنع الشركات من جمع البيانات التاريخية',
+      'باستبدال تحليل البيانات بالتقدير البشري'
+    ],
+    correctIndex: 1,
+    expEn: 'Training machines with historical data automates repetitive, redundant tasks.',
+    expAr: 'يقلل التكرار عبر تدريب الآلات لأداء المهام الروتينية المتكررة.'
+  },
+  {
+    id: 't3-mcq-5', topicId: 'topic3', type: 'mcq', source: 'PDF 2 (p. 8)',
+    question: 'How do e-commerce websites use machine learning to improve customer experience?',
+    questionAr: 'كيف تستخدم مواقع التجارة الإلكترونية تعلم الآلة لتحسين تجربة العملاء؟',
+    options: [
+      "By removing customers' purchase histories",
+      'By providing identical recommendations to everyone',
+      'By recommending products based on customer behavior',
+      'By limiting the products available to customers'
+    ],
+    optionsAr: [
+      'بحذف سجلات مشتريات العملاء',
+      'بتقديم توصيات متطابقة للجميع',
+      'بالتوصية بالمنتجات بناءً على سلوك العميل',
+      'بتقليص المنتجات المتاحة للعملاء'
+    ],
+    correctIndex: 2,
+    expEn: 'Recommendation systems use machine learning on customer behavior to suggest personalized products.',
+    expAr: 'تستخدم أنظمة التوصية سلوك العميل لاقتراح منتجات تناسبه.'
+  },
+  {
+    id: 't3-mcq-6', topicId: 'topic3', type: 'mcq', source: 'PDF 2 (p. 9)',
+    question: 'Why is data science valuable in the healthcare sector?',
+    questionAr: 'لماذا يُعد علم البيانات ذا قيمة كبيرة في قطاع الرعاية الصحية؟',
+    options: [
+      'It can help detect diseases at an early stage.',
+      'It eliminates the need for medical professionals.',
+      'It guarantees accurate diagnoses in every case.',
+      'It prevents healthcare organizations from collecting data.'
+    ],
+    optionsAr: [
+      'يمكنه المساعدة في اكتشاف الأمراض في مرحلة مبكرة.',
+      'يلغي الحاجة إلى الأطباء والمتخصصين.',
+      'يضمن تشخيصاً صحيحاً في كل حالة بلا استثناء.',
+      'يمنع المؤسسات الصحية من جمع البيانات.'
+    ],
+    correctIndex: 0,
+    expEn: 'Machine learning aids healthcare with early disease and tumor detection.',
+    expAr: 'يساعد في الكشف المبكر عن الأمراض والأورام.'
+  },
+  {
+    id: 't3-mcq-7', topicId: 'topic3', type: 'mcq', source: 'PDF 2 (p. 9)',
+    question: 'Why is it difficult to define data science precisely?',
+    questionAr: 'لماذا يصعب وضع تعريف دقيق واحد لعلم البيانات؟',
+    options: [
+      'It is limited to mathematics and statistics.',
+      'It has no practical applications outside technology.',
+      'It follows the same procedures in every organization.',
+      'Its meaning and responsibilities vary across contexts.'
+    ],
+    optionsAr: [
+      'لأنه يقتصر على الرياضيات والإحصاء فقط.',
+      'ليس له تطبيقات عملية خارج التكنولوجيا.',
+      'يتبع نفس الإجراءات في كل مؤسسة.',
+      'تختلف معانيه ومسؤولياته باختلاف السياق.'
+    ],
+    correctIndex: 3,
+    expEn: 'Data science is somewhat ambiguous because its meaning and role vary across companies and industries.',
+    expAr: 'تختلف المهام والتعريف الدقيق لعلم البيانات من مؤسسة لأخرى.'
+  },
+  {
+    id: 't3-mcq-8', topicId: 'topic3', type: 'mcq', source: 'PDF 2 (p. 9)',
+    question: 'Why must data scientists continue learning throughout their careers?',
+    questionAr: 'لماذا يجب على علماء البيانات الاستمرار في التعلم طوال مسيرتهم المهنية؟',
+    options: [
+      'Their existing skills become completely useless over time.',
+      'The field changes frequently and involves multiple disciplines.',
+      'Employers require them to abandon their original specialties.',
+      'Their work depends entirely on changing business regulations.'
+    ],
+    optionsAr: [
+      'تصبح مهاراتهم الحالية عديمة الفائدة تماماً بمرور الوقت.',
+      'يتغير المجال باستمرار ويشمل تخصصات متعددة.',
+      'يطلب منهم أصحاب العمل التخلي عن تخصصاتهم الأصلية.',
+      'يعتمد عملهم كلياً على تغير اللوائح التجارية.'
+    ],
+    correctIndex: 1,
+    expEn: 'Data science evolves rapidly and spans statistics, math, computer science, and domain expertise.',
+    expAr: 'لأن المجال متسارع التطور ويجمع بين عدة تخصصات علمية.'
+  },
+  {
+    id: 't3-mcq-9', topicId: 'topic3', type: 'mcq', source: 'PDF 2 (p. 9)',
+    question: 'Why is domain knowledge important when solving data science problems?',
+    questionAr: 'لماذا تُعد المعرفة بالمجال مهمة عند حل مشكلات علم البيانات؟',
+    options: [
+      'It eliminates the need for statistical analysis.',
+      'It allows data scientists to work without technical skills.',
+      'It helps them interpret data within a specific field.',
+      'It guarantees that all analytical results will be correct.'
+    ],
+    optionsAr: [
+      'تلغي الحاجة إلى التحليل الإحصائي.',
+      'تسمح لعلماء البيانات بالعمل دون مهارات تقنية.',
+      'تساعدهم على تفسير البيانات بدقة ضمن مجال محدد.',
+      'تضمن أن تكون جميع النتائج التحليلية صحيحة.'
+    ],
+    correctIndex: 2,
+    expEn: 'Without domain knowledge, raw statistical outputs can be misinterpreted outside their industry context.',
+    expAr: 'تساعد المعرفة بالمجال على فهم وتفسير البيانات في سياقها الصناعي الصحيح.'
+  },
+  {
+    id: 't3-mcq-10', topicId: 'topic3', type: 'mcq', source: 'PDF 2 (p. 10)',
+    question: 'What is a major privacy risk associated with data science?',
+    questionAr: 'ما هو الخطر الرئيسي المتعلق بالخصوصية في علم البيانات؟',
+    options: [
+      'Personal information may be exposed through data leaks.',
+      'Historical data may become unavailable for analysis.',
+      'Machine learning may require additional computing resources.',
+      'Data scientists may need to learn new programming languages.'
+    ],
+    optionsAr: [
+      'قد تتعرض المعلومات الشخصية للانكشاف عبر تسريبات البيانات.',
+      'قد تصبح البيانات التاريخية غير متاحة للتحليل.',
+      'قد يتطلب تعلم الآلة موارد حوسبة إضافية.',
+      'قد يحتاج علماء البيانات لتعلم لغات برمجة جديدة.'
+    ],
+    correctIndex: 0,
+    expEn: 'Weak security can result in data leaks and privacy breaches exposing personal information.',
+    expAr: 'ضعف الحماية قد يؤدي لتسريب البيانات الشخصية وانتهاك الخصوصية.'
+  },
+
+  /* ---------- 15 TRUE OR FALSE QUESTIONS (PDF 2: EN_MCQ & True Or False.pdf) ---------- */
+  /* TOPIC 1 T/F (a–e) */
+  {
+    id: 't1-tf-1', topicId: 'topic1', type: 'tf', source: 'PDF 2 (p. 1)',
+    question: 'Traditional business intelligence tools can easily handle unstructured data.',
+    questionAr: 'تستطيع أدوات ذكاء الأعمال التقليدية التعامل بسهولة مع البيانات غير المنظمة.',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 1,
+    expEn: 'False. Traditional BI tools work best with structured data, not large unstructured datasets.',
+    expAr: 'خطأ. أدوات ذكاء الأعمال التقليدية تعمل أساساً مع البيانات المنظمة.'
+  },
+  {
+    id: 't1-tf-2', topicId: 'topic1', type: 'tf', source: 'PDF 2 (p. 1)',
+    question: 'A data scientist and a data analyst perform the same roles.',
+    questionAr: 'يؤدي عالم البيانات ومحلل البيانات نفس الأدوار تماماً.',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 1,
+    expEn: 'False. Data analysts explain current trends from historical data, while data scientists use advanced algorithms to predict future outcomes.',
+    expAr: 'خطأ. لكل منهما دور مختلف؛ فعالم البيانات يستخدم خوارزميات متقدمة للتنبؤ بالمستقبل.'
+  },
+  {
+    id: 't1-tf-3', topicId: 'topic1', type: 'tf', source: 'PDF 2 (p. 1)',
+    question: 'Self-driven cars use machine learning algorithms to make decisions.',
+    questionAr: 'تستخدم السيارات ذاتية القيادة خوارزميات تعلم الآلة لاتخاذ القرارات.',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 0,
+    expEn: 'True. Machine learning algorithms process sensor data (lasers, radars, cameras) to make driving decisions.',
+    expAr: 'صحيح. تعتمد السيارات ذاتية القيادة على خوارزميات تعلم الآلة لمعالجة بيانات المستشعرات.'
+  },
+  {
+    id: 't1-tf-4', topicId: 'topic1', type: 'tf', source: 'PDF 2 (p. 1)',
+    question: 'Predictive causal analytics helps in predicting the outcomes of future events.',
+    questionAr: 'تساعد التحليلات التنبؤية السببية في التنبؤ بنتائج الأحداث المستقبلية.',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 0,
+    expEn: 'True. Predicting future outcomes is the core goal of predictive causal analytics.',
+    expAr: 'صحيح. هذا هو الهدف الأساسي للتحليلات التنبؤية السببية.'
+  },
+  {
+    id: 't1-tf-5', topicId: 'topic1', type: 'tf', source: 'PDF 2 (p. 1)',
+    question: 'Data science can help recommend products to customers based on purchase history.',
+    questionAr: 'يمكن لعلم البيانات المساعدة في التوصية بالمنتجات للعملاء بناءً على سجل المشتريات.',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 0,
+    expEn: 'True. Customer service models use purchase and browsing history to recommend suitable products.',
+    expAr: 'صحيح. تعتمد توصيات المنتجات على سجل مشتريات العميل وسجل تصفحه.'
+  },
+
+  /* TOPIC 2 T/F (a–e) */
+  {
+    id: 't2-tf-1', topicId: 'topic2', type: 'tf', source: 'PDF 2 (p. 4)',
+    question: 'The first phase of the data science lifecycle is building the model.',
+    questionAr: 'المرحلة الأولى من دورة حياة علم البيانات هي بناء النموذج.',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 1,
+    expEn: 'False. The first phase is Discovery; Building the Model is Phase 4.',
+    expAr: 'خطأ. المرحلة الأولى هي الاستكشاف (Discovery)، بينما بناء النموذج هو المرحلة الرابعة.'
+  },
+  {
+    id: 't2-tf-2', topicId: 'topic2', type: 'tf', source: 'PDF 2 (p. 4)',
+    question: 'R and Python are commonly used for data preparation and visualization.',
+    questionAr: 'تُستخدم لغتا R و Python بشكل شائع في تحضير البيانات وتصورها بصرياً.',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 0,
+    expEn: 'True. R and Python are widely used to clean, transform, and visualize data.',
+    expAr: 'صحيح. تُعد R و Python الأدوات الأكثر شيوعاً في تحضير البيانات وتصورها.'
+  },
+  {
+    id: 't2-tf-3', topicId: 'topic2', type: 'tf', source: 'PDF 2 (p. 4)',
+    question: 'Training and testing data sets are split during the planning phase.',
+    questionAr: 'يتم تقسيم بيانات التدريب والاختبار خلال مرحلة التخطيط.',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 1,
+    expEn: 'False. Datasets are split into training and testing sets during Phase 4 (Build the Model), not Phase 3.',
+    expAr: 'خطأ. يحدث التقسيم خلال مرحلة بناء النموذج (المرحلة الرابعة) وليس مرحلة التخطيط.'
+  },
+  {
+    id: 't2-tf-4', topicId: 'topic2', type: 'tf', source: 'PDF 2 (p. 4)',
+    question: 'The purpose of the discovery phase is to frame the problem and form a hypothesis.',
+    questionAr: 'الغرض من مرحلة الاستكشاف هو صياغة المشكلة وتكوين الفرضية.',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 0,
+    expEn: 'True. Discovery defines requirements, frames the problem, and forms the initial hypothesis.',
+    expAr: 'صحيح. تُصاغ المشكلة وتُوضَع الفرضية الأولية في مرحلة الاستكشاف.'
+  },
+  {
+    id: 't2-tf-5', topicId: 'topic2', type: 'tf', source: 'PDF 2 (p. 4)',
+    question: 'Communicating results is the last phase of the lifecycle.',
+    questionAr: 'توصيل النتائج هو المرحلة الأخيرة في دورة الحياة.',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 0,
+    expEn: 'True. Phase 6 (Communicate the Results) is the final phase.',
+    expAr: 'صحيح. توصيل النتائج هو المرحلة السادسة والأخيرة.'
+  },
+
+  /* TOPIC 3 T/F (a–e) */
+  {
+    id: 't3-tf-1', topicId: 'topic3', type: 'tf', source: 'PDF 2 (p. 7)',
+    question: 'Data science is a versatile field applied only in healthcare.',
+    questionAr: 'علم البيانات مجال متنوع يُطبَّق في الرعاية الصحية فقط.',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 1,
+    expEn: 'False. Data science is applied across many industries, not only healthcare.',
+    expAr: 'خطأ. يُطبَّق علم البيانات في صناعات ومجالات عديدة وليس الرعاية الصحية فقط.'
+  },
+  {
+    id: 't3-tf-2', topicId: 'topic3', type: 'tf', source: 'PDF 2 (p. 7)',
+    question: 'Data scientists earn an average of $160,000 annually, according to Glassdoor.',
+    questionAr: 'يكسب علماء البيانات متوسط 160,000 دولار سنوياً وفقاً لموقع Glassdoor (حسب نص المقرر).',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 0,
+    expEn: 'True (course-specific figure cited in PDF 2, p. 7).',
+    expAr: 'صحيح وفقاً للمعلومة الواردة في ملف المقرر ص 7.'
+  },
+  {
+    id: 't3-tf-3', topicId: 'topic3', type: 'tf', source: 'PDF 2 (p. 7)',
+    question: 'Domain knowledge is not essential to solving specific data science problems.',
+    questionAr: 'المعرفة بالمجال ليست ضرورية لحل مشكلات علم البيانات المحددة.',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 1,
+    expEn: 'False. Domain knowledge is essential for accurately interpreting data within a specific field.',
+    expAr: 'خطأ. المعرفة بالمجال أساسية لتفسير البيانات وحل مشكلات القطاع بدقة.'
+  },
+  {
+    id: 't3-tf-4', topicId: 'topic3', type: 'tf', source: 'PDF 2 (p. 7)',
+    question: 'Data science uses algorithms to analyze patterns in data and make predictions.',
+    questionAr: 'يستخدم علم البيانات الخوارزميات لتحليل الأنماط في البيانات وإجراء التنبؤات.',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 0,
+    expEn: 'True. Pattern analysis and prediction via algorithms are core to data science.',
+    expAr: 'صحيح. تحليل الأنماط والتنبؤ بالخوارزميات هما جوهر علم البيانات.'
+  },
+  {
+    id: 't3-tf-5', topicId: 'topic3', type: 'tf', source: 'PDF 2 (p. 7)',
+    question: 'Data privacy concerns arise due to improper security measures by companies.',
+    questionAr: 'تنشأ مخاوف خصوصية البيانات بسبب إجراءات الأمان غير الكافية من قبل الشركات.',
+    options: ['True', 'False'], optionsAr: ['صحيح (True)', 'خطأ (False)'],
+    correctIndex: 0,
+    expEn: 'True. Improper security practices can lead to data leaks and privacy breaches.',
+    expAr: 'صحيح. ضعف إجراءات الحماية يؤدي إلى مخاوف وانتهاكات لخصوصية البيانات.'
+  },
+
+  /* ---------- 15 FILL IN THE BLANKS (PDF 1: EN_Fill in the Blanks & Vocabulary Matching.pdf) ---------- */
+  /* TOPIC 1 Fill (a–e, p. 2) */
+  {
+    id: 't1-fill-1', topicId: 'topic1', type: 'fill', source: 'PDF 1 (p. 2)',
+    question: 'A __________ uses advanced algorithms to identify patterns and probabilities in data.',
+    questionAr: 'يستخدم __________ خوارزميات متقدمة لتحديد الأنماط والاحتمالات في البيانات.',
+    acceptedAnswers: ['data scientist'], displayAnswer: 'data scientist',
+    expEn: 'A data scientist applies advanced algorithms to discover patterns and event probabilities.',
+    expAr: 'عالم البيانات (data scientist) هو من يستخدم الخوارزميات المتقدمة لذلك.'
+  },
+  {
+    id: 't1-fill-2', topicId: 'topic1', type: 'fill', source: 'PDF 1 (p. 2)',
+    question: '__________ analytics focuses on making informed decisions by modifying parameters in a data set.',
+    questionAr: 'تركز التحليلات __________ على اتخاذ قرارات مستنيرة بتعديل المعاملات في مجموعة البيانات.',
+    acceptedAnswers: ['prescriptive'], displayAnswer: 'Prescriptive',
+    expEn: 'Prescriptive analytics modifies parameters and recommends optimal actions.',
+    expAr: 'التحليلات التوجيهية (Prescriptive) تركز على تعديل المعاملات والتوصية بالقرارات.'
+  },
+  {
+    id: 't1-fill-3', topicId: 'topic1', type: 'fill', source: 'PDF 1 (p. 2)',
+    question: 'Most traditional business intelligence tools work best with __________.',
+    questionAr: 'تعمل معظم أدوات ذكاء الأعمال التقليدية بشكل أفضل مع __________.',
+    acceptedAnswers: ['structured data', 'structured'], displayAnswer: 'structured data',
+    expEn: 'Traditional BI tools are built for structured data.',
+    expAr: 'البيانات المنظمة (structured data).'
+  },
+  {
+    id: 't1-fill-4', topicId: 'topic1', type: 'fill', source: 'PDF 1 (p. 2)',
+    question: 'Self-driven cars rely on data collected from sensors such as __________.',
+    questionAr: 'تعتمد السيارات ذاتية القيادة على البيانات المجمّعة من مستشعرات مثل __________.',
+    acceptedAnswers: ['lasers, radars, and cameras', 'lasers radars and cameras', 'lasers, radars and cameras'],
+    displayAnswer: 'lasers, radars, and cameras',
+    expEn: 'Self-driven cars use lasers, radars, and cameras to map their surroundings.',
+    expAr: 'الليزر والرادارات والكاميرات (lasers, radars, and cameras).'
+  },
+  {
+    id: 't1-fill-5', topicId: 'topic1', type: 'fill', source: 'PDF 1 (p. 2)',
+    question: 'Weather forecasting is an example of __________ analytics in data science.',
+    questionAr: 'يُعد التنبؤ بالطقس مثالاً على التحليلات __________ في علم البيانات.',
+    acceptedAnswers: ['predictive'], displayAnswer: 'predictive',
+    expEn: 'Weather forecasting is a prime application of predictive analytics.',
+    expAr: 'التحليلات التنبؤية (predictive).'
+  },
+
+  /* TOPIC 2 Fill (a–e, p. 3) */
+  {
+    id: 't2-fill-1', topicId: 'topic2', type: 'fill', source: 'PDF 1 (p. 3)',
+    question: 'In the __________ phase, you identify the business requirements and frame the problem.',
+    questionAr: 'في مرحلة __________، تحدد متطلبات العمل وتصوغ المشكلة.',
+    acceptedAnswers: ['discovery'], displayAnswer: 'discovery',
+    expEn: 'Discovery is Phase 1 of the lifecycle.',
+    expAr: 'مرحلة الاستكشاف (discovery).'
+  },
+  {
+    id: 't2-fill-2', topicId: 'topic2', type: 'fill', source: 'PDF 1 (p. 3)',
+    question: 'During data preparation, you process, __________, and condition the data before modeling.',
+    questionAr: 'خلال تحضير البيانات، تقوم بمعالجة البيانات و__________ وتهيئتها قبل النمذجة.',
+    acceptedAnswers: ['explore'], displayAnswer: 'explore',
+    expEn: 'You process, explore, and condition data before modeling.',
+    expAr: 'استكشاف (explore) البيانات قبل النمذجة.'
+  },
+  {
+    id: 't2-fill-3', topicId: 'topic2', type: 'fill', source: 'PDF 1 (p. 3)',
+    question: '__________ is a programming language often used for modeling and analysis.',
+    questionAr: '__________ هي لغة برمجة تُستخدم غالباً للنمذجة والتحليل.',
+    acceptedAnswers: ['r'], displayAnswer: 'R',
+    expEn: 'R is highlighted in the course text and solved key as a primary language for modeling and analysis.',
+    expAr: 'لغة R وفقاً لنموذج الحل في المقرر.'
+  },
+  {
+    id: 't2-fill-4', topicId: 'topic2', type: 'fill', source: 'PDF 1 (p. 3)',
+    question: 'The __________ phase involves running the model on real-time data and delivering reports.',
+    questionAr: 'تتضمن مرحلة __________ تشغيل النموذج على البيانات الفورية وتسليم التقارير.',
+    acceptedAnswers: ['operate the model', 'operate'], displayAnswer: 'Operate the Model',
+    expEn: 'Phase 5 is Operate the Model.',
+    expAr: 'مرحلة تشغيل النموذج (Operate the Model).'
+  },
+  {
+    id: 't2-fill-5', topicId: 'topic2', type: 'fill', source: 'PDF 1 (p. 3)',
+    question: 'The results of the model are communicated during the __________ phase.',
+    questionAr: 'يتم توصيل نتائج النموذج خلال مرحلة __________.',
+    acceptedAnswers: ['communicate the results'], displayAnswer: 'communicate the results',
+    expEn: 'Phase 6 is Communicate the Results.',
+    expAr: 'مرحلة توصيل النتائج (communicate the results).'
+  },
+
+  /* TOPIC 3 Fill (a–e, p. 4) */
+  {
+    id: 't3-fill-1', topicId: 'topic3', type: 'fill', source: 'PDF 1 (p. 4)',
+    question: 'Many companies use __________ systems to provide product suggestions to customers.',
+    questionAr: 'تستخدم كثير من الشركات أنظمة __________ لتقديم اقتراحات المنتجات للعملاء.',
+    acceptedAnswers: ['recommendation'], displayAnswer: 'recommendation',
+    expEn: 'Recommendation systems suggest relevant products based on customer behavior.',
+    expAr: 'أنظمة التوصية (recommendation).'
+  },
+  {
+    id: 't3-fill-2', topicId: 'topic3', type: 'fill', source: 'PDF 1 (p. 4)',
+    question: 'Data science requires a lot of __________ in fields like mathematics, computer science, and the specific industry.',
+    questionAr: 'يتطلب علم البيانات قدراً كبيراً من __________ في مجالات مثل الرياضيات وعلوم الحاسب والصناعة المحددة.',
+    acceptedAnswers: ['domain knowledge'], displayAnswer: 'domain knowledge',
+    expEn: 'Domain knowledge is essential alongside technical skills.',
+    expAr: 'المعرفة بالمجال (domain knowledge).'
+  },
+  {
+    id: 't3-fill-3', topicId: 'topic3', type: 'fill', source: 'PDF 1 (p. 4)',
+    question: 'A __________ occurs when sensitive information is accessed by unauthorized parties.',
+    questionAr: 'يحدث __________ عندما يصل أشخاص غير مصرح لهم إلى معلومات حساسة.',
+    acceptedAnswers: ['privacy breach'], displayAnswer: 'privacy breach',
+    expEn: 'A privacy breach is a violation of data protection leading to unauthorized access.',
+    expAr: 'انتهاك الخصوصية (privacy breach).'
+  },
+  {
+    id: 't3-fill-4', topicId: 'topic3', type: 'fill', source: 'PDF 1 (p. 4)',
+    question: 'In __________ learning, the system identifies patterns without labeled data.',
+    questionAr: 'في التعلم __________، يكتشف النظام الأنماط دون بيانات مصنّفة.',
+    acceptedAnswers: ['unsupervised'], displayAnswer: 'unsupervised',
+    expEn: 'Unsupervised learning finds hidden patterns without labeled training data.',
+    expAr: 'التعلم غير الخاضع للإشراف (unsupervised).'
+  },
+  {
+    id: 't3-fill-5', topicId: 'topic3', type: 'fill', source: 'PDF 1 (p. 4)',
+    question: 'The healthcare industry uses machine learning algorithms for __________.',
+    questionAr: 'يستخدم قطاع الرعاية الصحية خوارزميات تعلم الآلة في __________.',
+    acceptedAnswers: ['tumor detection'], displayAnswer: 'tumor detection',
+    expEn: 'Tumor detection is a key healthcare application of machine learning.',
+    expAr: 'الكشف عن الأورام (tumor detection).'
+  }
+];
+
+/* Append the 15 Vocabulary Matching items into MSDS_QUESTIONS so total = 75 exact items */
+(function () {
+  ['topic1', 'topic2', 'topic3'].forEach(function (tid) {
+    var group = window.MSDS_VOCAB_TERMS.filter(function (v) { return v.topicId === tid; });
+    var defs = group.map(function (v) { return v.enDef; });
+    var defsAr = group.map(function (v) { return v.arExp; });
+    group.forEach(function (v, idx) {
+      window.MSDS_QUESTIONS.push({
+        id: 'match-' + v.id,
+        topicId: tid,
+        type: 'matching',
+        source: 'PDF 1 (Vocabulary Matching)',
+        term: v.term,
+        question: 'Match the term "' + v.term + '" with its correct definition:',
+        questionAr: 'طابق المصطلح "' + v.term + '" (' + v.arMeaning + ') مع تعريفه الصحيح:',
+        options: defs.slice(),
+        optionsAr: defsAr.slice(),
+        correctIndex: idx,
+        expEn: v.term + ' — ' + v.enDef,
+        expAr: v.arMeaning + ' — ' + v.arExp
+      });
+    });
+  });
+})();
+
+/* ==========================================================================
+   M<>S Data Science Platform — Comprehensive Study Content (js/study-content.js)
+   Structured around all 3 topics from the uploaded Data Science PDFs.
+   Additional clarifying examples are explicitly labeled.
+   ========================================================================== */
+
+window.MSDS_STUDY_TOPICS = [
+  {
+    id: 'topic1',
+    number: '01',
+    diagram: 't1-workflow',
+    title: {
+      en: 'A Brief of Data Science and Data Scientist',
+      ar: 'مقدمة في علم البيانات وعالم البيانات'
+    },
+    shortDesc: {
+      en: 'Core purpose of Data Science, Data Analyst vs. Data Scientist, Predictive & Prescriptive Analytics, BI, and real-world domains.',
+      ar: 'الهدف الأساسي لعلم البيانات، الفرق بين محلل البيانات وعالم البيانات، التحليلات التنبؤية والتوجيهية، وذكاء الأعمال.'
+    },
+    introduction: {
+      en: 'Data Science is a multidisciplinary field that combines tools, principles, and advanced algorithms to extract meaningful insights from data and predict future outcomes. Unlike traditional Business Intelligence, it handles both structured and unstructured data at scale.',
+      ar: 'علم البيانات هو مجال متعدد التخصصات يجمع بين الأدوات والمبادئ والخوارزميات المتقدمة لاستخلاص الرؤى القيّمة من البيانات والتنبؤ بالنتائج المستقبلية، ويتميز عن ذكاء الأعمال التقليدي بقدرته على معالجة البيانات المنظمة وغير المنظمة بأحجام ضخمة.'
+    },
+    definitions: [
+      { term: 'Data Science', ar: 'علم البيانات', defEn: 'A discipline involving tools and algorithms to extract insights and predict outcomes.', defAr: 'تخصص يجمع بين الأدوات والخوارزميات لاستخلاص الرؤى والتنبؤ بالنتائج.' },
+      { term: 'Data Scientist', ar: 'عالم البيانات', defEn: 'A professional who uses data to answer business questions and provide insights.', defAr: 'متخصص يستخدم البيانات والأساليب المتقدمة للإجابة عن أسئلة الأعمال وتقديم الرؤى.' },
+      { term: 'Predictive Analytics', ar: 'التحليلات التنبؤية', defEn: 'A method for predicting possible future outcomes and associated actions.', defAr: 'منهجية للتنبؤ بالنتائج المستقبلية المحتملة والإجراءات المرتبطة بها.' },
+      { term: 'Prescriptive Analytics', ar: 'التحليلات التوجيهية', defEn: 'Techniques to recommend actions based on data predictions and decisions.', defAr: 'تقنيات توصي بأفضل الإجراءات وتعدّل المعاملات بناءً على التنبؤات لدعم القرار.' },
+      { term: 'Business Intelligence', ar: 'ذكاء الأعمال', defEn: 'Analyzing historical data to explain current patterns.', defAr: 'تحليل البيانات التاريخية لشرح وتفسير الأنماط الحالية.' }
+    ],
+    detailed: {
+      en: [
+        'Data Analyst vs. Data Scientist: They do NOT perform the same role. A Data Analyst focuses on explaining current patterns from historical data, whereas a Data Scientist applies advanced algorithms and statistical methods to predict future outcomes and event probabilities.',
+        'Predictive vs. Prescriptive Analytics: Predictive causal analytics forecasts what might happen in the future (e.g., weather forecasting). Prescriptive analytics goes further by modifying parameters and recommending concrete actions to make informed decisions.',
+        'Traditional BI vs. Modern Data Science: Traditional Business Intelligence tools work best with structured data and struggle with large volumes of complex, unstructured data. Data scientists work with both structured and unstructured data to extract useful insights across all formats.',
+        'Core Knowledge Pillars: Data scientists combine Mathematics, Statistics, and Computer Science.',
+        'Real-World Applications: (1) Customer Service — analyzing purchase history and customer data to recommend suitable products; (2) Self-Driven Cars — using sensors (lasers, radars, and cameras) plus machine learning algorithms to respond to surroundings; (3) Weather Forecasting — combining data from multiple sources to build predictive models.'
+      ],
+      ar: [
+        'محلل البيانات مقابل عالم البيانات: لا يؤديان نفس الدور؛ فمحلل البيانات يفسر الأنماط الحالية من البيانات التاريخية، بينما يستخدم عالم البيانات أساليب وخوارزميات متقدمة للتنبؤ بالنتائج المستقبلية.',
+        'التحليلات التنبؤية مقابل التوجيهية: التحليلات التنبؤية تتوقع ما قد يحدث مستقبلاً (مثل التنبؤ بالطقس)، بينما التحليلات التوجيهية تعدّل المعاملات وتوصي بالإجراءات المثلى لاتخاذ قرار مستنير.',
+        'ذكاء الأعمال التقليدي مقابل علم البيانات: تعمل أدوات ذكاء الأعمال التقليدية بكفاءة مع البيانات المنظمة فقط وتتعثر أمام الأحجام الكبيرة من البيانات المعقدة وغير المنظمة، لذا يعمل عالم البيانات مع النوعين معاً.',
+        'الركائز المعرفية لعالم البيانات: الرياضيات والإحصاء وعلوم الحاسب.',
+        'تطبيقات واقعية: (1) خدمة العملاء بالتوصية بالمنتجات بناءً على سجل المشتريات؛ (2) السيارات ذاتية القيادة عبر المستشعرات (الليزر والرادار والكاميرات) وخوارزميات تعلم الآلة؛ (3) التنبؤ بالطقس عبر تحليل البيانات من مصادر متعددة لبناء نماذج تنبؤية.'
+      ]
+    },
+    terminology: ['Structured Data', 'Unstructured Data', 'Predictive Causal Analytics', 'Prescriptive Analytics', 'Sensors (Lasers, Radars, Cameras)', 'Machine Learning Algorithms'],
+    examples: {
+      en: [
+        '[Additional Example] E-commerce: Analyzing past orders to recommend a phone case right after a customer buys a smartphone.',
+        '[Additional Example] Prescriptive Decision: A logistics app not only predicts a traffic jam (predictive) but automatically reroutes the driver (prescriptive).'
+      ],
+      ar: [
+        '[مثال توضيحي إضافي] التجارة الإلكترونية: تحليل المشتريات السابقة لاقتراح غطاء هاتف مناسب فور شراء العميل لهاتف جديد.',
+        '[مثال توضيحي إضافي] القرار التوجيهي: تطبيق ملاحة لا يكتفي بتوقع الازدحام (تنبؤي)، بل يقترح مساراً بديلاً فوراً (توجيهي).'
+      ]
+    },
+    keyPoints: {
+      en: [
+        'Main purpose of Data Science: identify patterns and predict possible outcomes.',
+        'Data Scientist knowledge = Mathematics + Statistics + Computer Science.',
+        'Traditional BI works best with structured data; Data Science handles structured & unstructured data.',
+        'Self-driven cars use lasers, radars, cameras + machine learning algorithms.'
+      ],
+      ar: [
+        'الغرض الرئيسي لعلم البيانات: اكتشاف الأنماط والتنبؤ بالنتائج المحتملة.',
+        'معرفة عالم البيانات = الرياضيات + الإحصاء + علوم الحاسب.',
+        'ذكاء الأعمال التقليدي للبيانات المنظمة، وعلم البيانات للمنظمة وغير المنظمة.',
+        'السيارات ذاتية القيادة تعتمد على الليزر والرادار والكاميرات وخوارزميات تعلم الآلة.'
+      ]
+    },
+    summary: {
+      en: 'Topic 1 establishes what Data Science is, how Data Scientists differ from Data Analysts and traditional BI, the difference between Predictive and Prescriptive analytics, and how Data Science powers customer service, autonomous vehicles, and weather forecasting.',
+      ar: 'يوضح الموضوع الأول ماهية علم البيانات، والفرق بين عالم البيانات ومحلل البيانات وذكاء الأعمال، والفرق بين التحليلات التنبؤية والتوجيهية، وتطبيقاتها في خدمة العملاء والسيارات الذاتية والأرصاد.'
+    },
+    commonMistakes: {
+      en: [
+        'Confusing Predictive Analytics (predicting outcomes) with Prescriptive Analytics (recommending actions and modifying parameters).',
+        'Assuming Data Scientists and Data Analysts perform the exact same role — they do not.',
+        'Thinking traditional BI handles unstructured data easily — it works best with structured data.'
+      ],
+      ar: [
+        'الخلط بين التحليلات التنبؤية (التوقع) والتوجيهية (التوصية بالإجراءات وتعديل المعاملات).',
+        'الاعتقاد بأن عالم البيانات ومحلل البيانات يؤديان نفس الدور.',
+        'الظن بأن أدوات ذكاء الأعمال التقليدية تعالج البيانات غير المنظمة بسهولة.'
+      ]
+    }
+  },
+  {
+    id: 'topic2',
+    number: '02',
+    diagram: 't2-lifecycle',
+    title: {
+      en: 'Data Science Life Cycle',
+      ar: 'دورة حياة علم البيانات'
+    },
+    shortDesc: {
+      en: 'All 6 sequential phases: Discovery, Data Preparation (Sandbox & ETL), Plan the Model, Build the Model, Operate the Model, and Communicate the Results.',
+      ar: 'المراحل الست المتتابعة: الاستكشاف، تحضير البيانات (ETL)، تخطيط النموذج، بناء النموذج، تشغيل النموذج، وتوصيل النتائج.'
+    },
+    introduction: {
+      en: 'The Data Science Life Cycle is a structured 6-phase methodology guiding a project from initial business requirements and hypothesis formation through data cleaning, modeling, real-time production operation, and final communication to stakeholders.',
+      ar: 'دورة حياة علم البيانات هي منهجية منظمة من 6 مراحل تقود المشروع من فهم متطلبات العمل وصياغة الفرضية، مروراً بتنظيف البيانات وبناء النموذج وتشغيله على البيانات الفورية، وحتى عرض النتائج على المؤسسة.'
+    },
+    definitions: [
+      { term: 'Lifecycle', ar: 'دورة الحياة', defEn: 'A structured approach consisting of phases to complete a data science project.', defAr: 'منهجية منظمة تتكون من مراحل لإتمام مشروع علم البيانات.' },
+      { term: 'Analytical Sandbox', ar: 'البيئة التحليلية', defEn: 'A secure environment for testing and analyzing data.', defAr: 'بيئة آمنة ومعزولة لاختبار وتحليل البيانات.' },
+      { term: 'ETL', ar: 'الاستخراج والتحويل والتحميل', defEn: 'The process of extracting, transforming, and loading data into a system.', defAr: 'عملية استخراج البيانات وتحويلها وتحميلها في النظام.' },
+      { term: 'Hypothesis', ar: 'الفرضية', defEn: 'A proposed explanation or prediction that can be tested.', defAr: 'تفسير أو توقع مقترح يمكن اختباره.' },
+      { term: 'Real-time Data', ar: 'البيانات الفورية', defEn: 'Data that is processed and analyzed as it is generated.', defAr: 'بيانات تُعالَج وتُحلَّل لحظياً فور إنتاجها.' }
+    ],
+    detailed: {
+      en: [
+        'Phase 1 — Discovery: Understand project requirements, assess available resources, technology, and time, frame the problem, and form an initial hypothesis.',
+        'Phase 2 — Data Preparation: Clean, process, explore, and condition data inside an Analytical Sandbox before modeling. Move data into the sandbox via ETL (Extracting, Transforming, Loading). R and Python are commonly used here for preparation and visualization.',
+        'Phase 3 — Plan the Model: Identify relationships between variables and select suitable algorithms. Tools include R (commonly used for modeling and analysis) and SQL (which supports database analysis and predictive modeling).',
+        'Phase 4 — Build the Model: Divide the dataset into Training and Testing sets to support model development and testing. Apply techniques such as Clustering, Classification, and Association.',
+        'Phase 5 — Operate the Model: Run the model in production to examine performance on real-time data and deliver reports.',
+        'Phase 6 — Communicate the Results: The final phase — evaluate key findings and communicate them clearly to the organization.'
+      ],
+      ar: [
+        'المرحلة 1 — الاستكشاف (Discovery): فهم متطلبات المشروع، وتقييم الموارد والتكنولوجيا والوقت المتاح، وصياغة المشكلة وتكوين الفرضية الأولية.',
+        'المرحلة 2 — تحضير البيانات (Data Preparation): تنظيف البيانات ومعالجتها واستكشافها وتهيئتها داخل البيئة التحليلية (Analytical Sandbox) عبر عمليات ETL، وتُستخدم R و Python بكثرة هنا.',
+        'المرحلة 3 — تخطيط النموذج (Plan the Model): تحديد العلاقات بين المتغيرات واختيار الخوارزميات المناسبة، باستخدام أدوات مثل R و SQL (التي تدعم التحليل داخل قاعدة البيانات والنمذجة التنبؤية).',
+        'المرحلة 4 — بناء النموذج (Build the Model): تقسيم البيانات إلى تدريب واختبار، وتطبيق تقنيات التجميع (Clustering) والتصنيف (Classification) والارتباط (Association).',
+        'المرحلة 5 — تشغيل النموذج (Operate the Model): اختبار أداء النموذج على البيانات الفورية في بيئة الإنتاج وتسليم التقارير.',
+        'المرحلة 6 — توصيل النتائج (Communicate the Results): المرحلة الأخيرة حيث تُقيَّم النتائج وتُعرض بوضوح على المؤسسة.'
+      ]
+    },
+    terminology: ['Discovery', 'Data Preparation', 'Analytical Sandbox', 'ETL', 'Plan the Model', 'SQL', 'R & Python', 'Training & Testing Sets', 'Clustering / Classification / Association', 'Operate the Model', 'Communicate the Results'],
+    examples: {
+      en: [
+        '[Additional Example] Train/Test Split: Using 80% of past customer records to train a churn classifier and holding back 20% to test its accuracy honestly.',
+        '[Additional Example] Real-Time Operation: Running a credit-card fraud model live on every checkout swipe.'
+      ],
+      ar: [
+        '[مثال توضيحي إضافي] تقسيم التدريب والاختبار: استخدام 80% من السجلات لتدريب النموذج وترك 20% لقياس دقته بموضوعية.',
+        '[مثال توضيحي إضافي] التشغيل الفوري: تشغيل نموذج كشف الاحتيال لحظياً مع كل عملية دفع بالبطاقة.'
+      ]
+    },
+    keyPoints: {
+      en: [
+        'Phase 1 is Discovery (NOT Building the Model).',
+        'ETL = Extracting, Transforming, and Loading into the Analytical Sandbox.',
+        'Training & Testing split happens in Phase 4 (Build the Model), NOT in Phase 3 (Plan the Model).',
+        'Modeling techniques in Phase 4: Clustering, Classification, and Association.',
+        'Phase 6 (Communicate the Results) is the final phase.'
+      ],
+      ar: [
+        'المرحلة الأولى هي الاستكشاف وليس بناء النموذج.',
+        'ETL تعني الاستخراج والتحويل والتحميل إلى البيئة التحليلية.',
+        'تقسيم التدريب والاختبار يحدث في المرحلة الرابعة (البناء) وليس الثالثة (التخطيط).',
+        'تقنيات بناء النموذج: التجميع والتصنيف والارتباط.',
+        'توصيل النتائج هو المرحلة السادسة والأخيرة.'
+      ]
+    },
+    summary: {
+      en: 'Follow the exact 6-step order: 1. Discovery -> 2. Data Preparation (ETL + Sandbox) -> 3. Plan the Model (Relationships + R/SQL) -> 4. Build the Model (Train/Test + Clustering/Classification/Association) -> 5. Operate the Model (Real-time data) -> 6. Communicate the Results.',
+      ar: 'احفظ الترتيب الدقيق للمراحل الست: 1. الاستكشاف -> 2. تحضير البيانات -> 3. تخطيط النموذج -> 4. بناء النموذج -> 5. تشغيل النموذج -> 6. توصيل النتائج.'
+    },
+    commonMistakes: {
+      en: [
+        'Thinking Training & Testing data are split during the Planning phase (Phase 3) — this is FALSE; they are split in Build the Model (Phase 4).',
+        'Mixing up ETL (Phase 2) with Clustering/Classification/Association (Phase 4).'
+      ],
+      ar: [
+        'الاعتقاد بأن تقسيم بيانات التدريب والاختبار يتم في مرحلة التخطيط — خطأ، بل يتم في مرحلة بناء النموذج.',
+        'الخلط بين عمليات ETL (المرحلة 2) وتقنيات النمذجة التجميع/التصنيف/الارتباط (المرحلة 4).'
+      ]
+    }
+  },
+  {
+    id: 'topic3',
+    number: '03',
+    diagram: 't3-proscons',
+    title: {
+      en: 'Pros and Cons of Data Science',
+      ar: 'مزايا وتحديات علم البيانات'
+    },
+    shortDesc: {
+      en: 'Career demand, versatility, automation of redundant tasks, healthcare impact, vs. ambiguous definition, continuous learning, domain knowledge, and privacy risks.',
+      ar: 'الفرص الوظيفية وتعدد المجالات وأتمتة المهام والرعاية الصحية مقابل غموض التعريف والتعلم المستمر والمعرفة بالمجال ومخاطر الخصوصية.'
+    },
+    introduction: {
+      en: 'Data Science offers major career, business, e-commerce, and healthcare advantages, yet it also presents real challenges including an ambiguous scope, continuous learning demands, dependence on domain knowledge, and serious data privacy risks.',
+      ar: 'يقدم علم البيانات مزايا ضخمة في الوظائف والأعمال والتجارة الإلكترونية والرعاية الصحية، لكنه يواجه في المقابل تحديات حقيقية مثل صعوبة التعريف الدقيق، الحاجة للتعلم المستمر، الاعتماد على المعرفة بالمجال، ومخاطر انتهاك الخصوصية.'
+    },
+    definitions: [
+      { term: 'Supervised Learning', ar: 'التعلم الخاضع للإشراف', defEn: 'A machine learning method where labeled data is used for training.', defAr: 'أسلوب في تعلم الآلة تُستخدم فيه بيانات مصنّفة للتدريب.' },
+      { term: 'Redundancy', ar: 'التكرار غير الضروري', defEn: 'The unnecessary repetition of tasks.', defAr: 'التكرار غير الضروري للمهام.' },
+      { term: 'Domain Knowledge', ar: 'المعرفة بالمجال', defEn: 'Knowledge specific to a particular field or industry.', defAr: 'معرفة متخصصة بقطاع أو صناعة معينة.' },
+      { term: 'Ambiguous', ar: 'غامض', defEn: 'Open to multiple interpretations or unclear.', defAr: 'قابل لأكثر من تفسير أو غير واضح.' },
+      { term: 'Privacy Breach', ar: 'انتهاك الخصوصية', defEn: 'The violation of data protection leading to unauthorized access.', defAr: 'انتهاك حماية البيانات يؤدي إلى وصول غير مصرح به.' }
+    ],
+    detailed: {
+      en: [
+        'Pros — Abundant Careers & High Demand: Career opportunities are abundant because demand for skilled data scientists exceeds supply. (Course material notes an average salary of $160,000 annually according to Glassdoor — preserved as course-specific material).',
+        'Pros — Versatility & Better Decisions: Data Science is applied across many different industries (NOT only healthcare) and helps companies make informed decisions by analyzing and improving data quality.',
+        'Pros — Reducing Redundancy, E-Commerce & Healthcare: Training machines to perform repetitive tasks reduces redundancy; e-commerce sites use machine learning recommendation systems based on customer behavior; healthcare uses ML algorithms for early disease and tumor detection.',
+        'Cons — Ambiguous Definition & Continuous Learning: It is difficult to define Data Science precisely because its meaning and responsibilities vary across contexts. Because the field changes frequently and spans multiple disciplines, data scientists must keep learning continuously.',
+        'Cons — Domain Knowledge & Data Privacy: Domain knowledge is essential to interpret data accurately in a specific industry. Improper security measures by companies create privacy concerns and risk exposing personal information through data leaks (privacy breaches).'
+      ],
+      ar: [
+        'المزايا — وفرة الفرص والطلب المرتفع: تتوفر فرص وظيفية واسعة لأن الطلب على علماء البيانات المهرة يفوق العرض (ويذكر المنهج متوسط راتب 160,000 دولار سنوياً وفق Glassdoor كمعلومة خاصة بالمقرر).',
+        'المزايا — تعدد المجالات وجودة القرارات: يُطبَّق علم البيانات عبر صناعات عديدة (وليس الرعاية الصحية فقط) ويساعد الشركات على اتخاذ قرارات مستنيرة عبر تحليل البيانات وتحسين جودتها.',
+        'المزايا — تقليل التكرار والتجارة الإلكترونية والصحة: تدريب الآلات يقلل المهام المتكررة؛ ومواقع التجارة الإلكترونية تستخدم أنظمة التوصية؛ والرعاية الصحية تستخدم تعلم الآلة للكشف المبكر عن الأمراض والأورام (Tumor Detection).',
+        'التحديات — صعوبة التعريف والتعلم المستمر: يصعب تعريف علم البيانات بدقة لأن مسؤولياته تختلف حسب السياق، كما يتطلب تعلماً مستمراً لتغيره السريع وتعدد تخصصاته.',
+        'التحديات — المعرفة بالمجال وخصوصية البيانات: المعرفة بالمجال ضرورية لتفسير البيانات داخل قطاع محدد، بينما يؤدي ضعف إجراءات الأمان إلى تسريب المعلومات الشخصية وحدوث انتهاك للخصوصية (Privacy Breach).'
+      ]
+    },
+    terminology: ['Supervised Learning', 'Unsupervised Learning', 'Recommendation Systems', 'Tumor Detection', 'Redundancy', 'Domain Knowledge', 'Ambiguous', 'Privacy Breach'],
+    examples: {
+      en: [
+        '[Additional Example] Supervised vs. Unsupervised: Classifying labeled emails as spam/not-spam is Supervised; grouping unlabeled shoppers by behavior is Unsupervised.',
+        '[Additional Example] Domain Knowledge: A medical data scientist needs clinical understanding to know which lab measurements signal risk.'
+      ],
+      ar: [
+        '[مثال توضيحي إضافي] الخاضع وغير الخاضع للإشراف: تصنيف رسائل بريد موسومة مسبقاً (خاضع للإشراف)، بينما تجميع متسوقين غير مصنفين حسب سلوكهم (غير خاضع للإشراف).',
+        '[مثال توضيحي إضافي] المعرفة بالمجال: يحتاج عالم البيانات الطبية لفهم المؤشرات السريرية لتفسير النتائج بدقة.'
+      ]
+    },
+    keyPoints: {
+      en: [
+        'Supervised learning uses labeled data; Unsupervised learning identifies patterns without labeled data.',
+        'Data science is versatile across many industries (NOT healthcare only).',
+        'Healthcare uses ML for early disease and tumor detection.',
+        'Domain knowledge IS essential; improper security causes privacy breaches.'
+      ],
+      ar: [
+        'التعلم الخاضع للإشراف يستخدم بيانات مصنفة، وغير الخاضع للإشراف يعمل دون بيانات مصنفة.',
+        'علم البيانات متنوع عبر صناعات متعددة وليس الرعاية الصحية فقط.',
+        'تستخدم الرعاية الصحية تعلم الآلة للكشف المبكر عن الأمراض والأورام.',
+        'المعرفة بالمجال أساسية، وضعف الأمان يسبب انتهاكات الخصوصية.'
+      ]
+    },
+    summary: {
+      en: 'Topic 3 balances the major strengths of Data Science (demand, versatility, automation, recommendations, early tumor detection) against its real limitations (varying definitions, lifelong learning, domain knowledge requirement, and data privacy risks).',
+      ar: 'يوازن الموضوع الثالث بين نقاط قوة علم البيانات (الطلب، المرونة، الأتمتة، التوصيات، الكشف المبكر عن الأورام) وتحدياته (اختلاف التعريف، التعلم المستمر، المعرفة بالمجال، ومخاطر الخصوصية).'
+    },
+    commonMistakes: {
+      en: [
+        'Confusing Supervised Learning (labeled data) with Unsupervised Learning (no labeled data).',
+        'Assuming Data Science guarantees 100% accurate medical diagnoses or replaces doctors — it assists with early detection.'
+      ],
+      ar: [
+        'الخلط بين التعلم الخاضع للإشراف (بيانات مصنفة) وغير الخاضع للإشراف (بدون تصنيف).',
+        'الاعتقاد بأن علم البيانات يستبدل الأطباء أو يضمن التشخيص بنسبة 100% — بل يساعد في الكشف المبكر.'
+      ]
+    }
+  }
+];
+
+/* ==========================================================================
+   M<>S Data Science Platform — Analytics & Progress Engine (js/progress.js)
+   All metrics derived strictly from actual stored user activity.
+   ========================================================================== */
+
+window.MSDS_PROGRESS = (function () {
+  function getTopicStats(topicId, state) {
+    var qs = window.MSDS_QUESTIONS.filter(function (q) { return q.topicId === topicId; });
+    var answered = 0, correct = 0, wrong = 0;
+    qs.forEach(function (q) {
+      var st = state.questionStats[q.id];
+      if (st && st.attempts > 0) {
+        answered += 1;
+        correct += st.correct;
+        wrong += st.wrong;
+      }
+    });
+    var totalAttempts = correct + wrong;
+    var accuracy = totalAttempts ? Math.round((correct / totalAttempts) * 100) : 0;
+    var topicDone = (state.completedTopics || []).indexOf(topicId) !== -1;
+    var progressPct = Math.min(100, Math.round(((topicDone ? 50 : 0) + (qs.length ? (answered / qs.length) * 50 : 0))));
+    return {
+      topicId: topicId,
+      totalQuestions: qs.length,
+      answeredUnique: answered,
+      correct: correct,
+      wrong: wrong,
+      totalAttempts: totalAttempts,
+      accuracy: accuracy,
+      topicDone: topicDone,
+      progressPct: progressPct
+    };
+  }
+
+  function compute() {
+    var state = window.MSDS_STORAGE.load();
+    var topics = ['topic1', 'topic2', 'topic3'].map(function (tid) { return getTopicStats(tid, state); });
+
+    var totalCorrect = 0, totalWrong = 0, totalUniqueAnswered = 0;
+    topics.forEach(function (tp) {
+      totalCorrect += tp.correct;
+      totalWrong += tp.wrong;
+      totalUniqueAnswered += tp.answeredUnique;
+    });
+    var totalAnswered = totalCorrect + totalWrong;
+    var overallAccuracy = totalAnswered ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+    var overallProgress = Math.round((topics[0].progressPct + topics[1].progressPct + topics[2].progressPct) / 3);
+
+    var activeTopics = topics.filter(function (tp) { return tp.totalAttempts > 0; }).sort(function (a, b) { return b.accuracy - a.accuracy; });
+    var strongest = activeTopics.length ? activeTopics[0] : null;
+    var weakest = activeTopics.length ? activeTopics[activeTopics.length - 1] : null;
+
+    var wrongQuestionIds = Object.keys(state.questionStats || {}).filter(function (qid) {
+      var st = state.questionStats[qid];
+      return st && st.wrong > 0 && !st.resolved;
+    });
+
+    /* Personalized "What should I revise next?" recommendations */
+    var recommendations = [];
+    if (wrongQuestionIds.length > 0) {
+      recommendations.push({
+        type: 'mistakes',
+        en: 'Review ' + wrongQuestionIds.length + ' unresolved incorrect question(s) in the Revision Hub.',
+        ar: 'راجع ' + wrongQuestionIds.length + ' سؤالاً أخطأت فيها سابقاً في مركز المراجعة.'
+      });
+    }
+    topics.forEach(function (tp) {
+      var meta = window.MSDS_STUDY_TOPICS.find(function (x) { return x.id === tp.topicId; });
+      if (!tp.topicDone) {
+        recommendations.push({
+          type: 'study',
+          topicId: tp.topicId,
+          en: 'Study and complete ' + meta.title.en + ' (' + tp.progressPct + '% complete).',
+          ar: 'ذاكر وأكمل ' + meta.title.ar + ' (نسبة الإنجاز ' + tp.progressPct + '%).'
+        });
+      } else if (tp.totalAttempts > 0 && tp.accuracy < 80) {
+        recommendations.push({
+          type: 'practice',
+          topicId: tp.topicId,
+          en: 'Practice ' + meta.title.en + ' to raise accuracy above 80% (currently ' + tp.accuracy + '%).',
+          ar: 'تدرّب على ' + meta.title.ar + ' لرفع الدقة فوق 80% (حالياً ' + tp.accuracy + '%).'
+        });
+      }
+    });
+
+    return {
+      topics: topics,
+      completedTopicsCount: (state.completedTopics || []).length,
+      overallProgress: overallProgress,
+      totalAnswered: totalAnswered,
+      totalUniqueAnswered: totalUniqueAnswered,
+      totalCorrect: totalCorrect,
+      totalWrong: totalWrong,
+      overallAccuracy: overallAccuracy,
+      strongest: strongest,
+      weakest: weakest,
+      wrongQuestionIds: wrongQuestionIds,
+      examHistory: state.examHistory || [],
+      streak: state.streak || 0,
+      dailyGoal: state.dailyGoal || 15,
+      dailyCount: state.dailyCount || 0,
+      recentActivity: state.recentActivity || [],
+      recommendations: recommendations.slice(0, 4)
+    };
+  }
+
+  return { compute: compute };
+})();
+
+/* ==========================================================================
+   M<>S Data Science Platform — Interactive Flashcards Engine (js/flashcards.js)
+   Combines all 15 vocabulary terms + key concept cards from Topics 1–3.
+   ========================================================================== */
+
+window.MSDS_FLASHCARDS = (function () {
+  var cards = [];
+  var filterTopic = 'all';
+  var idx = 0;
+  var flipped = false;
+
+  function buildDeck() {
+    var base = window.MSDS_VOCAB_TERMS.map(function (v) {
+      return {
+        id: 'fc-' + v.id,
+        topicId: v.topicId,
+        frontEn: v.term,
+        frontAr: v.arMeaning,
+        backEn: v.enDef,
+        backAr: v.arExp
+      };
+    });
+    var concepts = [
+      { id: 'fc-c1', topicId: 'topic1', frontEn: 'Data Analyst vs. Data Scientist', frontAr: 'محلل البيانات مقابل عالم البيانات', backEn: 'A Data Analyst explains current trends from historical data; a Data Scientist uses advanced algorithms to predict future outcomes.', backAr: 'محلل البيانات يفسر الحاضر من البيانات التاريخية، بينما يستخدم عالم البيانات خوارزميات متقدمة للتنبؤ بالنتائج.' },
+      { id: 'fc-c2', topicId: 'topic1', frontEn: 'Data Scientist Knowledge Combination', frontAr: 'الركائز المعرفية لعالم البيانات', backEn: 'Mathematics, Statistics, and Computer Science.', backAr: 'الرياضيات والإحصاء وعلوم الحاسب.' },
+      { id: 'fc-c3', topicId: 'topic1', frontEn: 'Self-Driven Car Sensors', frontAr: 'مستشعرات السيارات ذاتية القيادة', backEn: 'Lasers, radars, and cameras processed by machine learning algorithms.', backAr: 'الليزر والرادارات والكاميرات وتعالجها خوارزميات تعلم الآلة.' },
+      { id: 'fc-c4', topicId: 'topic2', frontEn: '6 Phases of Data Science Life Cycle', frontAr: 'المراحل الست لدورة حياة علم البيانات', backEn: '1. Discovery -> 2. Data Preparation -> 3. Plan the Model -> 4. Build the Model -> 5. Operate the Model -> 6. Communicate the Results.', backAr: '1. الاستكشاف -> 2. تحضير البيانات -> 3. تخطيط النموذج -> 4. بناء النموذج -> 5. تشغيل النموذج -> 6. توصيل النتائج.' },
+      { id: 'fc-c5', topicId: 'topic2', frontEn: 'When are Training & Testing datasets split?', frontAr: 'متى تُقسَّم بيانات التدريب والاختبار؟', backEn: 'During Phase 4 (Build the Model) — NOT during Phase 3 (Plan the Model).', backAr: 'خلال المرحلة الرابعة (بناء النموذج) وليس في مرحلة التخطيط.' },
+      { id: 'fc-c6', topicId: 'topic2', frontEn: '3 Model-Building Techniques (Phase 4)', frontAr: 'تقنيات بناء النموذج الثلاث', backEn: 'Clustering, Classification, and Association.', backAr: 'التجميع (Clustering) والتصنيف (Classification) والارتباط (Association).' },
+      { id: 'fc-c7', topicId: 'topic3', frontEn: 'Supervised vs. Unsupervised Learning', frontAr: 'التعلم الخاضع مقابل غير الخاضع للإشراف', backEn: 'Supervised uses labeled data for training; Unsupervised identifies patterns without labeled data.', backAr: 'الخاضع للإشراف يستخدم بيانات مصنّفة، وغير الخاضع للإشراف يكتشف الأنماط بدون تصنيف.' },
+      { id: 'fc-c8', topicId: 'topic3', frontEn: 'Healthcare ML Application', frontAr: 'تطبيق تعلم الآلة في الرعاية الصحية', backEn: 'Early disease detection and tumor detection.', backAr: 'الكشف المبكر عن الأمراض واكتشاف الأورام (Tumor Detection).' }
+    ];
+    return base.concat(concepts);
+  }
+
+  function getFiltered() {
+    var all = buildDeck();
+    if (filterTopic === 'all') return all;
+    return all.filter(function (c) { return c.topicId === filterTopic; });
+  }
+
+  function ensureDeck() {
+    if (!cards.length) cards = getFiltered();
+  }
+
+  function setFilter(topic) {
+    filterTopic = topic;
+    cards = getFiltered();
+    idx = 0;
+    flipped = false;
+  }
+
+  function shuffle() {
+    ensureDeck();
+    for (var i = cards.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = cards[i]; cards[i] = cards[j]; cards[j] = tmp;
+    }
+    idx = 0;
+    flipped = false;
+  }
+
+  function next() { ensureDeck(); if (idx < cards.length - 1) { idx++; flipped = false; } }
+  function prev() { ensureDeck(); if (idx > 0) { idx--; flipped = false; } }
+  function flip() { flipped = !flipped; }
+
+  function mark(status) {
+    ensureDeck();
+    var c = cards[idx];
+    if (!c) return;
+    window.MSDS_STORAGE.update(function (s) {
+      s.flashcardStatus[c.id] = status;
+    });
+  }
+
+  return {
+    getState: function () {
+      ensureDeck();
+      var st = window.MSDS_STORAGE.load().flashcardStatus || {};
+      var known = 0, review = 0;
+      cards.forEach(function (c) {
+        if (st[c.id] === 'known') known++;
+        else if (st[c.id] === 'review') review++;
+      });
+      return {
+        filterTopic: filterTopic,
+        cards: cards,
+        current: cards[idx] || null,
+        index: idx,
+        total: cards.length,
+        flipped: flipped,
+        known: known,
+        review: review,
+        currentStatus: cards[idx] ? (st[cards[idx].id] || '') : ''
+      };
+    },
+    setFilter: setFilter,
+    shuffle: shuffle,
+    next: next,
+    prev: prev,
+    flip: flip,
+    mark: mark
+  };
+})();
+
+/* ==========================================================================
+   M<>S Data Science Platform — Practice & Matching Engine (js/quiz.js)
+   Handles MCQ, True/False, Fill in the Blanks, & Interactive Matching Board.
+   ========================================================================== */
+
+window.MSDS_QUIZ = (function () {
+  var session = null;
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function normFill(s) {
+    return String(s || '').trim().toLowerCase().replace(/\s+/g, ' ').replace(/[.,;:!?]+$/g, '');
+  }
+
+  function validateFill(q, input) {
+    var val = normFill(input);
+    if (!val) return false;
+    return (q.acceptedAnswers || []).some(function (acc) { return normFill(acc) === val; });
+  }
+
+  function buildMatchingBoard(topicId) {
+    var topics = topicId === 'all' ? ['topic1', 'topic2', 'topic3'] : [topicId];
+    return topics.map(function (tid) {
+      var terms = window.MSDS_VOCAB_TERMS.filter(function (v) { return v.topicId === tid; });
+      return {
+        topicId: tid,
+        terms: terms.map(function (v) { return { id: v.id, term: v.term, ar: v.arMeaning }; }),
+        defs: shuffle(terms.map(function (v) { return { id: v.id, def: v.enDef, ar: v.arExp }; })),
+        selectedTermId: null,
+        pairs: {}, /* termId -> defId */
+        validated: false
+      };
+    });
+  }
+
+  function start(cfg) {
+    if (cfg.type === 'matching') {
+      session = {
+        mode: 'matching',
+        cfg: Object.assign({}, cfg),
+        boards: buildMatchingBoard(cfg.topic || 'all'),
+        boardIdx: 0,
+        finished: false
+      };
+      return session;
+    }
+
+    var pool = window.MSDS_QUESTIONS.filter(function (q) {
+      if (cfg.onlyIds) return cfg.onlyIds.indexOf(q.id) !== -1;
+      if (cfg.topic && cfg.topic !== 'all' && q.topicId !== cfg.topic) return false;
+      if (cfg.type && cfg.type !== 'all' && q.type !== cfg.type) return false;
+      if (cfg.type === 'all' && q.type === 'matching') return true;
+      return true;
+    });
+
+    var chosen = shuffle(pool).slice(0, Math.min(cfg.count || 10, pool.length));
+    session = {
+      mode: cfg.viewMode || 'single',
+      cfg: Object.assign({}, cfg),
+      questions: chosen,
+      index: 0,
+      drafts: {},    /* qId -> user draft before checking */
+      checked: {},   /* qId -> { answer, isCorrect } */
+      showAr: {},    /* qId -> boolean */
+      finished: false
+    };
+    return session;
+  }
+
+  function checkSingle(qId) {
+    if (!session || session.mode === 'matching') return null;
+    var q = session.questions.find(function (x) { return x.id === qId; });
+    if (!q) return null;
+    var ans = session.drafts[qId];
+    if (ans === undefined || ans === null || String(ans).trim() === '') return null;
+
+    var isCorrect = q.type === 'fill' ? validateFill(q, ans) : Number(ans) === Number(q.correctIndex);
+    var displayUser = q.type === 'fill' ? String(ans) : (q.options[Number(ans)] || '—');
+    session.checked[qId] = { answer: ans, displayUser: displayUser, isCorrect: isCorrect };
+    window.MSDS_STORAGE.recordAnswer(q.id, isCorrect, displayUser);
+    return session.checked[qId];
+  }
+
+  function finishPractice() {
+    if (!session) return;
+    if (session.mode !== 'matching') {
+      session.questions.forEach(function (q) {
+        if (!session.checked[q.id] && session.drafts[q.id] !== undefined && String(session.drafts[q.id]).trim() !== '') {
+          checkSingle(q.id);
+        }
+      });
+    }
+    session.finished = true;
+    var summary = getScore();
+    window.MSDS_STORAGE.update(function (s) {
+      s.practiceHistory.unshift({ ts: Date.now(), correct: summary.correct, total: summary.total, pct: summary.pct });
+      window.MSDS_STORAGE.logActivity(s, 'Practice Session', 'جلسة تدريب', summary.correct + '/' + summary.total + ' (' + summary.pct + '%)');
+    });
+    return summary;
+  }
+
+  function getScore() {
+    if (!session) return { correct: 0, total: 0, pct: 0, wrongIds: [] };
+    if (session.mode === 'matching') {
+      var c = 0, tot = 0, wIds = [];
+      session.boards.forEach(function (b) {
+        b.terms.forEach(function (t) {
+          tot += 1;
+          if (b.pairs[t.id] === t.id) c += 1;
+          else wIds.push('match-' + t.id);
+        });
+      });
+      return { correct: c, total: tot, pct: tot ? Math.round((c / tot) * 100) : 0, wrongIds: wIds };
+    }
+    var correct = 0, wrongIds = [];
+    session.questions.forEach(function (q) {
+      var res = session.checked[q.id];
+      if (res && res.isCorrect) correct += 1;
+      else wrongIds.push(q.id);
+    });
+    var total = session.questions.length;
+    return { correct: correct, total: total, pct: total ? Math.round((correct / total) * 100) : 0, wrongIds: wrongIds };
+  }
+
+  function validateMatchingBoard(boardIdx) {
+    if (!session || session.mode !== 'matching') return;
+    var b = session.boards[boardIdx];
+    if (!b) return;
+    b.validated = true;
+    b.terms.forEach(function (t) {
+      var ok = b.pairs[t.id] === t.id;
+      var matchedDef = b.defs.find(function (d) { return d.id === b.pairs[t.id]; });
+      window.MSDS_STORAGE.recordAnswer('match-' + t.id, ok, matchedDef ? matchedDef.def : '—');
+    });
+  }
+
+  return {
+    shuffle: shuffle,
+    validateFill: validateFill,
+    start: start,
+    checkSingle: checkSingle,
+    finishPractice: finishPractice,
+    getScore: getScore,
+    validateMatchingBoard: validateMatchingBoard,
+    getSession: function () { return session; },
+    clear: function () { session = null; }
+  };
+})();
+
+/* ==========================================================================
+   M<>S Data Science Platform — Formal Examination Engine (js/exams.js)
+   Features: Topic & Comprehensive exams, random selection, timer with auto-submit,
+   zero answer disclosure while active, confirmation modal, saved history & review.
+   ========================================================================== */
+
+window.MSDS_EXAMS = (function () {
+  var active = null;
+  var viewingHistoryAttempt = null;
+  var timerId = null;
+
+  function clearTimer() {
+    if (timerId) { clearInterval(timerId); timerId = null; }
+  }
+
+  function start(cfg, onTick, onExpire) {
+    clearTimer();
+    viewingHistoryAttempt = null;
+    var pool = window.MSDS_QUESTIONS.filter(function (q) {
+      if (cfg.onlyIds) return cfg.onlyIds.indexOf(q.id) !== -1;
+      if (cfg.scope && cfg.scope !== 'all' && q.topicId !== cfg.scope) return false;
+      return true;
+    });
+    if (!pool.length) return null;
+
+    var chosen = window.MSDS_QUIZ.shuffle(pool).slice(0, Math.min(cfg.count || 20, pool.length));
+    var dur = (cfg.timerMin || 0) * 60;
+    active = {
+      id: 'exam-' + Date.now(),
+      cfg: Object.assign({}, cfg),
+      questions: chosen,
+      index: 0,
+      answers: {},
+      startedAt: Date.now(),
+      durationSec: dur,
+      remainingSec: dur,
+      submitted: false,
+      result: null
+    };
+
+    if (dur > 0) {
+      timerId = setInterval(function () {
+        if (!active || active.submitted) { clearTimer(); return; }
+        active.remainingSec -= 1;
+        if (onTick) onTick(active.remainingSec);
+        if (active.remainingSec <= 0) {
+          clearTimer();
+          submit();
+          if (onExpire) onExpire();
+        }
+      }, 1000);
+    }
+    return active;
+  }
+
+  function submit() {
+    if (!active || active.submitted) return active ? active.result : null;
+    clearTimer();
+    active.submitted = true;
+    var elapsed = Math.max(1, Math.round((Date.now() - active.startedAt) / 1000));
+    var correct = 0, wrong = 0, review = [];
+
+    active.questions.forEach(function (q) {
+      var ans = active.answers[q.id];
+      var hasAns = ans !== undefined && ans !== null && String(ans).trim() !== '';
+      var isOk = false;
+      if (hasAns) {
+        isOk = q.type === 'fill' ? window.MSDS_QUIZ.validateFill(q, ans) : Number(ans) === Number(q.correctIndex);
+      }
+      if (isOk) correct += 1; else wrong += 1;
+
+      var userText = !hasAns ? '—' : (q.type === 'fill' ? String(ans) : (q.options[Number(ans)] || '—'));
+      var corrText = q.type === 'fill' ? q.displayAnswer : q.options[q.correctIndex];
+
+      window.MSDS_STORAGE.recordAnswer(q.id, isOk, userText);
+      review.push({
+        qId: q.id,
+        topicId: q.topicId,
+        question: q.question,
+        questionAr: q.questionAr,
+        userAnswer: userText,
+        correctAnswer: corrText,
+        isCorrect: isOk,
+        expEn: q.expEn,
+        expAr: q.expAr
+      });
+    });
+
+    var total = active.questions.length;
+    var pct = total ? Math.round((correct / total) * 100) : 0;
+    var record = {
+      id: active.id,
+      date: Date.now(),
+      scope: active.cfg.scope || 'all',
+      total: total,
+      correct: correct,
+      wrong: wrong,
+      percentage: pct,
+      elapsedSec: elapsed,
+      wrongIds: review.filter(function (r) { return !r.isCorrect; }).map(function (r) { return r.qId; }),
+      review: review
+    };
+
+    window.MSDS_STORAGE.update(function (s) {
+      s.examHistory = s.examHistory || [];
+      s.examHistory.unshift(record);
+      window.MSDS_STORAGE.logActivity(s, 'Exam Completed (' + record.scope + ')', 'إتمام امتحان (' + record.scope + ')', record.correct + '/' + record.total + ' (' + record.percentage + '%)');
+    });
+
+    active.result = record;
+    return record;
+  }
+
+  return {
+    start: start,
+    submit: submit,
+    clearTimer: clearTimer,
+    getActive: function () { return active; },
+    clearActive: function () { clearTimer(); active = null; viewingHistoryAttempt = null; },
+    setReviewAttempt: function (att) { viewingHistoryAttempt = att; },
+    getReviewAttempt: function () { return viewingHistoryAttempt; }
+  };
+})();
+
+/* ==========================================================================
+   M<>S Data Science Platform — Main Application UI Orchestrator (js/app.js)
+   Works identically in multi-page static mode (index.html + pages/*.html)
+   AND in single-file Canvas SPA mode (data-mode="spa").
+   Switching language NEVER resets active quiz, exam, or study progress.
+   ========================================================================== */
+
+window.MSDS_APP = (function () {
+  var stateUI = {
+    currentPage: 'home',
+    studyTopic: 'topic1',
+    vocabTopic: 'all',
+    vocabSearch: '',
+    vocabOrder: null,
+    vocabFlipped: {},
+    dashSearch: '',
+    qodSelected: null,
+    qodChecked: false,
+    revTab: 'wrong',
+    resetArmed: false
+  };
+
+  function esc(s) {
+    return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function toast(msg) {
+    var el = document.getElementById('msds-toast');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(el._tm);
+    el._tm = setTimeout(function () { el.classList.remove('show'); }, 2400);
+  }
+
+  function fmtTime(sec) {
+    var m = Math.floor(sec / 60), s = sec % 60;
+    return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function isSpa() {
+    return document.body.getAttribute('data-mode') === 'spa';
+  }
+
+  function navigateTo(page, paramTopic) {
+    if (paramTopic) {
+      stateUI.studyTopic = paramTopic;
+      window.MSDS_STORAGE.update(function (s) { s.lastTopicId = paramTopic; });
+    }
+    if (isSpa()) {
+      stateUI.currentPage = page;
+      document.querySelectorAll('.spa-view').forEach(function (el) {
+        el.classList.toggle('active', el.id === 'page-' + page);
+      });
+      document.querySelectorAll('[data-nav]').forEach(function (el) {
+        el.classList.toggle('active', el.getAttribute('data-nav') === page);
+      });
+      var dr = document.getElementById('mobile-drawer');
+      if (dr) dr.classList.remove('open');
+      renderCurrent();
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      return;
+    }
+    var inSub = window.location.pathname.indexOf('/pages/') !== -1;
+    var target = page === 'home' ? (inSub ? '../index.html' : 'index.html') : (inSub ? page + '.html' : 'pages/' + page + '.html');
+    if (paramTopic) target += '?topic=' + encodeURIComponent(paramTopic);
+    window.location.href = target;
+  }
+
+  /* ==================== LIGHTWEIGHT SVG ILLUSTRATIONS ==================== */
+  function renderSvg(kind) {
+    if (kind === 't1-workflow') {
+      return '<div class="card-subtle" style="margin:14px 0;overflow-x:auto;"><svg viewBox="0 0 640 120" role="img" aria-label="Data Science Workflow">' +
+        box(10, 22, 145, 'Raw Data', 'Structured & Unstructured') + arr(158, 52, 178, 52) +
+        box(182, 22, 145, 'Algorithms', 'Math, Stats & CS') + arr(330, 52, 350, 52) +
+        box(354, 22, 130, 'Predictive', 'Future Outcomes') + arr(487, 52, 507, 52) +
+        box(510, 22, 120, 'Prescriptive', 'Action Decisions', true) +
+      '</svg></div>';
+    }
+    if (kind === 't2-lifecycle') {
+      return '<div class="card-subtle" style="margin:14px 0;overflow-x:auto;"><svg viewBox="0 0 660 155" role="img" aria-label="Data Science 6-Phase Life Cycle">' +
+        box(10, 12, 195, '01. Discovery', 'Requirements & Hypothesis') + arr(208, 42, 228, 42) +
+        box(232, 12, 195, '02. Data Preparation', 'Sandbox, ETL, R/Python') + arr(430, 42, 450, 42) +
+        box(454, 12, 195, '03. Plan the Model', 'Relationships, R & SQL') +
+        box(10, 86, 195, '04. Build the Model', 'Train/Test, Cluster/Classify') + arr(208, 116, 228, 116) +
+        box(232, 86, 195, '05. Operate Model', 'Production & Real-time') + arr(430, 116, 450, 116) +
+        box(454, 86, 195, '06. Communicate', 'Evaluate & Share Findings', true) +
+      '</svg></div>';
+    }
+    if (kind === 't3-proscons') {
+      return '<div class="card-subtle" style="margin:14px 0;overflow-x:auto;"><svg viewBox="0 0 640 120" role="img" aria-label="Pros and Cons Balance">' +
+        box(15, 20, 285, 'PROS: Value & Career', 'High demand, versatile, automation, healthcare', true) +
+        box(340, 20, 285, 'CONS: Risks & Demands', 'Ambiguity, continuous learning, privacy risks', false) +
+      '</svg></div>';
+    }
+    return '';
+  }
+  function box(x, y, w, t1, t2, hi) {
+    return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="58" rx="4" fill="' + (hi ? '#17432E' : '#202722') + '" stroke="#76A785" stroke-width="1"/>' +
+           '<text x="' + (x + w / 2) + '" y="' + (y + 25) + '" text-anchor="middle" fill="#F3F4EF" font-size="11.5" font-weight="700">' + t1 + '</text>' +
+           '<text x="' + (x + w / 2) + '" y="' + (y + 43) + '" text-anchor="middle" fill="#A8B3A9" font-size="9.5">' + t2 + '</text>';
+  }
+  function arr(x1, y1, x2, y2) {
+    return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="#315B42" stroke-width="2"/>' +
+           '<polygon points="' + x2 + ',' + y2 + ' ' + (x2 - 6) + ',' + (y2 - 4) + ' ' + (x2 - 6) + ',' + (y2 + 4) + '" fill="#315B42"/>';
+  }
+
+  /* ==================== CHROME SYNC ==================== */
+  function syncChrome() {
+    var t = window.MSDS_I18N.t;
+    var theme = window.MSDS_STORAGE.load().theme || 'light';
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      el.textContent = t(el.getAttribute('data-i18n'));
+    });
+    var lb = document.getElementById('btn-lang');
+    if (lb) lb.textContent = t('langSwitch');
+    var tb = document.getElementById('btn-theme');
+    if (tb) tb.textContent = theme === 'light' ? t('themeDark') : t('themeLight');
+  }
+
+  /* ==================== PAGE A: HOME / DASHBOARD ==================== */
+  function renderHome() {
+    var root = document.getElementById('page-home');
+    if (!root) return;
+    var t = window.MSDS_I18N.t;
+    var lang = window.MSDS_I18N.getLang();
+    var st = window.MSDS_STORAGE.load();
+    var p = window.MSDS_PROGRESS.compute();
+
+    /* Deterministic Question of the Day */
+    var dayIdx = Math.floor(Date.now() / 86400000) % window.MSDS_QUESTIONS.filter(function (q) { return q.type === 'mcq'; }).length;
+    var mcqs = window.MSDS_QUESTIONS.filter(function (q) { return q.type === 'mcq'; });
+    var qod = mcqs[dayIdx];
+
+    var searchResultsHtml = '';
+    if (stateUI.dashSearch.trim()) {
+      var q = stateUI.dashSearch.trim().toLowerCase();
+      var hits = [];
+      window.MSDS_VOCAB_TERMS.forEach(function (v) {
+        if (v.term.toLowerCase().indexOf(q) !== -1 || v.arMeaning.indexOf(stateUI.dashSearch.trim()) !== -1) {
+          hits.push({ label: v.term + ' — ' + v.arMeaning, page: 'vocabulary', topic: v.topicId });
+        }
+      });
+      window.MSDS_STUDY_TOPICS.forEach(function (tp) {
+        if (tp.title.en.toLowerCase().indexOf(q) !== -1 || tp.title.ar.indexOf(stateUI.dashSearch.trim()) !== -1 || tp.shortDesc.en.toLowerCase().indexOf(q) !== -1) {
+          hits.push({ label: tp.title[lang], page: 'study', topic: tp.id });
+        }
+      });
+      searchResultsHtml = '<div class="card-subtle" style="margin-top:10px;">' +
+        (hits.length ? hits.slice(0, 6).map(function (h) {
+          return '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);">' +
+            '<span>' + esc(h.label) + '</span><button class="btn btn-secondary btn-sm" data-go-page="' + h.page + '" data-go-topic="' + h.topic + '">&rarr;</button></div>';
+        }).join('') : '<span style="color:var(--text-muted);font-size:0.88rem;">' + t('searchNoResults') + '</span>') +
+      '</div>';
+    }
+
+    var goalPct = Math.min(100, Math.round((p.dailyCount / Math.max(1, p.dailyGoal)) * 100));
+
+    root.innerHTML =
+      '<section class="hero-card">' +
+        '<div>' +
+          '<div class="eyebrow">M&lt;&gt;S &middot; ' + t('courseTitle') + '</div>' +
+          '<h1 class="page-title" style="margin-top:4px;">' + t('welcomeTitle') + '</h1>' +
+          '<p class="page-sub">' + t('welcomeSub') + '</p>' +
+          '<p style="margin:8px 0 0;font-size:0.88rem;color:var(--text-muted);">' + t('courseDesc') + '</p>' +
+        '</div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:8px;flex-shrink:0;">' +
+          '<button class="btn btn-primary" data-go-page="study" data-go-topic="' + esc(st.lastTopicId || 'topic1') + '">' + t('continueLearning') + '</button>' +
+          '<button class="btn btn-secondary" data-go-page="practice">' + t('quickPractice') + '</button>' +
+          '<button class="btn btn-secondary" data-go-page="flashcards">' + t('quickFlashcards') + '</button>' +
+          '<button class="btn btn-secondary" data-go-page="exams">' + t('quickExams') + '</button>' +
+        '</div>' +
+      '</section>' +
+
+      '<div style="margin-bottom:18px;">' +
+        '<input type="search" id="dash-search" class="input" value="' + esc(stateUI.dashSearch) + '" placeholder="' + esc(t('searchCourse')) + '">' +
+        searchResultsHtml +
+      '</div>' +
+
+      '<section class="stats-row">' +
+        '<div class="stat-box"><div class="stat-k">' + t('statTopics') + '</div><div class="stat-v">' + p.completedTopicsCount + '/3</div></div>' +
+        '<div class="stat-box"><div class="stat-k">' + t('statProgress') + '</div><div class="stat-v">' + p.overallProgress + '%</div></div>' +
+        '<div class="stat-box"><div class="stat-k">' + t('statAccuracy') + '</div><div class="stat-v">' + (p.totalAnswered ? p.overallAccuracy + '%' : '—') + '</div></div>' +
+        '<div class="stat-box"><div class="stat-k">' + t('statStreak') + '</div><div class="stat-v">' + p.streak + ' <span style="font-size:0.85rem;font-weight:600;color:var(--text-muted);">' + t('daysUnit') + '</span></div></div>' +
+      '</section>' +
+
+      '<h2 style="font-size:1.1rem;margin:0 0 12px;">' + t('courseTopics') + '</h2>' +
+      '<section class="topics-grid">' +
+        window.MSDS_STUDY_TOPICS.map(function (tp, i) {
+          var tStat = p.topics[i];
+          return '<div class="topic-card">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+              '<span class="topic-num">TOPIC ' + tp.number + '</span>' +
+              (tStat.topicDone ? '<span class="badge badge-green">&#10003; ' + t('topicCompleted') + '</span>' : '<span class="badge badge-muted">' + tStat.progressPct + '%</span>') +
+            '</div>' +
+            '<h3 style="margin:0;font-size:1.05rem;">' + esc(tp.title[lang]) + '</h3>' +
+            '<p style="margin:0;font-size:0.86rem;color:var(--text-muted);flex:1;">' + esc(tp.shortDesc[lang]) + '</p>' +
+            '<div class="progress-track"><div class="progress-fill" style="width:' + tStat.progressPct + '%;"></div></div>' +
+            '<button class="btn btn-primary btn-sm" style="align-self:flex-start;margin-top:4px;" data-go-page="study" data-go-topic="' + tp.id + '">' + t('startLearning') + '</button>' +
+          '</div>';
+        }).join('') +
+      '</section>' +
+
+      '<div class="dash-two-col">' +
+        '<section class="card">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
+            '<h3 style="margin:0;font-size:1rem;">' + t('qOfDay') + '</h3>' +
+            '<span class="badge badge-muted">' + esc(qod.source) + '</span>' +
+          '</div>' +
+          '<p style="margin:0 0 4px;font-weight:700;">' + esc(qod.question) + '</p>' +
+          (lang === 'ar' ? '<p style="margin:0 0 10px;font-size:0.86rem;color:var(--text-muted);">' + esc(qod.questionAr) + '</p>' : '') +
+          '<div class="opt-list">' + qod.options.map(function (o, oi) {
+            var cls = '';
+            if (stateUI.qodChecked) {
+              if (oi === qod.correctIndex) cls = ' ok';
+              else if (oi === stateUI.qodSelected) cls = ' err';
+            } else if (oi === stateUI.qodSelected) cls = ' selected';
+            return '<button class="opt-btn' + cls + '" data-qod-opt="' + oi + '"><span class="opt-key">' + String.fromCharCode(65 + oi) + '</span><span>' + esc(o) + (lang === 'ar' ? ' — ' + esc(qod.optionsAr[oi]) : '') + '</span></button>';
+          }).join('') + '</div>' +
+          '<div style="margin-top:12px;"><button class="btn btn-primary btn-sm" id="btn-check-qod" ' + (stateUI.qodSelected === null ? 'disabled' : '') + '>' + t('checkQod') + '</button></div>' +
+          (stateUI.qodChecked ? '<div class="fb-box ' + (stateUI.qodSelected === qod.correctIndex ? 'ok' : 'err') + '">' + esc(lang === 'ar' ? qod.expAr : qod.expEn) + '</div>' : '') +
+        '</section>' +
+
+        '<div style="display:flex;flex-direction:column;gap:16px;">' +
+          '<section class="card">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
+              '<h3 style="margin:0;font-size:1rem;">' + t('dailyGoal') + '</h3>' +
+              '<span style="font-size:0.84rem;font-weight:700;">' + p.dailyCount + '/' + p.dailyGoal + ' ' + t('questionsToday') + '</span>' +
+            '</div>' +
+            '<div class="progress-track"><div class="progress-fill" style="width:' + goalPct + '%;"></div></div>' +
+          '</section>' +
+
+          '<section class="card">' +
+            '<h3 style="margin:0 0 10px;font-size:1rem;">' + t('recentActivity') + '</h3>' +
+            (p.recentActivity.length ? p.recentActivity.slice(0, 4).map(function (a) {
+              return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.86rem;">' +
+                '<span><strong>' + esc(lang === 'ar' ? a.titleAr : a.titleEn) + '</strong></span>' +
+                '<span style="color:var(--text-muted);">' + esc(a.detail) + '</span></div>';
+            }).join('') : '<div class="empty-box" style="padding:16px;">' + t('noActivity') + '</div>') +
+          '</section>' +
+        '</div>' +
+      '</div>';
+
+    /* Bindings */
+    root.querySelectorAll('[data-go-page]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        navigateTo(b.getAttribute('data-go-page'), b.getAttribute('data-go-topic'));
+      });
+    });
+    var ds = document.getElementById('dash-search');
+    if (ds) ds.addEventListener('input', function () {
+      stateUI.dashSearch = ds.value;
+      renderHome();
+      var n = document.getElementById('dash-search');
+      if (n) { n.focus(); n.setSelectionRange(n.value.length, n.value.length); }
+    });
+    root.querySelectorAll('[data-qod-opt]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (stateUI.qodChecked) return;
+        stateUI.qodSelected = Number(b.getAttribute('data-qod-opt'));
+        renderHome();
+      });
+    });
+    var cq = document.getElementById('btn-check-qod');
+    if (cq) cq.addEventListener('click', function () {
+      stateUI.qodChecked = true;
+      var ok = stateUI.qodSelected === qod.correctIndex;
+      window.MSDS_STORAGE.recordAnswer(qod.id, ok, qod.options[stateUI.qodSelected]);
+      renderHome();
+    });
+  }
+
+  /* ==================== PAGE B: STUDY / LEARN ==================== */
+  function renderStudy() {
+    var root = document.getElementById('page-study');
+    if (!root) return;
+    var t = window.MSDS_I18N.t;
+    var lang = window.MSDS_I18N.getLang();
+    var st = window.MSDS_STORAGE.load();
+    var tp = window.MSDS_STUDY_TOPICS.find(function (x) { return x.id === stateUI.studyTopic; }) || window.MSDS_STUDY_TOPICS[0];
+    var isDone = (st.completedTopics || []).indexOf(tp.id) !== -1;
+    var isBook = (st.bookmarkedExplanations || []).indexOf(tp.id) !== -1;
+
+    root.innerHTML =
+      '<div class="page-head">' +
+        '<div class="eyebrow">M&lt;&gt;S · ' + t('navStudy') + '</div>' +
+        '<h1 class="page-title">' + t('studyTitle') + '</h1>' +
+        '<p class="page-sub">' + t('studySubtitle') + '</p>' +
+      '</div>' +
+
+      '<div class="tabs-row">' +
+        window.MSDS_STUDY_TOPICS.map(function (item) {
+          return '<button class="tab-btn ' + (item.id === tp.id ? 'active' : '') + '" data-st-tab="' + item.id + '">Topic ' + item.number + ': ' + esc(item.title[lang]) + '</button>';
+        }).join('') +
+      '</div>' +
+
+      '<article class="card" style="display:flex;flex-direction:column;gap:18px;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">' +
+          '<div><div class="eyebrow">TOPIC ' + tp.number + '</div><h2 style="margin:4px 0 0;font-size:1.45rem;">' + esc(tp.title[lang]) + '</h2></div>' +
+          '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+            '<button class="btn btn-sm ' + (isBook ? 'btn-primary' : 'btn-secondary') + '" id="btn-bm-exp">' + (isBook ? '&#9733; ' + t('bookmarked') : '&#9734; ' + t('bookmarkExp')) + '</button>' +
+            '<button class="btn btn-sm ' + (isDone ? 'btn-secondary' : 'btn-primary') + '" id="btn-done-topic">' + (isDone ? '&#10003; ' + t('topicCompleted') : t('markTopicDone')) + '</button>' +
+          '</div>' +
+        '</div>' +
+
+        renderSvg(tp.diagram) +
+
+        '<div><h3 style="margin:0 0 6px;color:var(--accent);">' + t('secIntro') + '</h3><p style="margin:0;">' + esc(tp.introduction[lang]) + '</p></div>' +
+
+        '<div><h3 style="margin:0 0 8px;color:var(--accent);">' + t('secDefs') + '</h3>' +
+          '<div class="vocab-grid">' + tp.definitions.map(function (d) {
+            return '<div class="card-subtle"><strong>' + esc(d.term) + ' (' + esc(d.ar) + ')</strong><p style="margin:6px 0 0;font-size:0.88rem;">' + esc(lang === 'ar' ? d.defAr : d.defEn) + '</p></div>';
+          }).join('') + '</div></div>' +
+
+        '<div><h3 style="margin:0 0 8px;color:var(--accent);">' + t('secDetail') + '</h3>' +
+          tp.detailed[lang].map(function (para) { return '<p style="margin:0 0 10px;">' + esc(para) + '</p>'; }).join('') + '</div>' +
+
+        '<div><h3 style="margin:0 0 8px;color:var(--accent);">' + t('secTerms') + '</h3>' +
+          '<div style="display:flex;flex-wrap:wrap;gap:6px;">' + tp.terminology.map(function (tm) { return '<span class="badge badge-muted">' + esc(tm) + '</span>'; }).join('') + '</div></div>' +
+
+        '<div><h3 style="margin:0 0 8px;color:var(--accent);">' + t('secExamples') + '</h3><ul style="margin:0;padding-inline-start:20px;">' +
+          tp.examples[lang].map(function (e) { return '<li style="margin-bottom:6px;">' + esc(e) + '</li>'; }).join('') + '</ul></div>' +
+
+        '<div><h3 style="margin:0 0 8px;color:var(--accent);">' + t('secKeyPoints') + '</h3><ul style="margin:0;padding-inline-start:20px;">' +
+          tp.keyPoints[lang].map(function (k) { return '<li style="margin-bottom:6px;">' + esc(k) + '</li>'; }).join('') + '</ul></div>' +
+
+        '<div class="card-subtle"><strong>' + t('secSummary') + ':</strong> ' + esc(tp.summary[lang]) + '</div>' +
+
+        '<div><h3 style="margin:0 0 8px;color:var(--err-color);">' + t('secMistakes') + '</h3><ul style="margin:0;padding-inline-start:20px;">' +
+          tp.commonMistakes[lang].map(function (m) { return '<li style="margin-bottom:6px;">' + esc(m) + '</li>'; }).join('') + '</ul></div>' +
+      '</article>';
+
+    root.querySelectorAll('[data-st-tab]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        stateUI.studyTopic = b.getAttribute('data-st-tab');
+        window.MSDS_STORAGE.update(function (s) { s.lastTopicId = stateUI.studyTopic; });
+        renderStudy();
+      });
+    });
+    document.getElementById('btn-done-topic').addEventListener('click', function () {
+      window.MSDS_STORAGE.update(function (s) {
+        var i = s.completedTopics.indexOf(tp.id);
+        if (i === -1) {
+          s.completedTopics.push(tp.id);
+          window.MSDS_STORAGE.logActivity(s, 'Completed ' + tp.title.en, 'إكمال ' + tp.title.ar, '100%');
+        } else s.completedTopics.splice(i, 1);
+      });
+      renderStudy();
+      toast(isDone ? 'Unmarked' : t('topicCompleted'));
+    });
+    document.getElementById('btn-bm-exp').addEventListener('click', function () {
+      window.MSDS_STORAGE.update(function (s) {
+        var i = s.bookmarkedExplanations.indexOf(tp.id);
+        if (i === -1) s.bookmarkedExplanations.push(tp.id); else s.bookmarkedExplanations.splice(i, 1);
+      });
+      renderStudy();
+    });
+  }
+
+  /* ==================== PAGE C: VOCABULARY ==================== */
+  function renderVocabulary() {
+    var root = document.getElementById('page-vocabulary');
+    if (!root) return;
+    var t = window.MSDS_I18N.t;
+    var st = window.MSDS_STORAGE.load();
+    var terms = stateUI.vocabOrder || window.MSDS_VOCAB_TERMS.slice();
+
+    var filtered = terms.filter(function (v) {
+      if (stateUI.vocabTopic !== 'all' && v.topicId !== stateUI.vocabTopic) return false;
+      if (stateUI.vocabSearch.trim()) {
+        var q = stateUI.vocabSearch.trim().toLowerCase();
+        return v.term.toLowerCase().indexOf(q) !== -1 || v.arMeaning.indexOf(stateUI.vocabSearch.trim()) !== -1 || v.enDef.toLowerCase().indexOf(q) !== -1;
+      }
+      return true;
+    });
+
+    root.innerHTML =
+      '<div class="page-head">' +
+        '<div class="eyebrow">M&lt;&gt;S · ' + t('navVocab') + '</div>' +
+        '<h1 class="page-title">' + t('vocabTitle') + '</h1>' +
+        '<p class="page-sub">' + t('vocabSubtitle') + '</p>' +
+      '</div>' +
+
+      '<div class="config-grid" style="margin-bottom:16px;">' +
+        '<input type="search" id="voc-search" class="input" value="' + esc(stateUI.vocabSearch) + '" placeholder="' + esc(t('searchVocab')) + '">' +
+        '<select id="voc-topic" class="select">' +
+          '<option value="all"' + (stateUI.vocabTopic === 'all' ? ' selected' : '') + '>' + t('allTopics') + '</option>' +
+          '<option value="topic1"' + (stateUI.vocabTopic === 'topic1' ? ' selected' : '') + '>Topic 1</option>' +
+          '<option value="topic2"' + (stateUI.vocabTopic === 'topic2' ? ' selected' : '') + '>Topic 2</option>' +
+          '<option value="topic3"' + (stateUI.vocabTopic === 'topic3' ? ' selected' : '') + '>Topic 3</option>' +
+        '</select>' +
+        '<button class="btn btn-secondary" id="voc-shuffle">' + t('shuffle') + '</button>' +
+      '</div>' +
+
+      '<div class="vocab-grid">' + filtered.map(function (v) {
+        var flipped = !!stateUI.vocabFlipped[v.id];
+        var ok = (st.vocabUnderstood || []).indexOf(v.id) !== -1;
+        var fav = (st.vocabFavorites || []).indexOf(v.id) !== -1;
+        return '<div class="flip-scene">' +
+          '<div class="flip-card ' + (flipped ? 'flipped' : '') + '">' +
+            '<div class="flip-face">' +
+              '<div>' +
+                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
+                  '<span class="badge badge-muted">' + v.topicId.toUpperCase() + '</span>' +
+                  (ok ? '<span class="badge badge-green">&#10003; ' + t('understood') + '</span>' : '') +
+                '</div>' +
+                '<div style="font-size:1.15rem;font-weight:800;">' + esc(v.term) + '</div>' +
+                '<div style="font-size:1rem;font-weight:700;color:var(--accent);margin-top:4px;">' + esc(v.arMeaning) + '</div>' +
+                '<p style="margin:10px 0 0;font-size:0.86rem;color:var(--text-muted);">' + esc(v.enDef) + '</p>' +
+              '</div>' +
+              '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">' +
+                '<button class="btn btn-primary btn-sm" data-vflip="' + v.id + '">' + t('flipCard') + '</button>' +
+                '<button class="btn btn-secondary btn-sm" data-vok="' + v.id + '">' + (ok ? t('understood') : t('markUnderstood')) + '</button>' +
+                '<button class="btn btn-secondary btn-sm" data-vfav="' + v.id + '">' + (fav ? '&#9733;' : '&#9734;') + '</button>' +
+              '</div>' +
+            '</div>' +
+            '<div class="flip-face flip-back">' +
+              '<div>' +
+                '<div class="eyebrow">' + esc(v.term) + '</div>' +
+                '<p style="margin:8px 0;font-size:0.9rem;">' + esc(v.arExp) + '</p>' +
+                '<p style="margin:0;font-size:0.84rem;font-style:italic;color:var(--text-muted);">"' + esc(v.example) + '"</p>' +
+              '</div>' +
+              '<button class="btn btn-secondary btn-sm" style="align-self:flex-start;" data-vflip="' + v.id + '">' + t('flipCard') + '</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('') + '</div>';
+
+    var vs = document.getElementById('voc-search');
+    if (vs) vs.addEventListener('input', function () {
+      stateUI.vocabSearch = vs.value;
+      renderVocabulary();
+      var n = document.getElementById('voc-search');
+      if (n) { n.focus(); n.setSelectionRange(n.value.length, n.value.length); }
+    });
+    document.getElementById('voc-topic').addEventListener('change', function (e) { stateUI.vocabTopic = e.target.value; renderVocabulary(); });
+    document.getElementById('voc-shuffle').addEventListener('click', function () { stateUI.vocabOrder = window.MSDS_QUIZ.shuffle(window.MSDS_VOCAB_TERMS); renderVocabulary(); });
+    root.querySelectorAll('[data-vflip]').forEach(function (b) { b.addEventListener('click', function () { var id = b.getAttribute('data-vflip'); stateUI.vocabFlipped[id] = !stateUI.vocabFlipped[id]; renderVocabulary(); }); });
+    root.querySelectorAll('[data-vok]').forEach(function (b) { b.addEventListener('click', function () { var id = b.getAttribute('data-vok'); window.MSDS_STORAGE.update(function (s) { var i = s.vocabUnderstood.indexOf(id); if (i === -1) s.vocabUnderstood.push(id); else s.vocabUnderstood.splice(i, 1); }); renderVocabulary(); }); });
+    root.querySelectorAll('[data-vfav]').forEach(function (b) { b.addEventListener('click', function () { var id = b.getAttribute('data-vfav'); window.MSDS_STORAGE.update(function (s) { var i = s.vocabFavorites.indexOf(id); if (i === -1) s.vocabFavorites.push(id); else s.vocabFavorites.splice(i, 1); }); renderVocabulary(); }); });
+  }
+
+  /* ==================== PAGE D: PRACTICE ==================== */
+  function renderPractice() {
+    var root = document.getElementById('page-practice');
+    if (!root) return;
+    var t = window.MSDS_I18N.t;
+    var lang = window.MSDS_I18N.getLang();
+    var sess = window.MSDS_QUIZ.getSession();
+
+    if (!sess) {
+      root.innerHTML =
+        '<div class="page-head">' +
+          '<div class="eyebrow">M&lt;&gt;S · ' + t('navPractice') + '</div>' +
+          '<h1 class="page-title">' + t('practiceTitle') + '</h1>' +
+          '<p class="page-sub">' + t('practiceSubtitle') + '</p>' +
+        '</div>' +
+        '<div class="card">' +
+          '<div class="config-grid">' +
+            '<div><label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;">' + t('selectTopic') + '</label>' +
+              '<select id="pr-topic" class="select"><option value="all">' + t('allTopics') + '</option><option value="topic1">Topic 1</option><option value="topic2">Topic 2</option><option value="topic3">Topic 3</option></select></div>' +
+            '<div><label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;">' + t('selectType') + '</label>' +
+              '<select id="pr-type" class="select"><option value="all">' + t('typeAll') + '</option><option value="mcq">' + t('typeMcq') + '</option><option value="tf">' + t('typeTf') + '</option><option value="matching">' + t('typeMatch') + '</option><option value="fill">' + t('typeFill') + '</option></select></div>' +
+            '<div><label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;">' + t('questionCount') + '</label>' +
+              '<select id="pr-count" class="select"><option value="5">5</option><option value="10" selected>10</option><option value="15">15</option><option value="30">30</option><option value="75">All (75)</option></select></div>' +
+            '<div><label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;">' + t('viewMode') + '</label>' +
+              '<select id="pr-view" class="select"><option value="single">' + t('modeSingle') + '</option><option value="list">' + t('modeList') + '</option></select></div>' +
+          '</div>' +
+          '<div style="margin-top:16px;"><button class="btn btn-primary" id="btn-start-pr">' + t('startPractice') + '</button></div>' +
+        '</div>';
+
+      document.getElementById('btn-start-pr').addEventListener('click', function () {
+        window.MSDS_QUIZ.start({
+          topic: document.getElementById('pr-topic').value,
+          type: document.getElementById('pr-type').value,
+          count: Number(document.getElementById('pr-count').value),
+          viewMode: document.getElementById('pr-view').value
+        });
+        renderPractice();
+      });
+      return;
+    }
+
+    /* Finished Practice Summary */
+    if (sess.finished) {
+      var sc = window.MSDS_QUIZ.getScore();
+      root.innerHTML =
+        '<div class="card">' +
+          '<div class="eyebrow">' + t('navPractice') + '</div>' +
+          '<h2 class="page-title">' + sc.correct + ' / ' + sc.total + ' (' + sc.pct + '%)</h2>' +
+          '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">' +
+            (sc.wrongIds.length ? '<button class="btn btn-primary" id="btn-pr-retry">' + t('retryWrong') + ' (' + sc.wrongIds.length + ')</button>' : '') +
+            '<button class="btn btn-secondary" id="btn-pr-new">' + t('newSession') + '</button>' +
+          '</div>' +
+        '</div>';
+      var rBtn = document.getElementById('btn-pr-retry');
+      if (rBtn) rBtn.addEventListener('click', function () {
+        window.MSDS_QUIZ.start({ onlyIds: sc.wrongIds, count: sc.wrongIds.length, viewMode: 'single' });
+        renderPractice();
+      });
+      document.getElementById('btn-pr-new').addEventListener('click', function () { window.MSDS_QUIZ.clear(); renderPractice(); });
+      return;
+    }
+
+    /* Interactive Touch-Friendly Matching Board */
+    if (sess.mode === 'matching') {
+      var b = sess.boards[sess.boardIdx];
+      var pairedCount = Object.keys(b.pairs).length;
+      root.innerHTML =
+        '<div class="card">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">' +
+            '<strong>' + t('typeMatch') + ' — ' + b.topicId.toUpperCase() + ' (' + (sess.boardIdx + 1) + '/' + sess.boards.length + ')</strong>' +
+            '<span class="badge badge-muted">' + pairedCount + '/' + b.terms.length + '</span>' +
+          '</div>' +
+          '<p style="margin:0;font-size:0.86rem;color:var(--text-muted);">' + t('matchingInstr') + '</p>' +
+          '<div class="match-board">' +
+            '<div class="match-col">' + b.terms.map(function (tm, i) {
+              var cls = 'match-item';
+              if (b.selectedTermId === tm.id) cls += ' picking';
+              if (b.validated) cls += (b.pairs[tm.id] === tm.id ? ' ok' : ' err');
+              else if (b.pairs[tm.id]) cls += ' paired';
+              var badge = b.pairs[tm.id] ? ' <span class="badge badge-green">#' + (b.defs.findIndex(function (d) { return d.id === b.pairs[tm.id]; }) + 1) + '</span>' : '';
+              return '<button class="' + cls + '" data-m-term="' + tm.id + '"><strong>' + (i + 1) + '. ' + esc(tm.term) + '</strong>' + (lang === 'ar' ? ' — ' + esc(tm.ar) : '') + badge + '</button>';
+            }).join('') + '</div>' +
+            '<div class="match-col">' + b.defs.map(function (df, i) {
+              var cls = 'match-item';
+              var assignedTerm = Object.keys(b.pairs).find(function (tid) { return b.pairs[tid] === df.id; });
+              if (b.validated) cls += (assignedTerm === df.id ? ' ok' : ' err');
+              else if (assignedTerm) cls += ' paired';
+              return '<button class="' + cls + '" data-m-def="' + df.id + '"><strong>#' + (i + 1) + '</strong> ' + esc(df.def) + (lang === 'ar' ? '<div style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">' + esc(df.ar) + '</div>' : '') + '</button>';
+            }).join('') + '</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;">' +
+            (!b.validated ? '<button class="btn btn-primary" id="btn-val-match">' + t('validateMatches') + '</button>' : '') +
+            '<button class="btn btn-secondary" id="btn-rst-match">' + t('resetMatches') + '</button>' +
+            (sess.boardIdx < sess.boards.length - 1 ? '<button class="btn btn-primary" id="btn-next-board">' + t('nextBtn') + ' &rarr;</button>' : '<button class="btn btn-primary" id="btn-fin-pr">' + t('finishPractice') + '</button>') +
+          '</div>' +
+        '</div>';
+
+      root.querySelectorAll('[data-m-term]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (b.validated) return;
+          b.selectedTermId = btn.getAttribute('data-m-term');
+          renderPractice();
+        });
+      });
+      root.querySelectorAll('[data-m-def]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (b.validated || !b.selectedTermId) return;
+          var defId = btn.getAttribute('data-m-def');
+          Object.keys(b.pairs).forEach(function (k) { if (b.pairs[k] === defId) delete b.pairs[k]; });
+          b.pairs[b.selectedTermId] = defId;
+          b.selectedTermId = null;
+          renderPractice();
+        });
+      });
+      var vm = document.getElementById('btn-val-match');
+      if (vm) vm.addEventListener('click', function () { window.MSDS_QUIZ.validateMatchingBoard(sess.boardIdx); renderPractice(); });
+      document.getElementById('btn-rst-match').addEventListener('click', function () { b.pairs = {}; b.validated = false; b.selectedTermId = null; renderPractice(); });
+      var nb = document.getElementById('btn-next-board');
+      if (nb) nb.addEventListener('click', function () { sess.boardIdx += 1; renderPractice(); });
+      var fp = document.getElementById('btn-fin-pr');
+      if (fp) fp.addEventListener('click', function () { window.MSDS_QUIZ.finishPractice(); renderPractice(); });
+      return;
+    }
+
+    /* Single or List Practice Questions */
+    var listToRender = sess.mode === 'list' ? sess.questions : [sess.questions[sess.index]];
+    var bms = window.MSDS_STORAGE.load().bookmarkedQuestions || [];
+
+    var cardsHtml = listToRender.map(function (q, localIdx) {
+      var globalIdx = sess.mode === 'list' ? localIdx : sess.index;
+      var chk = sess.checked[q.id];
+      var dr = sess.drafts[q.id];
+      var isBm = bms.indexOf(q.id) !== -1;
+      var showAr = lang === 'ar' || !!sess.showAr[q.id];
+
+      var body = '';
+      if (q.type === 'fill') {
+        body = '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">' +
+          '<input class="input" style="max-width:340px;" data-pr-fill="' + q.id + '" value="' + esc(dr || '') + '" placeholder="' + esc(t('fillPlaceholder')) + '" ' + (chk ? 'disabled' : '') + '>' +
+          (!chk ? '<button class="btn btn-primary" data-pr-check="' + q.id + '">' + t('checkAnswer') + '</button>' : '') +
+        '</div>';
+      } else {
+        body = '<div class="opt-list">' + q.options.map(function (opt, oi) {
+          var cls = '';
+          if (chk) {
+            if (oi === q.correctIndex) cls = ' ok';
+            else if (Number(chk.answer) === oi) cls = ' err';
+          } else if (dr !== undefined && Number(dr) === oi) cls = ' selected';
+          return '<button class="opt-btn' + cls + '" data-pr-opt="' + q.id + '" data-oi="' + oi + '" ' + (chk ? 'disabled' : '') + '>' +
+            '<span class="opt-key">' + String.fromCharCode(65 + oi) + '</span>' +
+            '<span>' + esc(opt) + (showAr && q.optionsAr ? '<div style="font-size:0.82rem;color:var(--text-muted);">' + esc(q.optionsAr[oi]) + '</div>' : '') + '</span>' +
+          '</button>';
+        }).join('') + '</div>' +
+        (!chk ? '<div style="margin-top:12px;"><button class="btn btn-primary btn-sm" data-pr-check="' + q.id + '" ' + (dr === undefined ? 'disabled' : '') + '>' + t('checkAnswer') + '</button></div>' : '');
+      }
+
+      var fb = '';
+      if (chk) {
+        var corrDisp = q.type === 'fill' ? q.displayAnswer : q.options[q.correctIndex];
+        fb = '<div class="fb-box ' + (chk.isCorrect ? 'ok' : 'err') + '">' +
+          '<strong>' + (chk.isCorrect ? t('correct') : t('incorrect') + ' — ' + t('correctAnsLabel') + ': ' + esc(corrDisp)) + '</strong>' +
+          '<div style="margin-top:4px;">' + esc(lang === 'ar' ? q.expAr : q.expEn) + '</div>' +
+        '</div>';
+      }
+
+      return '<div class="card" style="margin-bottom:14px;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">' +
+          '<span class="badge badge-muted">#' + (globalIdx + 1) + '/' + sess.questions.length + ' · ' + esc(q.topicId.toUpperCase()) + ' · ' + esc(q.source) + '</span>' +
+          '<div style="display:flex;gap:6px;">' +
+            '<button class="btn btn-secondary btn-sm" data-pr-ar="' + q.id + '">' + t('showArTrans') + '</button>' +
+            '<button class="btn btn-secondary btn-sm" data-pr-bm="' + q.id + '">' + (isBm ? '&#9733; ' + t('savedQuestion') : '&#9734; ' + t('saveQuestion')) + '</button>' +
+          '</div>' +
+        '</div>' +
+        '<p style="margin:0;font-weight:700;font-size:1.02rem;">' + esc(q.question) + '</p>' +
+        (showAr ? '<p style="margin:6px 0 0;font-size:0.88rem;color:var(--text-muted);">' + esc(q.questionAr) + '</p>' : '') +
+        body + fb +
+      '</div>';
+    }).join('');
+
+    var progPct = Math.round(((Object.keys(sess.checked).length) / Math.max(1, sess.questions.length)) * 100);
+    root.innerHTML =
+      '<div class="progress-track" style="margin-bottom:14px;"><div class="progress-fill" style="width:' + progPct + '%;"></div></div>' +
+      cardsHtml +
+      '<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;">' +
+        (sess.mode === 'single' ? '<button class="btn btn-secondary" id="pr-prev" ' + (sess.index === 0 ? 'disabled' : '') + '>&larr; ' + t('prevBtn') + '</button>' : '<span></span>') +
+        '<div style="display:flex;gap:8px;">' +
+          (sess.mode === 'single' && sess.index < sess.questions.length - 1 ? '<button class="btn btn-secondary" id="pr-next">' + t('nextBtn') + ' &rarr;</button>' : '') +
+          '<button class="btn btn-primary" id="pr-finish">' + t('finishPractice') + '</button>' +
+        '</div>' +
+      '</div>';
+
+    root.querySelectorAll('[data-pr-opt]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        sess.drafts[b.getAttribute('data-pr-opt')] = Number(b.getAttribute('data-oi'));
+        renderPractice();
+      });
+    });
+    root.querySelectorAll('[data-pr-fill]').forEach(function (inp) {
+      inp.addEventListener('input', function () { sess.drafts[inp.getAttribute('data-pr-fill')] = inp.value; });
+    });
+    root.querySelectorAll('[data-pr-check]').forEach(function (b) {
+      b.addEventListener('click', function () { window.MSDS_QUIZ.checkSingle(b.getAttribute('data-pr-check')); renderPractice(); });
+    });
+    root.querySelectorAll('[data-pr-ar]').forEach(function (b) {
+      b.addEventListener('click', function () { var id = b.getAttribute('data-pr-ar'); sess.showAr[id] = !sess.showAr[id]; renderPractice(); });
+    });
+    root.querySelectorAll('[data-pr-bm]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var id = b.getAttribute('data-pr-bm');
+        window.MSDS_STORAGE.update(function (s) { var i = s.bookmarkedQuestions.indexOf(id); if (i === -1) s.bookmarkedQuestions.push(id); else s.bookmarkedQuestions.splice(i, 1); });
+        renderPractice();
+      });
+    });
+    var pp = document.getElementById('pr-prev');
+    if (pp) pp.addEventListener('click', function () { sess.index -= 1; renderPractice(); });
+    var pn = document.getElementById('pr-next');
+    if (pn) pn.addEventListener('click', function () { sess.index += 1; renderPractice(); });
+    document.getElementById('pr-finish').addEventListener('click', function () { window.MSDS_QUIZ.finishPractice(); renderPractice(); });
+  }
+
+  /* ==================== PAGE E: FLASHCARDS ==================== */
+  function renderFlashcards() {
+    var root = document.getElementById('page-flashcards');
+    if (!root) return;
+    var t = window.MSDS_I18N.t;
+    var lang = window.MSDS_I18N.getLang();
+    var fc = window.MSDS_FLASHCARDS.getState();
+    var c = fc.current;
+
+    root.innerHTML =
+      '<div class="page-head">' +
+        '<div class="eyebrow">M&lt;&gt;S · ' + t('navFlashcards') + '</div>' +
+        '<h1 class="page-title">' + t('flashcardsTitle') + '</h1>' +
+        '<p class="page-sub">' + t('flashcardsSubtitle') + '</p>' +
+      '</div>' +
+
+      '<div class="tabs-row">' +
+        ['all', 'topic1', 'topic2', 'topic3'].map(function (tp) {
+          return '<button class="tab-btn ' + (fc.filterTopic === tp ? 'active' : '') + '" data-fc-f="' + tp + '">' + (tp === 'all' ? t('allTopics') : tp.toUpperCase()) + '</button>';
+        }).join('') +
+        '<button class="btn btn-secondary btn-sm" id="fc-shuf" style="margin-inline-start:auto;">' + t('shuffle') + '</button>' +
+      '</div>' +
+
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:0.86rem;">' +
+        '<strong>' + (fc.index + 1) + ' / ' + fc.total + '</strong>' +
+        '<div><span class="badge badge-green">' + t('knownCount') + ': ' + fc.known + '</span> <span class="badge badge-err">' + t('needsRevCount') + ': ' + fc.review + '</span></div>' +
+      '</div>' +
+      '<div class="progress-track" style="margin-bottom:18px;"><div class="progress-fill" style="width:' + Math.round(((fc.index + 1) / Math.max(1, fc.total)) * 100) + '%;"></div></div>' +
+
+      (c ? '<div class="flip-scene" style="max-width:680px;margin:0 auto 18px;cursor:pointer;" id="fc-scene">' +
+        '<div class="flip-card ' + (fc.flipped ? 'flipped' : '') + '">' +
+          '<div class="flip-face" style="align-items:center;justify-content:center;text-align:center;">' +
+            '<div class="eyebrow">' + t('cardFront') + ' · ' + c.topicId.toUpperCase() + '</div>' +
+            '<h2 style="margin:12px 0 6px;font-size:1.45rem;">' + esc(c.frontEn) + '</h2>' +
+            '<div style="color:var(--accent);font-weight:700;">' + esc(c.frontAr) + '</div>' +
+            '<div style="font-size:0.78rem;color:var(--text-muted);margin-top:16px;">' + t('clickToFlip') + '</div>' +
+          '</div>' +
+          '<div class="flip-face flip-back" style="align-items:center;justify-content:center;text-align:center;">' +
+            '<div class="eyebrow">' + t('cardBack') + '</div>' +
+            '<p style="margin:12px 0 8px;font-size:1.02rem;font-weight:600;">' + esc(c.backEn) + '</p>' +
+            '<p style="margin:0;font-size:0.94rem;color:var(--text-muted);">' + esc(c.backAr) + '</p>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="display:flex;justify-content:center;flex-wrap:wrap;gap:10px;">' +
+        '<button class="btn btn-secondary" id="fc-prev" ' + (fc.index === 0 ? 'disabled' : '') + '>&larr; ' + t('prevBtn') + '</button>' +
+        '<button class="btn ' + (fc.currentStatus === 'known' ? 'btn-primary' : 'btn-secondary') + '" id="fc-known">&#10003; ' + t('markKnown') + '</button>' +
+        '<button class="btn ' + (fc.currentStatus === 'review' ? 'btn-danger' : 'btn-secondary') + '" id="fc-rev">' + t('markNeedsRev') + '</button>' +
+        '<button class="btn btn-secondary" id="fc-next" ' + (fc.index >= fc.total - 1 ? 'disabled' : '') + '>' + t('nextBtn') + ' &rarr;</button>' +
+      '</div>' : '');
+
+    root.querySelectorAll('[data-fc-f]').forEach(function (b) { b.addEventListener('click', function () { window.MSDS_FLASHCARDS.setFilter(b.getAttribute('data-fc-f')); renderFlashcards(); }); });
+    document.getElementById('fc-shuf').addEventListener('click', function () { window.MSDS_FLASHCARDS.shuffle(); renderFlashcards(); });
+    var sc = document.getElementById('fc-scene');
+    if (sc) sc.addEventListener('click', function () { window.MSDS_FLASHCARDS.flip(); renderFlashcards(); });
+    var fp = document.getElementById('fc-prev'); if (fp) fp.addEventListener('click', function () { window.MSDS_FLASHCARDS.prev(); renderFlashcards(); });
+    var fn = document.getElementById('fc-next'); if (fn) fn.addEventListener('click', function () { window.MSDS_FLASHCARDS.next(); renderFlashcards(); });
+    var fk = document.getElementById('fc-known'); if (fk) fk.addEventListener('click', function () { window.MSDS_FLASHCARDS.mark('known'); renderFlashcards(); });
+    var fr = document.getElementById('fc-rev'); if (fr) fr.addEventListener('click', function () { window.MSDS_FLASHCARDS.mark('review'); renderFlashcards(); });
+  }
+
+  /* ==================== PAGE F: EXAMS ==================== */
+  function renderExams() {
+    var root = document.getElementById('page-exams');
+    if (!root) return;
+    var t = window.MSDS_I18N.t;
+    var lang = window.MSDS_I18N.getLang();
+    var act = window.MSDS_EXAMS.getActive();
+    var revHist = window.MSDS_EXAMS.getReviewAttempt();
+
+    /* Reviewing a submitted or historical exam */
+    if ((act && act.submitted && act.result) || revHist) {
+      var res = revHist || act.result;
+      root.innerHTML =
+        '<div class="card" style="margin-bottom:18px;">' +
+          '<div class="eyebrow">M&lt;&gt;S · ' + t('navExams') + '</div>' +
+          '<h1 class="page-title">' + res.correct + ' / ' + res.total + ' (' + res.percentage + '%)</h1>' +
+          '<p class="page-sub">' + t('correct') + ': ' + res.correct + ' · ' + t('incorrect') + ': ' + res.wrong + ' · ' + fmtTime(res.elapsedSec) + '</p>' +
+          '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">' +
+            (res.wrongIds && res.wrongIds.length ? '<button class="btn btn-primary" id="ex-retry-wrong">' + t('retryWrong') + '</button>' : '') +
+            '<button class="btn btn-secondary" id="ex-back-lobby">' + t('navExams') + '</button>' +
+          '</div>' +
+        '</div>' +
+        res.review.map(function (r, idx) {
+          return '<div class="card" style="margin-bottom:10px;">' +
+            '<span class="badge ' + (r.isCorrect ? 'badge-green' : 'badge-err') + '">' + (r.isCorrect ? t('correct') : t('incorrect')) + '</span>' +
+            '<p style="margin:8px 0 4px;font-weight:700;">' + (idx + 1) + '. ' + esc(r.question) + '</p>' +
+            (lang === 'ar' ? '<p style="margin:0 0 6px;font-size:0.84rem;color:var(--text-muted);">' + esc(r.questionAr) + '</p>' : '') +
+            '<div style="font-size:0.86rem;"><strong>' + t('yourAnsLabel') + ':</strong> ' + esc(r.userAnswer) + '</div>' +
+            '<div style="font-size:0.86rem;color:var(--ok-color);"><strong>' + t('correctAnsLabel') + ':</strong> ' + esc(r.correctAnswer) + '</div>' +
+            '<div style="font-size:0.84rem;color:var(--text-muted);margin-top:4px;">' + esc(lang === 'ar' ? r.expAr : r.expEn) + '</div>' +
+          '</div>';
+        }).join('');
+
+      var rw = document.getElementById('ex-retry-wrong');
+      if (rw) rw.addEventListener('click', function () {
+        window.MSDS_EXAMS.start({ scope: 'retry', onlyIds: res.wrongIds, count: res.wrongIds.length, timerMin: 0 }, tickUi, renderExams);
+        renderExams();
+      });
+      document.getElementById('ex-back-lobby').addEventListener('click', function () { window.MSDS_EXAMS.clearActive(); renderExams(); });
+      return;
+    }
+
+    /* Active Distraction-Free Exam */
+    if (act && !act.submitted) {
+      var q = act.questions[act.index];
+      var ans = act.answers[q.id];
+      var pct = Math.round(((act.index + 1) / act.questions.length) * 100);
+      root.innerHTML =
+        '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">' +
+          '<strong>' + (act.index + 1) + ' / ' + act.questions.length + '</strong>' +
+          (act.durationSec > 0 ? '<span class="timer-pill" id="exam-timer-val">' + fmtTime(act.remainingSec) + '</span>' : '') +
+        '</div>' +
+        '<div class="progress-track" style="margin-bottom:16px;"><div class="progress-fill" style="width:' + pct + '%;"></div></div>' +
+        '<div class="card" style="margin-bottom:16px;">' +
+          '<span class="badge badge-muted">' + q.topicId.toUpperCase() + ' · ' + esc(q.type.toUpperCase()) + '</span>' +
+          '<p style="margin:10px 0 4px;font-weight:700;font-size:1.06rem;">' + esc(q.question) + '</p>' +
+          (lang === 'ar' ? '<p style="margin:0 0 10px;font-size:0.86rem;color:var(--text-muted);">' + esc(q.questionAr) + '</p>' : '') +
+          (q.type === 'fill'
+            ? '<input id="ex-fill-inp" class="input" value="' + esc(ans || '') + '" placeholder="' + esc(t('fillPlaceholder')) + '">'
+            : '<div class="opt-list">' + q.options.map(function (o, oi) {
+                return '<button class="opt-btn ' + (ans !== undefined && Number(ans) === oi ? 'selected' : '') + '" data-ex-opt="' + oi + '"><span class="opt-key">' + String.fromCharCode(65 + oi) + '</span><span>' + esc(o) + (lang === 'ar' && q.optionsAr ? '<div style="font-size:0.82rem;color:var(--text-muted);">' + esc(q.optionsAr[oi]) + '</div>' : '') + '</span></button>';
+              }).join('') + '</div>') +
+        '</div>' +
+        '<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;">' +
+          '<button class="btn btn-secondary" id="ex-prev" ' + (act.index === 0 ? 'disabled' : '') + '>&larr; ' + t('prevBtn') + '</button>' +
+          '<div style="display:flex;gap:8px;">' +
+            (act.index < act.questions.length - 1 ? '<button class="btn btn-secondary" id="ex-next">' + t('nextBtn') + ' &rarr;</button>' : '') +
+            '<button class="btn btn-primary" id="ex-submit-ask">' + t('submitExam') + '</button>' +
+          '</div>' +
+        '</div>';
+
+      root.querySelectorAll('[data-ex-opt]').forEach(function (b) { b.addEventListener('click', function () { act.answers[q.id] = Number(b.getAttribute('data-ex-opt')); renderExams(); }); });
+      var ef = document.getElementById('ex-fill-inp');
+      if (ef) ef.addEventListener('input', function () { act.answers[q.id] = ef.value; });
+      document.getElementById('ex-prev').addEventListener('click', function () { act.index -= 1; renderExams(); });
+      var en = document.getElementById('ex-next'); if (en) en.addEventListener('click', function () { act.index += 1; renderExams(); });
+      document.getElementById('ex-submit-ask').addEventListener('click', function () { openConfirmModal(); });
+      return;
+    }
+
+    /* Exam Lobby + Saved History */
+    var hist = window.MSDS_STORAGE.load().examHistory || [];
+    root.innerHTML =
+      '<div class="page-head">' +
+        '<div class="eyebrow">M&lt;&gt;S · ' + t('navExams') + '</div>' +
+        '<h1 class="page-title">' + t('examsTitle') + '</h1>' +
+        '<p class="page-sub">' + t('examsSubtitle') + '</p>' +
+      '</div>' +
+      '<div class="card" style="margin-bottom:20px;">' +
+        '<div class="config-grid">' +
+          '<div><label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;">' + t('examScope') + '</label>' +
+            '<select id="ex-scope" class="select"><option value="all">' + t('scopeAll') + '</option><option value="topic1">' + t('scopeT1') + '</option><option value="topic2">' + t('scopeT2') + '</option><option value="topic3">' + t('scopeT3') + '</option></select></div>' +
+          '<div><label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;">' + t('questionCount') + '</label>' +
+            '<select id="ex-count" class="select"><option value="10">10</option><option value="20" selected>20</option><option value="30">30</option><option value="50">50</option><option value="75">75</option></select></div>' +
+          '<div><label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;">' + t('examTimer') + '</label>' +
+            '<select id="ex-timer" class="select"><option value="0">' + t('timerNone') + '</option><option value="10">' + t('timer10') + '</option><option value="15" selected>' + t('timer15') + '</option><option value="25">' + t('timer25') + '</option></select></div>' +
+          '<div style="display:flex;align-items:flex-end;"><button class="btn btn-primary" style="width:100%;" id="btn-start-ex">' + t('startExam') + '</button></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="card">' +
+        '<h2 style="margin:0 0 12px;font-size:1.05rem;">' + t('examHistory') + '</h2>' +
+        (hist.length ? '<div class="table-wrap"><table class="table"><thead><tr><th>#</th><th>Scope</th><th>Score</th><th>Time</th><th></th></tr></thead><tbody>' +
+          hist.map(function (h, i) {
+            return '<tr><td>' + (hist.length - i) + '</td><td>' + esc(h.scope.toUpperCase()) + '</td><td><strong>' + h.correct + '/' + h.total + ' (' + h.percentage + '%)</strong></td><td>' + fmtTime(h.elapsedSec) + '</td>' +
+              '<td><button class="btn btn-secondary btn-sm" data-rev-att="' + i + '">' + t('reviewAttempt') + '</button></td></tr>';
+          }).join('') + '</tbody></table></div>' : '<div class="empty-box">' + t('noExamsYet') + '</div>') +
+      '</div>';
+
+    document.getElementById('btn-start-ex').addEventListener('click', function () {
+      window.MSDS_EXAMS.start({
+        scope: document.getElementById('ex-scope').value,
+        count: Number(document.getElementById('ex-count').value),
+        timerMin: Number(document.getElementById('ex-timer').value)
+      }, tickUi, function () { renderExams(); toast('Time expired — exam submitted.'); });
+      renderExams();
+    });
+    root.querySelectorAll('[data-rev-att]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        window.MSDS_EXAMS.setReviewAttempt(hist[Number(b.getAttribute('data-rev-att'))]);
+        renderExams();
+      });
+    });
+  }
+
+  function tickUi(rem) {
+    var el = document.getElementById('exam-timer-val');
+    if (el) el.textContent = fmtTime(rem);
+  }
+
+  function openConfirmModal() {
+    var m = document.getElementById('confirm-modal');
+    if (m) m.classList.add('open');
+  }
+
+  /* ==================== PAGE G: RESULTS & PROGRESS ==================== */
+  function renderResults() {
+    var root = document.getElementById('page-results');
+    if (!root) return;
+    var t = window.MSDS_I18N.t;
+    var lang = window.MSDS_I18N.getLang();
+    var p = window.MSDS_PROGRESS.compute();
+
+    root.innerHTML =
+      '<div class="page-head">' +
+        '<div class="eyebrow">M&lt;&gt;S · ' + t('navResults') + '</div>' +
+        '<h1 class="page-title">' + t('resultsTitle') + '</h1>' +
+        '<p class="page-sub">' + t('resultsSubtitle') + '</p>' +
+      '</div>' +
+
+      '<section class="stats-row">' +
+        '<div class="stat-box"><div class="stat-k">' + t('totalAnswered') + '</div><div class="stat-v">' + p.totalAnswered + '</div></div>' +
+        '<div class="stat-box"><div class="stat-k">' + t('correctTotal') + '</div><div class="stat-v">' + p.totalCorrect + '</div></div>' +
+        '<div class="stat-box"><div class="stat-k">' + t('incorrectTotal') + '</div><div class="stat-v">' + p.totalWrong + '</div></div>' +
+        '<div class="stat-box"><div class="stat-k">' + t('overallAccuracy') + '</div><div class="stat-v">' + (p.totalAnswered ? p.overallAccuracy + '%' : '—') + '</div></div>' +
+      '</section>' +
+
+      '<div class="dash-two-col">' +
+        '<section class="card">' +
+          '<h2 style="margin:0 0 14px;font-size:1.05rem;">' + t('topicPerf') + '</h2>' +
+          p.topics.map(function (tp, i) {
+            var meta = window.MSDS_STUDY_TOPICS[i];
+            return '<div style="margin-bottom:14px;">' +
+              '<div style="display:flex;justify-content:space-between;font-size:0.88rem;font-weight:600;margin-bottom:5px;">' +
+                '<span>' + esc(meta.title[lang]) + '</span><span>' + (tp.totalAttempts ? tp.accuracy + '% (' + tp.correct + '/' + tp.totalAttempts + ')' : '—') + '</span></div>' +
+              '<div class="progress-track"><div class="progress-fill" style="width:' + tp.accuracy + '%;"></div></div>' +
+            '</div>';
+          }).join('') +
+          '<div class="config-grid" style="grid-template-columns:1fr 1fr;margin-top:16px;">' +
+            '<div class="card-subtle"><div class="stat-k">' + t('strongestTopic') + '</div><strong>' + (p.strongest ? p.strongest.topicId.toUpperCase() + ' (' + p.strongest.accuracy + '%)' : '—') + '</strong></div>' +
+            '<div class="card-subtle"><div class="stat-k">' + t('weakestTopic') + '</div><strong>' + (p.weakest ? p.weakest.topicId.toUpperCase() + ' (' + p.weakest.accuracy + '%)' : '—') + '</strong></div>' +
+          '</div>' +
+        '</section>' +
+
+        '<section class="card">' +
+          '<h2 style="margin:0 0 12px;font-size:1.05rem;">' + t('reviseNext') + '</h2>' +
+          (p.recommendations.length ? p.recommendations.map(function (rec) {
+            return '<div class="card-subtle" style="margin-bottom:10px;font-size:0.88rem;">' + esc(rec[lang]) + '</div>';
+          }).join('') : '<div class="empty-box">' + t('noAnalyticsYet') + '</div>') +
+          '<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">' +
+            '<button class="btn btn-danger btn-sm" id="btn-reset-all">' + (stateUI.resetArmed ? t('resetConfirm') : t('resetData')) + '</button>' +
+          '</div>' +
+        '</section>' +
+      '</div>';
+
+    document.getElementById('btn-reset-all').addEventListener('click', function () {
+      if (!stateUI.resetArmed) { stateUI.resetArmed = true; renderResults(); return; }
+      window.MSDS_STORAGE.resetAll();
+      stateUI.resetArmed = false;
+      renderResults();
+      toast('Progress reset.');
+    });
+  }
+
+  /* ==================== PAGE H: BOOKMARKS & REVISION ==================== */
+  function renderRevision() {
+    var root = document.getElementById('page-revision');
+    if (!root) return;
+    var t = window.MSDS_I18N.t;
+    var lang = window.MSDS_I18N.getLang();
+    var st = window.MSDS_STORAGE.load();
+    var p = window.MSDS_PROGRESS.compute();
+
+    var wrongQs = p.wrongQuestionIds.map(function (id) { return window.MSDS_QUESTIONS.find(function (q) { return q.id === id; }); }).filter(Boolean);
+    var savedQs = (st.bookmarkedQuestions || []).map(function (id) { return window.MSDS_QUESTIONS.find(function (q) { return q.id === id; }); }).filter(Boolean);
+    var savedVs = (st.vocabFavorites || []).map(function (id) { return window.MSDS_VOCAB_TERMS.find(function (v) { return v.id === id; }); }).filter(Boolean);
+    var savedEs = (st.bookmarkedExplanations || []).map(function (id) { return window.MSDS_STUDY_TOPICS.find(function (x) { return x.id === id; }); }).filter(Boolean);
+
+    var body = '';
+    if (stateUI.revTab === 'wrong') {
+      body = wrongQs.length ? wrongQs.map(function (q) {
+        var qs = st.questionStats[q.id];
+        return '<div class="card" style="margin-bottom:10px;">' +
+          '<span class="badge badge-err">' + q.topicId.toUpperCase() + '</span>' +
+          '<p style="margin:6px 0 4px;font-weight:700;">' + esc(q.question) + '</p>' +
+          '<div style="font-size:0.86rem;color:var(--err-color);"><strong>' + t('yourAnsLabel') + ':</strong> ' + esc(qs.lastWrongAnswer) + '</div>' +
+          '<div style="font-size:0.86rem;color:var(--ok-color);"><strong>' + t('correctAnsLabel') + ':</strong> ' + esc(q.type === 'fill' ? q.displayAnswer : q.options[q.correctIndex]) + '</div>' +
+          '<div style="font-size:0.84rem;color:var(--text-muted);margin-top:4px;">' + esc(lang === 'ar' ? q.expAr : q.expEn) + '</div>' +
+        '</div>';
+      }).join('') : '<div class="empty-box">' + t('emptySection') + '</div>';
+    } else if (stateUI.revTab === 'savedQ') {
+      body = savedQs.length ? savedQs.map(function (q) {
+        return '<div class="card" style="margin-bottom:10px;"><strong>' + esc(q.question) + '</strong>' +
+          '<div style="font-size:0.86rem;color:var(--ok-color);margin-top:4px;">' + esc(q.type === 'fill' ? q.displayAnswer : q.options[q.correctIndex]) + '</div></div>';
+      }).join('') : '<div class="empty-box">' + t('emptySection') + '</div>';
+    } else if (stateUI.revTab === 'savedV') {
+      body = savedVs.length ? '<div class="vocab-grid">' + savedVs.map(function (v) {
+        return '<div class="card"><strong>' + esc(v.term) + ' — ' + esc(v.arMeaning) + '</strong><p style="margin:6px 0 0;font-size:0.86rem;">' + esc(lang === 'ar' ? v.arExp : v.enDef) + '</p></div>';
+      }).join('') + '</div>' : '<div class="empty-box">' + t('emptySection') + '</div>';
+    } else {
+      body = savedEs.length ? savedEs.map(function (tp) {
+        return '<div class="card" style="margin-bottom:10px;"><strong>' + esc(tp.title[lang]) + '</strong><p style="margin:6px 0 0;font-size:0.88rem;">' + esc(tp.summary[lang]) + '</p></div>';
+      }).join('') : '<div class="empty-box">' + t('emptySection') + '</div>';
+    }
+
+    root.innerHTML =
+      '<div class="page-head">' +
+        '<div class="eyebrow">M&lt;&gt;S · ' + t('navRevision') + '</div>' +
+        '<h1 class="page-title">' + t('revisionTitle') + '</h1>' +
+        '<p class="page-sub">' + t('revisionSubtitle') + '</p>' +
+      '</div>' +
+      '<div class="tabs-row">' +
+        '<button class="tab-btn ' + (stateUI.revTab === 'wrong' ? 'active' : '') + '" data-rt="wrong">' + t('tabWrong') + ' (' + wrongQs.length + ')</button>' +
+        '<button class="tab-btn ' + (stateUI.revTab === 'savedQ' ? 'active' : '') + '" data-rt="savedQ">' + t('tabSavedQ') + ' (' + savedQs.length + ')</button>' +
+        '<button class="tab-btn ' + (stateUI.revTab === 'savedV' ? 'active' : '') + '" data-rt="savedV">' + t('tabSavedV') + ' (' + savedVs.length + ')</button>' +
+        '<button class="tab-btn ' + (stateUI.revTab === 'savedE' ? 'active' : '') + '" data-rt="savedE">' + t('tabSavedE') + ' (' + savedEs.length + ')</button>' +
+        (wrongQs.length ? '<button class="btn btn-primary btn-sm" id="btn-quick-rev" style="margin-inline-start:auto;">' + t('quickRevBtn') + '</button>' : '') +
+      '</div>' + body;
+
+    root.querySelectorAll('[data-rt]').forEach(function (b) { b.addEventListener('click', function () { stateUI.revTab = b.getAttribute('data-rt'); renderRevision(); }); });
+    var qr = document.getElementById('btn-quick-rev');
+    if (qr) qr.addEventListener('click', function () {
+      window.MSDS_QUIZ.start({ onlyIds: p.wrongQuestionIds, count: p.wrongQuestionIds.length, viewMode: 'single' });
+      navigateTo('practice');
+    });
+  }
+
+  function renderCurrent() {
+    syncChrome();
+    var p = stateUI.currentPage;
+    if (p === 'home') renderHome();
+    else if (p === 'study') renderStudy();
+    else if (p === 'vocabulary') renderVocabulary();
+    else if (p === 'practice') renderPractice();
+    else if (p === 'flashcards') renderFlashcards();
+    else if (p === 'exams') renderExams();
+    else if (p === 'results') renderResults();
+    else if (p === 'revision') renderRevision();
+  }
+
+  function init() {
+    var st = window.MSDS_STORAGE.load();
+    window.MSDS_I18N.apply(st.lang || 'en');
+    document.documentElement.setAttribute('data-theme', st.theme || 'light');
+
+    stateUI.currentPage = document.body.getAttribute('data-page') || 'home';
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('topic')) stateUI.studyTopic = params.get('topic');
+    else stateUI.studyTopic = st.lastTopicId || 'topic1';
+
+    document.querySelectorAll('[data-nav]').forEach(function (el) {
+      el.addEventListener('click', function (e) {
+        if (isSpa()) {
+          e.preventDefault();
+          navigateTo(el.getAttribute('data-nav'));
+        }
+      });
+    });
+
+    var mBtn = document.getElementById('btn-mobile');
+    if (mBtn) mBtn.addEventListener('click', function () { document.getElementById('mobile-drawer').classList.toggle('open'); });
+
+    var lBtn = document.getElementById('btn-lang');
+    if (lBtn) lBtn.addEventListener('click', function () {
+      window.MSDS_I18N.toggle();
+      renderCurrent(); /* Preserves active quiz/exam/study state! */
+    });
+
+    var tBtn = document.getElementById('btn-theme');
+    if (tBtn) tBtn.addEventListener('click', function () {
+      var next = (window.MSDS_STORAGE.load().theme || 'light') === 'light' ? 'dark' : 'light';
+      window.MSDS_STORAGE.update(function (s) { s.theme = next; });
+      document.documentElement.setAttribute('data-theme', next);
+      syncChrome();
+    });
+
+    /* Confirm Submit Exam Modal */
+    var cCancel = document.getElementById('modal-cancel');
+    if (cCancel) cCancel.addEventListener('click', function () { document.getElementById('confirm-modal').classList.remove('open'); });
+    var cOk = document.getElementById('modal-confirm');
+    if (cOk) cOk.addEventListener('click', function () {
+      document.getElementById('confirm-modal').classList.remove('open');
+      window.MSDS_EXAMS.submit();
+      renderExams();
+    });
+
+    /* Keyboard navigation for Flashcards */
+    document.addEventListener('keydown', function (e) {
+      if (stateUI.currentPage !== 'flashcards') return;
+      if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+      if (e.code === 'Space') { e.preventDefault(); window.MSDS_FLASHCARDS.flip(); renderFlashcards(); }
+      else if (e.code === 'ArrowRight') { window.MSDS_FLASHCARDS.next(); renderFlashcards(); }
+      else if (e.code === 'ArrowLeft') { window.MSDS_FLASHCARDS.prev(); renderFlashcards(); }
+    });
+
+    renderCurrent();
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+
+  return { navigateTo: navigateTo, renderCurrent: renderCurrent };
+})();
+
+  </script>
+</body>
+</html>
